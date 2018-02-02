@@ -39,19 +39,31 @@ Extra large ≥1200px
 @media (min-width: 768px) {
 	h1 {
 		font-size: 3.5em;
-	}	
+	}
+
+	h2 {
+		font-size: 2em;
+	}
 }
 
 @media (max-width: 767px) {
 	h1 {
 		font-size: 2.5em;
-	}	
+	}
+
+	h2 {
+		font-size: 1.75em;
+	}
 }
 
 @media (max-width: 575px) {
 	h1 {
 		font-size: 1.75em;
-	}	
+	}
+
+	h2 {
+		font-size: 1.25em;
+	}
 }
 
 .siteTitle {
@@ -98,6 +110,21 @@ Extra large ≥1200px
 #resultList {
 	margin: 1em 0;
 }
+
 #resultList li {
 	font-size: 0.9em;
+}
+
+#detailsPanel {
+	padding: 1em;
+}
+
+.titleYear {
+	font-size: 0.66em;
+}
+
+.imdbIcon {
+	height: 1em;
+	display: inline-block;
+	margin-left: 0.5em;
 }

@@ -47,6 +47,7 @@ function doFetch (fetchTarget, handler) {
 		});
 }
 
+// TODO: combine these two
 function fetchSearchResults (searchString) {
 	doFetch('&s=' + searchString, (data) => { showSearchResults(data) });
 }
@@ -123,24 +124,78 @@ function showMovieDetails (data) {
 
 	let resultBlock = document.createElement('div');
 
-	let resultTitle = document.createElement('h2');
-	resultTitle.textContent = data.Title + ' (' + data.Year + ')';
-	resultBlock.appendChild(resultTitle);
+	resultBlock.appendChild(resultTitle(data));
+	resultBlock.appendChild(resultPoster(data));
+	resultBlock.appendChild(resultMetadata(data));
 
-	let resultMetadata = document.createElement('dl');
+	detailsPanel.appendChild(resultBlock);
+}
+
+function resultTitle (data) {
+	let resultTitle = document.createElement('h2');
+	resultTitle.innerHTML = data.Title
+		+ ' <span class="titleYear">(' + data.Year + ')</span>';
+	return resultTitle;
+}
+
+function resultMetadata (data) {
+	let metadata = document.createElement('dl');
 
 	let metadataFields = ['Director', 'Released', 'Rated', 'Runtime'];
 
 	metadataFields.forEach((field) => {
 		let fieldName = document.createElement('dt');
 		fieldName.textContent = field;
-		resultMetadata.appendChild(fieldName);
+		metadata.appendChild(fieldName);
 
 		let fieldValue = document.createElement('dd');
-		fieldValue.textContent = data[field];
-		resultMetadata.appendChild(fieldValue);
+		fieldValue.innerHTML = data[field];
+
+		if (field == 'Director') {
+			fieldValue.appendChild(directorLink(data[field]));
+		}
+
+		metadata.appendChild(fieldValue);
 	});
 
-	resultBlock.appendChild(resultMetadata);
-	detailsPanel.appendChild(resultBlock);
+	return metadata;
+}
+
+function directorLink (name) {
+	let searchURI = 'http://www.imdb.com/find?ref_=nv_sr_fn&s=nm&q='
+		+ encodeURI(name);
+
+	let searchLink = document.createElement('a');
+	searchLink.setAttribute('href', searchURI);
+
+	let imdbIcon = document.createElement('img');
+	imdbIcon.setAttribute('alt', 'Search IMDb for ' + name);
+	imdbIcon.setAttribute('title', 'Search IMDb for ' + name);
+	imdbIcon.setAttribute('class', 'imdbIcon');
+	imdbIcon.setAttribute('src', 'images/imdb-logo.png');
+
+	searchLink.appendChild(imdbIcon);
+	return searchLink;
+}
+
+function resultPoster (data) {
+	let poster = document.createElement('div');
+	poster.setAttribute('id', 'resultPoster');
+	poster.setAttribute('style', 'float: left; margin: 0 1em 0 0');
+
+	let posterImage = document.createElement('img');
+	posterImage.setAttribute('style', 'width: 10em;');
+
+	if (data.Poster == 'N/A') {
+		posterImage.setAttribute('src', 'images/no-poster.png');
+	} else {
+		posterImage.setAttribute('alt', 'The poster for ' + data.Title 
+			+ ' (' + data.Year + ')');
+
+		posterImage.setAttribute('src', data.Poster);
+	}
+
+	poster.appendChild(posterImage);
+
+	return poster;
 }
