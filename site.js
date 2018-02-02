@@ -29,6 +29,13 @@ function searchBoxSubmit (e) {
 	let searchString = searchBox.value;
 
 	if (searchString != 'Search') {
+
+		// Remove details view when new search is run
+		let detailsPanel = document.getElementById('detailsPanel');
+		while (detailsPanel.firstChild) {
+			detailsPanel.removeChild(detailsPanel.firstChild);
+		}
+
 		doFetch('s', searchString, 1,
 			(data) => { showSearchResults(data, 1, searchString) });
 	}
@@ -69,9 +76,7 @@ function getJSON (response) {
 function showSearchResults (data, page, searchString) {
 	let results = data.Search;
 
-	if (!page) {
-		page = 1;
-	}
+	if (!page) page = 1;
 
 	let resultList = document.getElementById('resultList');
 
