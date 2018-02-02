@@ -14,9 +14,32 @@ body, html {
 
 .intro{
   font-family: "Cookie";
-  text-align: center;
-  color: #f2eee3;
+  color: #ef626c;
   font-size: 30px;
+}
+.centering{
+  text-align: center;
+  align:center;
+}
+
+form{
+  align-self: center;
+}
+#queryInput{
+  height: 8vh;
+  width: 50vw;
+  background-color: #f6e8ea;
+  color: #312f2f;
+  padding: 10px;
+}
+
+.submitButton{
+  margin-top: 10px;
+  background-color: #312f2f;
+  color: #f6e8ea;
+  font-family: "Cookie";
+  padding-right: 20px;
+  padding-left: 20px;
 }
 </style>
 <html lang="en">
@@ -31,14 +54,46 @@ body, html {
     <title>Project Cinema</title>
   </head>
   <body>
-    <div class="home-image-bg">
+    <div class="home-image-bg first-search">
       <div class="container">
         <div class="row">
-          <div class="col">
+          <div class="col centering">
             <p class="intro">Give us something, <br>and we'll find matching movies</p>
+            <form class="initialSearch">
+              <div>
+                <input type="text" id="queryInput" name="queryInput" placeholder="Batman">
+              </div>
+              <div>
+                <button class="submitButton"> GO! </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
+    <div class="not-first-search">
+      <div class="container">
+        <div class="row">
+          <div class="col centering" display="inline-block">
+            <form class="initialSearch">
+              <div>
+                <input type="text" id="nextQueryInput" name="nextQueryInput" placeholder="search again">
+              </div>
+              <div>
+                <button class="nextSubmitButton"> GO! </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row resultsOutput">
+          <div class="col">
+            <div class="resultsOutput">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <script src="index.js">
+  </script>
   </body>
 </html>
