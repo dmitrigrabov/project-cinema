@@ -122,6 +122,25 @@ function showMovieDetails (data) {
 	}
 
 	let resultBlock = document.createElement('div');
-	resultBlock.textContent = JSON.stringify(data, null, 2);
+
+	let resultTitle = document.createElement('h2');
+	resultTitle.textContent = data.Title + ' (' + data.Year + ')';
+	resultBlock.appendChild(resultTitle);
+
+	let resultMetadata = document.createElement('dl');
+
+	let metadataFields = ['Director', 'Released', 'Rated', 'Runtime'];
+
+	metadataFields.forEach((field) => {
+		let fieldName = document.createElement('dt');
+		fieldName.textContent = field;
+		resultMetadata.appendChild(fieldName);
+
+		let fieldValue = document.createElement('dd');
+		fieldValue.textContent = data[field];
+		resultMetadata.appendChild(fieldValue);
+	});
+
+	resultBlock.appendChild(resultMetadata);
 	detailsPanel.appendChild(resultBlock);
 }

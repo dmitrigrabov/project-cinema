@@ -94,3 +94,10 @@ Extra large ≥1200px
 .sidebar p {
 	font-size: 0.8em;
 }
+
+#resultList {
+	margin: 1em 0;
+}
+#resultList li {
+	font-size: 0.9em;
+}
