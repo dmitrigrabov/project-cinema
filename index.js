@@ -97,5 +97,19 @@ function makeRowForInput(movie){
 
 function displayFurtherInfo(event){
   console.log("foo");
-  console.log(event.currentTarget);
+  var imdbID = event.currentTarget.id;
+  fetchingDetailsFn(imdbID);
+}
+
+function fetchingDetailsFn(incoming){
+  fetch(`http://www.omdbapi.com/?i=${incoming}&apikey=e5643f99`)
+  .then(function(response) {
+      console.log(response);
+      return response.json();
+  }).then(function(data) {
+      console.log(data);
+
+  }).catch(function(error) {
+    debugger;
+  });
 }
