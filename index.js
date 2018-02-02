@@ -40,6 +40,8 @@ function makeRowForInput(movie){
 
   var outputElementParent = document.getElementsByClassName("resultsOutput")[0];
 
+  // TODO: create a function that returns movieDetails
+
   console.log(posterSrc, movieTitle);
 
   var movieDetails = document.createElement("div");
@@ -73,6 +75,9 @@ function makeRowForInput(movie){
   movieDetails.appendChild(posterBox);
   movieDetails.appendChild(movieInfo);
 
+  movieDetails.id = movieIMDBid;
+  movieDetails.addEventListener("click", displayFurtherInfo);
+
   movieInfoIMDB.appendChild(imdbLink);
 
   movieInfo.appendChild(movieInfoTitle);
@@ -87,10 +92,10 @@ function makeRowForInput(movie){
 
 
   outputElementParent.appendChild(movieDetails);
-  // resultsOutput = resultsOutput +
-// `  <div class="row eachResult">
-//     <div class="col">
-//
-//     </div>
-//   </div>`
+}
+
+
+function displayFurtherInfo(event){
+  console.log("foo");
+  console.log(event.currentTarget);
 }
