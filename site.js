@@ -1,5 +1,6 @@
 prepPage();
 
+// Initialize event listeners on search box
 function prepPage () {
 	let searchForm = document.getElementById('searchForm');
 
@@ -7,6 +8,7 @@ function prepPage () {
 
 	let searchBox = document.getElementById('searchBox');
 
+	// Show 'Search' prompt in search box when no text entered
 	searchBox.addEventListener('focus', () => {
 		if (searchBox.value == 'Search') {
 			searchBox.value = '';
@@ -22,12 +24,14 @@ function prepPage () {
 	});
 }
 
+// Handle search form submission
 function searchBoxSubmit (e) {
 	e.preventDefault();
 	let searchBox = document.getElementById('searchBox');
 
 	let searchString = searchBox.value;
 
+	// Only do anything if search prompt is absent
 	if (searchString != 'Search') {
 
 		// Remove details view when new search is run
@@ -41,9 +45,12 @@ function searchBoxSubmit (e) {
 	}
 }
 
+// Mechanics of requesting data from endpoint
 function doFetch (type, searchString, page, handler) {
+
+	// Two types of search: 's' and 't'
 	let fetchTarget = `&${type}=${searchString}`;
-	if (page) {
+	if (page) { // Result pagination
 		fetchTarget += `&page=${page}`;
 	}
 
@@ -60,10 +67,12 @@ function doFetch (type, searchString, page, handler) {
 		}).then( (data) => {
 			handler(data);
 		}).catch( (error) => {
+			// Needs improvement (messages for different errors)
 			console.log('Error fetching! ', error.message)
 		});
 }
 
+// Check that our response object is JSON and extract data
 function getJSON (response) {
 	let contentType = response.headers.get("content-type");
 	if( contentType && contentType.includes("application/json")) {
@@ -73,6 +82,7 @@ function getJSON (response) {
 	}
 }
 
+// Put search result data onto page
 function showSearchResults (data, page, searchString) {
 	let results = data.Search;
 
@@ -80,12 +90,14 @@ function showSearchResults (data, page, searchString) {
 
 	let resultList = document.getElementById('resultList');
 
-	// If we have results from a previous run, lose them.
+	// If we have results from a previous run, lose them
 	if (resultList) {
 		while (resultList.firstChild) {
 			resultList.removeChild(resultList.firstChild);
-			resultList.setAttribute('start', ((page-1) * 10) + 1);
 		}
+
+		// Start numbered list on page at correct position
+		resultList.setAttribute('start', ((page-1) * 10) + 1);
 	} else {
 		resultList = document.createElement('ol');
 		resultList.setAttribute('id', 'resultList');
@@ -103,9 +115,30 @@ function showSearchResults (data, page, searchString) {
 	searchResults.appendChild(resultsNavigation(page, searchString));
 }
 
+// Produce HTML list items
+function createItemLink (item) {
+	let listItem = document.createElement('li');
+	let itemLink = document.createElement('a');
+	itemLink.setAttribute('href', '');
+
+	itemLink.textContent = item.Title;
+	
+	// When items are clicked, request full details from endpoint
+	itemLink.addEventListener('click', (e) => {
+		e.preventDefault();
+		doFetch('t', item.Title, undefined,
+			(data) => { showMovieDetails(data) });
+	}, false);
+
+	listItem.appendChild(itemLink);
+	return listItem;
+}
+
+// Create list results page navigation
 function resultsNavigation (page, searchString) {
 	let resultsNavigator = document.getElementById('resultsNavigation');
 
+	// We don't need whatever was on page already
 	if (resultsNavigator) {
 		resultsNavigator.parentNode.removeChild(resultsNavigator);
 	}
@@ -113,6 +146,7 @@ function resultsNavigation (page, searchString) {
 	resultsNavigator = document.createElement('div');
 	resultsNavigator.setAttribute('id', 'resultsNavigation');
 
+	// Create links for going back or forwards a page
 	if (page > 1) {
 		let previousTen = prevNext('prev', page, searchString);
 		resultsNavigator.appendChild(previousTen);
@@ -124,6 +158,7 @@ function resultsNavigation (page, searchString) {
 	return resultsNavigator;
 }
 
+// Create "Previous 10" or "Next 10" result navigation links
 function prevNext (direction, page, searchString) {
 	let prevNextLink = document.createElement('a');
 	prevNextLink.setAttribute('href', '');
@@ -150,27 +185,11 @@ function prevNext (direction, page, searchString) {
 	return prevNextLink;
 }
 
-function createItemLink (item) {
-	let listItem = document.createElement('li');
-	let itemLink = document.createElement('a');
-	itemLink.setAttribute('href', '');
-
-	itemLink.textContent = item.Title;
-	
-	itemLink.addEventListener('click', (e) => {
-		e.preventDefault();
-		doFetch('t', item.Title, undefined,
-			(data) => { showMovieDetails(data) });
-	}, false);
-
-	listItem.appendChild(itemLink);
-	return listItem;
-}
-
+// Populate details panel with data from endpoint
 function showMovieDetails (data) {
 	let detailsPanel = document.getElementById('detailsPanel');
 
-	// If we have results from a previous run, lose them.
+	// We don't need any results from a previous run
 	while (detailsPanel.firstChild) {
 		detailsPanel.removeChild(detailsPanel.firstChild);
 	}
@@ -184,6 +203,7 @@ function showMovieDetails (data) {
 	detailsPanel.appendChild(resultBlock);
 }
 
+// Create HTML heading element for details panel
 function resultTitle (data) {
 	let resultTitle = document.createElement('h2');
 	resultTitle.innerHTML = data.Title
@@ -191,6 +211,7 @@ function resultTitle (data) {
 	return resultTitle;
 }
 
+// Create HTML definition list from metadata returned by endpoint
 function resultMetadata (data) {
 	let metadata = document.createElement('dl');
 
@@ -214,6 +235,7 @@ function resultMetadata (data) {
 	return metadata;
 }
 
+// Create link to search IMDB for director's name
 function directorLink (name) {
 	let searchURI = 'http://www.imdb.com/find?ref_=nv_sr_fn&s=nm&q='
 		+ encodeURI(name);
@@ -231,6 +253,7 @@ function directorLink (name) {
 	return searchLink;
 }
 
+// Create image element for poster in details panel
 function resultPoster (data) {
 	let poster = document.createElement('div');
 	poster.setAttribute('id', 'resultPoster');
@@ -239,6 +262,7 @@ function resultPoster (data) {
 	let posterImage = document.createElement('img');
 	posterImage.setAttribute('style', 'width: 10em;');
 
+	// If endpoint didn't have anything, use a placeholder
 	if (data.Poster == 'N/A') {
 		posterImage.setAttribute('src', 'images/no-poster.png');
 	} else {
