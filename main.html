@@ -4,6 +4,12 @@
 body, html {
   height: 100%;
 }
+
+body{
+  background-color: #22181c;
+}
+
+
 .home-image-bg{
   background-image: url("images/cinema-seats-BY-lloyd-dirks-74271.jpg");
   background-size: cover;
@@ -12,10 +18,10 @@ body, html {
   background-repeat: no-repeat;
 }
 
-.intro{
+.site-name{
   font-family: "Cookie";
   color: #ef626c;
-  font-size: 30px;
+  font-size: 50px;
 }
 .centering{
   text-align: center;
@@ -44,6 +50,17 @@ form{
 
 .not-first-search{
   display: none;
+  background-color: #22181c;
+}
+
+.resultsItem{
+  background-color: #f6e8ea;
+}
+
+.notInitialSearch{
+  display: inline-block;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 </style>
 <html lang="en">
@@ -62,7 +79,7 @@ form{
       <div class="container">
         <div class="row">
           <div class="col centering">
-            <p class="intro">Give us something, <br>and we'll find matching movies</p>
+            <p class="site-name">FlickFinder</p>
             <form class="initialSearch">
               <div>
                 <input type="text" id="queryInput" name="queryInput" placeholder="Batman">
@@ -78,12 +95,15 @@ form{
     <div class="not-first-search">
       <div class="container">
         <div class="row">
-          <div class="col centering">
+          <div class="col-3" align="right">
+            <p class="site-name">FlickFinder</p>
+          </div>
+          <div class="col-6">
+          </div>
+          <div class="col-3">
             <form class="notInitialSearch" display=inline-block>
               <div display=inline-block>
                 <input type="text" id="nextQueryInput" name="nextQueryInput" placeholder="search again">
-              </div>
-              <div display=inline-block>
                 <button class="nextSubmitButton"> GO! </button>
               </div>
             </form>

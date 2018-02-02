@@ -7,8 +7,11 @@ function processQuery(event){
   var formInput = document.getElementById("queryInput").value;
   console.log(formInput);
 
+  if (formInput == ""){
+    return alert("Search box can't be blank. Please enter a search term.");
+  } else {
   console.log(fetchingFn(formInput));
-
+  }
 }
 
 function fetchingFn(incoming){
@@ -48,12 +51,17 @@ function makeRowForInput(movie){
   var movieInfoIMDB = document.createElement("p");
   var imdbLink = document.createElement("a");
 
-  movieDetails.className = "row";
+  movieDetails.className = "row resultsItem";
   movieDetails.style.margin = "5px 30px";
-  posterBox.className = "col-3";
+  posterBox.className = "col-2";
   posterBox.align = "right";
-  movieInfo.className = "col-9";
-  image.src = posterSrc;
+  movieInfo.className = "col-10";
+
+  if (posterSrc == "N/A"){
+    image.src = "images/no-image-available.jpeg";
+  } else {
+    image.src = posterSrc;
+  }
   image.height = "150";
   imdbLink.href = `http://www.imdb.com/title/${movieIMDBid}`
   imdbLink.innerHTML = `Learn more about ${movieTitle} on IMDB`
