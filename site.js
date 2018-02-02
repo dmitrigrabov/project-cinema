@@ -29,13 +29,16 @@ function searchBoxSubmit (e) {
 	let searchString = searchBox.value;
 
 	if (searchString != 'Search') {
-		doFetch('s', searchString,
-			(data) => { showSearchResults(data) });
+		doFetch('s', searchString, 1,
+			(data) => { showSearchResults(data, 1, searchString) });
 	}
 }
 
-function doFetch (type, searchString, handler) {
+function doFetch (type, searchString, page, handler) {
 	let fetchTarget = `&${type}=${searchString}`;
+	if (page) {
+		fetchTarget += `&page=${page}`;
+	}
 
 	let apiKey = '8ed1874c';
 	let apiRoot = 'http://www.omdbapi.com/?apikey=' + apiKey;
@@ -63,29 +66,83 @@ function getJSON (response) {
 	}
 }
 
-function showSearchResults (data) {
+function showSearchResults (data, page, searchString) {
 	let results = data.Search;
 
-	let resultList;
+	if (!page) {
+		page = 1;
+	}
+
+	let resultList = document.getElementById('resultList');
 
 	// If we have results from a previous run, lose them.
-	if (document.getElementById('resultList')) {
-		resultList = document.getElementById('resultList');
-
+	if (resultList) {
 		while (resultList.firstChild) {
 			resultList.removeChild(resultList.firstChild);
+			resultList.setAttribute('start', ((page-1) * 10) + 1);
 		}
 	} else {
 		resultList = document.createElement('ol');
 		resultList.setAttribute('id', 'resultList');
-	}
+	}	
 
-	document.getElementById('searchResults').appendChild(resultList);
+	let searchResults = document.getElementById('searchResults');
+
+	searchResults.appendChild(resultList);
 
 	results.forEach((result) => {
 		let listItem = createItemLink(result);
 		resultList.appendChild(listItem);
 	});
+
+	searchResults.appendChild(resultsNavigation(page, searchString));
+}
+
+function resultsNavigation (page, searchString) {
+	let resultsNavigator = document.getElementById('resultsNavigation');
+
+	if (resultsNavigator) {
+		resultsNavigator.parentNode.removeChild(resultsNavigator);
+	}
+
+	resultsNavigator = document.createElement('div');
+	resultsNavigator.setAttribute('id', 'resultsNavigation');
+
+	if (page > 1) {
+		let previousTen = prevNext('prev', page, searchString);
+		resultsNavigator.appendChild(previousTen);
+	}
+
+	let nextTen = prevNext('next', page, searchString);
+	resultsNavigator.appendChild(nextTen);
+
+	return resultsNavigator;
+}
+
+function prevNext (direction, page, searchString) {
+	let prevNextLink = document.createElement('a');
+	prevNextLink.setAttribute('href', '');
+
+	let text;
+	let navPage;
+
+	if (direction == 'prev') {
+		text = '&larr; Previous 10';
+		navPage = page - 1;
+	} else if (direction == 'next') {
+		text = 'Next 10 &rarr;';
+		navPage = page + 1;
+	}
+
+	prevNextLink.innerHTML = text;
+
+	prevNextLink.addEventListener('click', (e) => {
+		e.preventDefault();
+		doFetch('s', searchString, navPage,
+			(data) => { showSearchResults(data, navPage, searchString) });
+	}, false);
+
+	return prevNextLink;
 }
 
 function createItemLink (item) {
@@ -97,7 +154,7 @@ function createItemLink (item) {
 	
 	itemLink.addEventListener('click', (e) => {
 		e.preventDefault();
-		doFetch('t', item.Title,
+		doFetch('t', item.Title, undefined,
 			(data) => { showMovieDetails(data) });
 	}, false);
 
