@@ -11,28 +11,33 @@
 <body>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-12 site-title">
+		<div class="col-12 siteTitle">
 			<h1>MovieThing</h1>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-lg-9 col-md-9 col-12">
-			<form id="input-form">
-				<input type="text" id="searchBox" size="20" value="Search" /> <input type="submit" value="Go" /><br />
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc condimentum augue arcu, at euismod lorem condimentum quis. Vivamus eu ex non lacus rhoncus gravida pharetra cursus libero. Nullam libero diam, ornare nec metus id, posuere aliquet nunc. Praesent cursus diam nec leo venenatis, eleifend placerat ex varius. Etiam ullamcorper placerat ultrices.
+			<form id="searchForm">
+				<input type="text" id="searchBox" size="20" value="Search" /> <input type="submit" value="Go" id="searchButton" />
 			</form>
 		</div>
 		<div class="col-lg-3 col-md-3 col-12 sidebar">
 			<p>
-				Etiam at iaculis erat. Phasellus lacinia lorem eros. Vivamus finibus non arcu tincidunt sagittis. Nullam congue sapien vitae diam tempor faucibus. Mauris nec laoreet urna, quis venenatis augue.
+				Etiam at iaculis erat. Phasellus lacinia lorem eros.
 			</p>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-12">
-			<div id="search-results">[search results panel]</div>
+			<div id="searchResults"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<div id="detailsPanel"></div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="site.js"></script>
 </body>
 </html>

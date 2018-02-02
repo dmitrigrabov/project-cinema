@@ -54,12 +54,12 @@ Extra large ≥1200px
 	}	
 }
 
-.site-title {
+.siteTitle {
 	padding: 1.5em !important;
 	background-image: url(images/header-background.jpg);
 }
 
-.site-title h1 {
+.siteTitle h1 {
 	width: 9em;
 	background: #000;
 	color: #fff;
@@ -70,11 +70,11 @@ Extra large ≥1200px
 	border-bottom-right-radius: 0.5em;
 }
 
-#input-form, .sidebar p {
+#searchForm, .sidebar p {
 	padding: 1em;
 }
 
-#input-form input[type=text] {
+#searchForm input[type=text] {
 	color: #aaa;
 	background: #fff;
 	border: 1px solid #999;
@@ -83,7 +83,7 @@ Extra large ≥1200px
 	border-bottom-right-radius: 0.5em;
 }
 
-#input-form input[type=submit] {
+#searchForm input[type=submit] {
 	color: #000;
 	background: #fff;
 	border: 1px solid #999;
