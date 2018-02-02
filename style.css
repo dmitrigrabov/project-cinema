@@ -22,7 +22,6 @@ p, div, span, form, input {
 }
 
 div[class^='col-'] {
-	border: 1px solid black !important;
 	padding: 0;
 }
 
@@ -84,6 +83,12 @@ Extra large ≥1200px
 
 #searchForm, .sidebar p {
 	padding: 1em;
+}
+
+#searchForm {
+	background: #eee;
+	border-top: 1px solid #999;
+	border-bottom: 1px dashed #999;
 }
 
 #searchForm input[type=text] {

@@ -29,39 +29,29 @@ function searchBoxSubmit (e) {
 	let searchString = searchBox.value;
 
 	if (searchString != 'Search') {
-		fetchSearchResults(searchString);
+		doFetch('s', searchString,
+			(data) => { showSearchResults(data) });
 	}
 }
 
-function doFetch (fetchTarget, handler) {
+function doFetch (type, searchString, handler) {
+	let fetchTarget = `&${type}=${searchString}`;
+
 	let apiKey = '8ed1874c';
 	let apiRoot = 'http://www.omdbapi.com/?apikey=' + apiKey;
 
 	fetch(apiRoot + fetchTarget)
 		.then( (response) => {
-			return getJSON(checkResponse(response));
+			if (!response.ok) {
+				throw new Error('Request response was not OK');
+			}
+
+			return getJSON(response);
 		}).then( (data) => {
 			handler(data);
 		}).catch( (error) => {
 			console.log('Error fetching! ', error.message)
 		});
-}
-
-// TODO: combine these two
-function fetchSearchResults (searchString) {
-	doFetch('&s=' + searchString, (data) => { showSearchResults(data) });
-}
-
-function fetchMovieDetails (searchString) {
-	doFetch('&t=' + searchString, (data) => { showMovieDetails(data) });
-}
-
-function checkResponse (response) {
-	if (!response.ok) {
-		throw new Error('Request response was not OK');
-	}
-
-	return response;
 }
 
 function getJSON (response) {
@@ -107,7 +97,8 @@ function createItemLink (item) {
 	
 	itemLink.addEventListener('click', (e) => {
 		e.preventDefault();
-		fetchMovieDetails(item.Title);
+		doFetch('t', item.Title,
+			(data) => { showMovieDetails(data) });
 	}, false);
 
 	listItem.appendChild(itemLink);
