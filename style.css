@@ -112,6 +112,10 @@ Extra large ≥1200px
 	font-size: 0.8em;
 }
 
+.favoritesTitle {
+	font-weight: bold;
+}
+
 #resultList {
 	margin: 1em 0;
 }

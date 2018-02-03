@@ -22,6 +22,38 @@ function prepPage () {
 			searchBox.setAttribute('style',	'color: #aaa');
 		}
 	});
+
+	showFavorites();
+
+	document.getElementById('clearFavorites').addEventListener('click', (e) => {
+		e.preventDefault();
+		clearFavorites();
+	});
+}
+
+// Display the favorites list in the page sidebar
+function showFavorites () {
+	let favoritesList = document.getElementById('favoritesList');
+	while (favoritesList.firstChild) {
+		favoritesList.removeChild(favoritesList.firstChild);
+	}
+
+	for (i = 1; i <= 10; i++) {
+		let favoritesItem = document.createElement('li');
+		let faveKey = 'faveMovie' + i;
+
+		favoritesItem.setAttribute('id', faveKey);
+
+		let savedFavorite = localStorage.getItem(`${faveKey}`);
+		if (savedFavorite) {
+			let favoriteData = savedFavorite.split('--');
+			// To do: create as link that loads results panel
+			favoritesItem.innerHTML = `${favoriteData[0]} (${favoriteData[1]})`;
+			// To do: create link, add listener for removeFavorite()
+		}
+
+		favoritesList.appendChild(favoritesItem);
+	}
 }
 
 // Handle search form submission
@@ -85,6 +117,8 @@ function getJSON (response) {
 // Put search result data onto page
 function showSearchResults (data, page, searchString) {
 	let results = data.Search;
+
+	// To do: handle there being no results found
 
 	if (!page) page = 1;
 
@@ -199,8 +233,85 @@ function showMovieDetails (data) {
 	resultBlock.appendChild(resultTitle(data));
 	resultBlock.appendChild(resultPoster(data));
 	resultBlock.appendChild(resultMetadata(data));
+	resultBlock.appendChild(resultFavoriteToggle(data));
 
 	detailsPanel.appendChild(resultBlock);
+}
+
+// Create switch to mark/unmark as favorite
+function resultFavoriteToggle (data) {
+	let toggle = document.createElement('input');
+	toggle.setAttribute('type', 'checkbox');
+	toggle.setAttribute('id', 'favoriteToggle');
+
+	let title = data.Title;
+	let year = data.Year;
+	let faveData = `${title}--${year}`; // Title alone may not be unique
+
+	let faveKey;
+	for (i = 1; i <= 10; i++) {
+		faveKey = 'faveMovie' + i;
+		if (localStorage.getItem(`${faveKey}`) == faveData) {
+			toggle.checked = true;
+			break;
+		}
+	}
+
+	let toggleDiv = document.createElement('div');
+	toggleDiv.appendChild(toggle);
+	let toggleLabel = document.createElement('label');
+	toggleLabel.setAttribute('for', 'favoriteToggle');
+	toggleLabel.textContent = 'Favorite';
+	toggleDiv.appendChild(toggleLabel);
+
+	toggle.addEventListener('change', (e) => {
+		if (toggle.checked) {
+			saveFavorite(faveData);
+		} else {
+			removeFavorite(`${faveKey}`);
+		}
+
+		showFavorites();
+	});
+
+	return toggleDiv;
+}
+
+// Save a favorite in local storage
+function saveFavorite (faveData) {
+	let saved;
+	let faveKey;
+
+	// Find first available slot in favorites list
+	for (i = 1; i <= 10; i++) {
+		faveKey = 'faveMovie' + i;
+		if (!localStorage.getItem(`${faveKey}`)) {
+			localStorage.setItem(`${faveKey}`, faveData);
+			saved = true;
+			break;
+		}
+	}
+
+	if (!saved) {
+		alert('Maximum favorites reached.');
+	}
+}
+
+// Remove a favorite from local storage
+function removeFavorite (f) {
+	localStorage.removeItem(`${f}`);
+}
+
+// Remove all favorites items from local storage and clear list on page
+function clearFavorites () {
+	for (i = 1; i <= 10; i++) {
+		removeFavorite('faveMovie' + i);
+	}
+
+	showFavorites();
+
+	let toggle = document.getElementById('favoriteToggle');
+	if (toggle) toggle.checked = false;
 }
 
 // Create HTML heading element for details panel
