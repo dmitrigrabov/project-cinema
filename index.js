@@ -160,5 +160,12 @@ function hideFurtherInfo (event){
   console.log(event);
   var furtherInfoID = event.path[1].classList[1];
   console.log(furtherInfoID);
+  var imdbID = furtherInfoID.slice(10);
+  console.log(imdbID);
+  var childNode = document.getElementsByClassName(furtherInfoID)[0];
+  console.log(childNode);
+  var parentNode = document.getElementById(imdbID);
+
+  parentNode.removeChild(childNode);
 
 }
