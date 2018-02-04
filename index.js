@@ -147,14 +147,29 @@ function makeDetailedInfoCard(movieDetailsObject){
 }
 
 function hideFurtherInfo (event){
-  console.log(event);
-  var furtherInfoID = event.path[1].classList[1];
-  var imdbID = furtherInfoID.slice(10);
-  var childNode = document.getElementsByClassName(furtherInfoID)[0];
-  var parentNode = document.getElementById(imdbID);
-  console.log(parentNode);
+  // console.log(event);
+  // var furtherInfoID = event.path[1].classList[1];
+  // var imdbID = furtherInfoID.slice(10);
+  // console.log(imdbID);
+  // var childNode = document.getElementsByClassName(furtherInfoID)[0];
+  // var parentNode = document.getElementById(imdbID);
+  // console.log(parentNode);
+  // parentNode.removeEventListener("click", hideFurtherInfo);
+  // // parentNode.addEventListener("click", displayFurtherInfo);
+  // parentNode.removeChild(childNode);
+
+
+
+
+  const childNode = event.currentTarget;
+
+  const parentNode = childNode.parentNode;
+
   parentNode.removeEventListener("click", hideFurtherInfo);
-  // parentNode.addEventListener("click", displayFurtherInfo);
+
+
   parentNode.removeChild(childNode);
+
+  parentNode.addEventListener("click", displayFurtherInfo);
 
 }
