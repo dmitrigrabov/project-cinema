@@ -19,6 +19,9 @@ function showSearchResults(resultArray) {
     var showMovieTitle = document.createElement('h3');
     showMovieTitle.innerHTML = result.Title + ', ' + result.Year;
     displayMovies.appendChild(showMovieTitle);
+    var showMoviePoster = document.createElement('img');
+    showMoviePoster.src = result.Poster;
+    displayMovies.appendChild(showMoviePoster);
   });
 }
 
