@@ -17,7 +17,13 @@ nextFormLocator.addEventListener("submit", processNextQuery);
 
 function processNextQuery(event){
   event.preventDefault();
+  var formInput = document.getElementById("nextQueryInput").value;
 
+    clearPastResults();
+    fetchingFn(formInput);
+}
+
+function clearPastResults(){
   var formInput = document.getElementById("nextQueryInput").value;
   if (formInput == ""){
     return alert("Search box can't be blank. Please enter a search term.");
@@ -26,21 +32,29 @@ function processNextQuery(event){
     while (resultHolder.firstChild){
       resultHolder.removeChild(resultHolder.firstChild);
     }
-    fetchingFn(formInput);
   }
 }
 
 function fetchingFn(incoming){
   fetch(`http://www.omdbapi.com/?s=${incoming}&apikey=e5643f99`)
   .then(function(response) {
+
+      console.log(response);
       return response.json();
+
   }).then(function(data) {
+
+    if (data.Search){
       document.getElementsByClassName("first-search")[0].style.display = "none";
       document.getElementsByClassName("not-first-search")[0].style.display = "block";
       var listOfFilms = data.Search;
       // console.log(listOfFilms) is part of the spec
       console.log(listOfFilms);
       listOfFilms.forEach(item => makeRowForInput(item));
+    }
+    else {
+      displayError();
+    }
 
   }).catch(function(error) {
     debugger;
@@ -177,4 +191,15 @@ function toggleFurtherInfo (event){
   else {
     furtherInfoBox.style.display = "";
   }
+}
+
+function displayError(){
+    var outputElementParent = document.getElementsByClassName("resultsOutput")[0];
+    var textBox = document.createElement("p");
+    var infoContent = document.createTextNode("We couldn't find any matching results.")
+    textBox.appendChild(infoContent);
+    clearPastResults();
+    outputElementParent.style.backgroundColor = "#F6E8EA";
+    textBox.style.fontSize = "2em";
+    outputElementParent.appendChild(textBox);
 }
