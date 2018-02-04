@@ -138,7 +138,7 @@ function makeDetailedInfoCard(movieDetailsObject){
   extraDetails.appendChild(ratingP);
   extraDetails.appendChild(plotP);
 
-  extraDetails.addEventListener("click", hideFurtherInfo);
+  movieRow.addEventListener("click", toggleFurtherInfo);
   movieRow.removeEventListener("click", displayFurtherInfo);
 
 
@@ -146,30 +146,14 @@ function makeDetailedInfoCard(movieDetailsObject){
 
 }
 
-function hideFurtherInfo (event){
-  // console.log(event);
-  // var furtherInfoID = event.path[1].classList[1];
-  // var imdbID = furtherInfoID.slice(10);
-  // console.log(imdbID);
-  // var childNode = document.getElementsByClassName(furtherInfoID)[0];
-  // var parentNode = document.getElementById(imdbID);
-  // console.log(parentNode);
-  // parentNode.removeEventListener("click", hideFurtherInfo);
-  // // parentNode.addEventListener("click", displayFurtherInfo);
-  // parentNode.removeChild(childNode);
+function toggleFurtherInfo (event){
+  var movieRow = event.currentTarget;
+  var furtherInfoBox = movieRow.lastChild;
 
-
-
-
-  const childNode = event.currentTarget;
-
-  const parentNode = childNode.parentNode;
-
-  parentNode.removeEventListener("click", hideFurtherInfo);
-
-
-  parentNode.removeChild(childNode);
-
-  parentNode.addEventListener("click", displayFurtherInfo);
-
+  if (furtherInfoBox.style.display == ""){
+    furtherInfoBox.style.display = "none";
+  }
+  else {
+    furtherInfoBox.style.display = "";
+  }
 }
