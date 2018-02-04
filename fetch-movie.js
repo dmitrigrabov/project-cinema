@@ -15,6 +15,7 @@ function listenForSubmit() {
 listenForSubmit();
 
 function showSearchResults(resultArray) {
+  displayMovies.innerHTML = ' ';
   resultArray.forEach(function(result) {
     var showMovieTitle = document.createElement('h3');
     showMovieTitle.innerHTML = result.Title + ', ' + result.Year;
