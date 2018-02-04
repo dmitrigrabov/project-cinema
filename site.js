@@ -240,6 +240,8 @@ function showFavorites () {
 
 			if (i > 1) {
 				let moveUpLink = emptyLink();
+				moveUpLink.setAttribute('title', 'Move this favorite up the list');
+				moveUpLink.setAttribute('class', 'favoriteAction');
 
 				moveUpLink.addEventListener('click', (e) => {
 					e.preventDefault();
@@ -253,6 +255,8 @@ function showFavorites () {
 
 			if (i < 10) {
 				let moveDownLink = emptyLink();
+				moveDownLink.setAttribute('title', 'Move this favorite down the list');
+				moveDownLink.setAttribute('class', 'favoriteAction');
 
 				moveDownLink.addEventListener('click', (e) => {
 					e.preventDefault();
@@ -265,6 +269,8 @@ function showFavorites () {
 			}
 
 			let deleteLink = emptyLink();
+			deleteLink.setAttribute('title', 'Remove this favorite');
+			deleteLink.setAttribute('class', 'favoriteAction');
 
 			deleteLink.addEventListener('click', (e) => {
 				e.preventDefault();

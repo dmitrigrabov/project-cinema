@@ -146,3 +146,11 @@ Extra large ≥1200px
 	display: inline-block;
 	margin-right: 1em;
 }
+
+#clearFavorites {
+	font-size: small;
+}
+
+.favoriteAction:hover {
+	text-decoration: none;
+}
