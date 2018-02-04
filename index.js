@@ -147,6 +147,18 @@ function makeDetailedInfoCard(movieDetailsObject){
   extraDetails.appendChild(ratingP);
   extraDetails.appendChild(plotP);
 
+  extraDetails.addEventListener("click", hideFurtherInfo);
+  movieRow.removeEventListener("click", displayFurtherInfo);
+
+
   movieRow.appendChild(extraDetails);
+
+}
+
+function hideFurtherInfo (event){
+  console.log("bar");
+  console.log(event);
+  var furtherInfoID = event.path[1].classList[1];
+  console.log(furtherInfoID);
 
 }
