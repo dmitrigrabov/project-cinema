@@ -151,6 +151,6 @@ Extra large ≥1200px
 	font-size: small;
 }
 
-.favoriteAction:hover {
+#favoritesList a:hover {
 	text-decoration: none;
 }
