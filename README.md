@@ -17,7 +17,7 @@ You should complete as many of the following tasks as you can. You can use Boots
 - [v] Use JavaScript to capture the submit event on in your search form, extract the query string from your input and use that to make an API call to the Open Movie Database API to search for films which match the query string. Console.log the results
 - [v] Display the data returned by the API including title, year and poster picture
 - [%] Adjust your layout to create room for a detailed view of movie information
-- [ ] Capture clicks on your movie results items and use that information to make another request to the API for detailed movie information. Console.log the returned result
+- [v] Capture clicks on your movie results items and use that information to make another request to the API for detailed movie information. Console.log the returned result
 - [%] Display the detailed movie result in the in the details view you created earlier
 
 **Your own feature**

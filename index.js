@@ -50,17 +50,19 @@ function makeRowForInput(movie){
 
   movieDetails.className = "row resultsItem";
   movieDetails.style.margin = "5px 30px";
-  posterBox.className = "col-2";
-  posterBox.align = "right";
-  movieInfo.className = "col-10";
+  posterBox.className = "col-md-2";
+  posterBox.style.align = "center";
+  movieInfo.className = "col-md-10";
 
   if (posterSrc == "N/A"){
     image.src = "images/no-image-available.jpeg";
   } else {
     image.src = posterSrc;
   }
-  image.height = "150";
+  image.style.height = "150px";
+  image.style.width = "100px";
 
+  image.style.objectFit = "cover";
   //TODO : trim excess image on horizontal axis to a fixed width
 
   imdbLink.href = `http://www.imdb.com/title/${movieIMDBid}`
