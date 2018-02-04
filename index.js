@@ -12,6 +12,24 @@ function processQuery(event){
   }
 }
 
+var nextFormLocator = document.getElementsByClassName("notInitialSearch")[0];
+nextFormLocator.addEventListener("submit", processNextQuery);
+
+function processNextQuery(event){
+  event.preventDefault();
+
+  var formInput = document.getElementById("nextQueryInput").value;
+  if (formInput == ""){
+    return alert("Search box can't be blank. Please enter a search term.");
+  } else {
+    var resultHolder = document.getElementsByClassName("resultsOutput")[0];
+    while (resultHolder.firstChild){
+      resultHolder.removeChild(resultHolder.firstChild);
+    }
+    fetchingFn(formInput);
+  }
+}
+
 function fetchingFn(incoming){
   fetch(`http://www.omdbapi.com/?s=${incoming}&apikey=e5643f99`)
   .then(function(response) {
@@ -61,9 +79,10 @@ function makeRowForInput(movie){
   }
   image.style.height = "150px";
   image.style.width = "100px";
-
   image.style.objectFit = "cover";
-  //TODO : trim excess image on horizontal axis to a fixed width
+  image.style.marginTop = "5px";
+  image.style.marginBottom = "5px";
+  image.style.border = "2px solid black";
 
   imdbLink.href = `http://www.imdb.com/title/${movieIMDBid}`
   imdbLink.innerHTML = `Learn more about ${movieTitle} on IMDB`
