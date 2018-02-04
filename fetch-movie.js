@@ -1,47 +1,38 @@
-//var searchString = 'jurassic';
-//var searchUrl = 'http://www.omdbapi.com/?s=star&apikey=25a585bd';
+var displayMovies = document.getElementById('container2');
+displayMovies.innerHTML = ' ';
 
 function listenForSubmit() {
-    var submitMovieSearch = document.querySelector('#submitButton');
-    submitMovieSearch.addEventListener("click", function(event) {
+  var submitMovieSearch = document.querySelector('#submitButton');
+  submitMovieSearch.addEventListener("click", function(event) {
       event.preventDefault();
-      var movieSearchText = document.querySelector('#searchForm').value;
-      //console.log(document.querySelector('#searchForm').value);
-
-      function setUrl() {
-        var startUrl = 'http://www.omdbapi.com/?s=';
-        var midUrl = movieSearchText.replace(/\s/g, "+").toLowerCase();
-        var endUrl = '&apikey=25a585bd';
-        var searchUrl = startUrl+midUrl+endUrl;
-        console.log(searchUrl);
-        return searchUrlTest;
-      }
-      setUrl();
-    });
-  }
+      var inputText = document.querySelector('#searchForm').value;
+      var inputMovie = inputText.replace(/\s/g, "+").toLowerCase();
+      console.log(inputMovie);
+      findAllTheMovies(inputMovie);
+  });
+}
 
 listenForSubmit();
 
-/*
-function setUrl() {
-  var startUrl = 'http://www.omdbapi.com/?s=';
-  var midUrl = document.querySelector('#searchForm').value;
-  var endUrl = '&apikey=25a585bd';
-  var searchUrlTest = startUrl+midUrl+endUrl;
-  console.log(searchUrlTest);
-  //return searchUrlTest;
+function showSearchResults(resultArray) {
+  resultArray.forEach(function(result) {
+    var showMovieTitle = document.createElement('h3');
+    showMovieTitle.innerHTML = result.Title + ', ' + result.Year;
+    displayMovies.appendChild(showMovieTitle);
+  });
 }
 
-setUrl();*/
-
-/*fetch(searchUrl)
-  .then(function(response) {
-    return response.json()
-    debugger;
-  }).then(function(myJsonData) {
-    const resultArray = myJsonData.Search;
-    debugger;
-    resultArray.forEach(result => console.log(result.Title));
-  }).catch(function(error) {
-    debugger;
-  });*/
+function findAllTheMovies(movie) {
+  fetch(`http://www.omdbapi.com/?s=${movie}&apikey=25a585bd`)
+    .then(function(response) {
+      return response.json()
+      debugger;
+    }).then(function(myJsonData) {
+      const resultArray = myJsonData.Search;
+      resultArray.forEach(result => console.log(result.Title));
+      showSearchResults(resultArray);
+      debugger;
+    }).catch(function(error) {
+      debugger;
+    });
+}
