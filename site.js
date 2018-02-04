@@ -226,65 +226,71 @@ function showFavorites () {
 	}
 
 	for (i = 1; i <= 10; i++) {
-		let favoritesItem = document.createElement('li');
 		let faveKey = 'faveMovie' + i;
 
+		let savedFavorite = localStorage.getItem(`${faveKey}`);
+		if (!savedFavorite) continue;
+
+		let favoritesItem = document.createElement('li');
 		favoritesItem.setAttribute('id', faveKey);
 
-		let savedFavorite = localStorage.getItem(`${faveKey}`);
-		if (savedFavorite) {
-			let favoriteData = savedFavorite.split('--');
-			// To do: create as link that loads results panel
-			favoritesItem.innerHTML = `${favoriteData[0]} (${favoriteData[1]})`;
-			// To do: create link, add listener for removeFavorite()
+		let favoriteData = savedFavorite.split('--');
+		let movieTitle = favoriteData[0];
+		let movieYear = favoriteData[1];
 
-			if (i > 1) {
-				let moveUpLink = emptyLink();
-				moveUpLink.setAttribute('title', 'Move this favorite up the list');
-				moveUpLink.setAttribute('class', 'favoriteAction');
+		let detailLink = emptyLink();
+		detailLink.textContent = `${movieTitle} (${movieYear})`;
 
-				moveUpLink.addEventListener('click', (e) => {
-					e.preventDefault();
-					moveFavorite(`${faveKey}`, 'up');
-					showFavorites();
-				});
+		// When items are clicked, request full details from endpoint
+		detailLink.addEventListener('click', (e) => {
+			e.preventDefault();
+			doFetch('t', movieTitle, undefined,
+				(data) => { showMovieDetails(data) });
+		}, false);
 
-				moveUpLink.innerHTML += '🔼';
-				favoritesItem.appendChild(moveUpLink);
-			}
+		favoritesItem.appendChild(detailLink);
 
-			if (i < 10) {
-				let moveDownLink = emptyLink();
-				moveDownLink.setAttribute('title', 'Move this favorite down the list');
-				moveDownLink.setAttribute('class', 'favoriteAction');
-
-				moveDownLink.addEventListener('click', (e) => {
-					e.preventDefault();
-					moveFavorite(`${faveKey}`, 'down');
-					showFavorites();
-				});
-
-				moveDownLink.innerHTML += '🔽';
-				favoritesItem.appendChild(moveDownLink);
-			}
-
-			let deleteLink = emptyLink();
-			deleteLink.setAttribute('title', 'Remove this favorite');
-			deleteLink.setAttribute('class', 'favoriteAction');
-
-			deleteLink.addEventListener('click', (e) => {
-				e.preventDefault();
-				removeFavorite(`${faveKey}`);
-				showFavorites();
-			});
-
-			deleteLink.innerHTML = '<small>❌</small>';
-
-			favoritesItem.appendChild(deleteLink);
+		if (i > 1) {
+			favoritesItem.appendChild(upDown('up', faveKey));
 		}
+
+		// To do: prevent from displaying on last item if <10 items
+		if (i < 10) {
+			favoritesItem.appendChild(upDown('down', faveKey));
+		}
+
+		let deleteLink = emptyLink();
+		deleteLink.setAttribute('title', 'Remove this favorite');
+		deleteLink.setAttribute('class', 'favoriteAction');
+
+		deleteLink.addEventListener('click', (e) => {
+			e.preventDefault();
+			removeFavorite(faveKey);
+			showFavorites();
+		});
+
+		deleteLink.innerHTML = '<small>❌</small>';
+
+		favoritesItem.appendChild(deleteLink);
 
 		favoritesList.appendChild(favoritesItem);
 	}
+}
+
+// Create links for moving favorites items up or down the list
+function upDown (direction, movieID) {
+	let link = emptyLink();
+	link.setAttribute('title', `Move this favorite ${direction} the list`);
+	link.setAttribute('class', 'favoriteAction');
+
+	link.addEventListener('click', (e) => {
+		e.preventDefault();
+		moveFavorite(movieID, direction);
+		showFavorites();
+	});
+
+	link.innerHTML += direction == 'up' ? '🔼' : '🔽';
+	return link;
 }
 
 // Move a favorite item up or down
