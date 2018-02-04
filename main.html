@@ -1,0 +1,59 @@
+<!doctype html>
+
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Cookie" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
+    <title>FlickFinder</title>
+  </head>
+  <body>
+    <div class="home-image-bg first-search">
+      <div class="container">
+        <div class="row">
+          <div class="col centering">
+            <p class="site-name">FlickFinder</p>
+            <form class="initialSearch">
+              <div>
+                <input type="text" id="queryInput" name="queryInput" placeholder="Type here to search">
+              </div>
+              <div>
+                <button class="submitButton"> GO! </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="not-first-search">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 mobile-centering" align="right">
+            <p class="site-name">FlickFinder</p>
+          </div>
+          <div class="col-md-4 mobile-centering">
+          </div>
+          <div class="col-md-5 mobile-centering">
+            <form class="notInitialSearch" display=inline-block>
+              <div display=inline-block>
+                <input type="text" id="nextQueryInput" name="nextQueryInput" placeholder="search again">
+                <button class="nextSubmitButton"> GO! </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="container resultsOutput">
+
+      </div>
+    </div>
+  <script src="index.js">
+  </script>
+  </body>
+</html>
