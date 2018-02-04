@@ -65,6 +65,9 @@ function makeRowForInput(movie){
     image.src = posterSrc;
   }
   image.height = "150";
+
+  //TODO : trim excess image on horizontal axis to a fixed width
+
   imdbLink.href = `http://www.imdb.com/title/${movieIMDBid}`
   imdbLink.innerHTML = `Learn more about ${movieTitle} on IMDB`
 
@@ -108,8 +111,42 @@ function fetchingDetailsFn(incoming){
       return response.json();
   }).then(function(data) {
       console.log(data);
-
+      makeDetailedInfoCard(data);
   }).catch(function(error) {
     debugger;
   });
+}
+
+function makeDetailedInfoCard(movieDetailsObject){
+  var imdbID = movieDetailsObject.imdbID;
+  var movieRow = document.getElementById(imdbID);
+  var runtime = movieDetailsObject.Runtime;
+  var rating = movieDetailsObject.Rated;
+  var plot = movieDetailsObject.Plot;
+
+  console.log(movieRow);
+  console.log(runtime, rating, plot);
+
+  var extraDetails = document.createElement("div");
+  extraDetails.className = `col-9 detailInfo${imdbID}`;
+  extraDetails.style.backgroundColor = "#84dccf";
+
+  var runtimeP = document.createElement("p");
+  var ratingP = document.createElement("p");
+  var plotP = document.createElement("p");
+
+  var runtimeContent = document.createTextNode(`Runtime: ${runtime}`);
+  var ratingContent = document.createTextNode(`Rating: ${rating}`);
+  var plotContent = document.createTextNode(`Plot outline: ${plot}`);
+
+  runtimeP.appendChild(runtimeContent);
+  ratingP.appendChild(ratingContent);
+  plotP.appendChild(plotContent);
+
+  extraDetails.appendChild(runtimeP);
+  extraDetails.appendChild(ratingP);
+  extraDetails.appendChild(plotP);
+
+  movieRow.appendChild(extraDetails);
+
 }
