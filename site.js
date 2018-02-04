@@ -124,11 +124,17 @@ function showSearchResults (data, page, searchString) {
 	searchResults.appendChild(resultsNavigation(page, searchString));
 }
 
+// Create an empty link node
+function emptyLink () {
+	let link = document.createElement('a');
+	link.setAttribute('href', '');
+	return link;
+}
+
 // Produce HTML list items
 function createItemLink (item) {
 	let listItem = document.createElement('li');
-	let itemLink = document.createElement('a');
-	itemLink.setAttribute('href', '');
+	let itemLink = emptyLink();
 
 	itemLink.textContent = item.Title;
 	
@@ -169,8 +175,7 @@ function resultsNavigation (page, searchString) {
 
 // Create "Previous 10" or "Next 10" result navigation links
 function prevNext (direction, page, searchString) {
-	let prevNextLink = document.createElement('a');
-	prevNextLink.setAttribute('href', '');
+	let prevNextLink = emptyLink();
 
 	let text;
 	let navPage;
@@ -233,12 +238,52 @@ function showFavorites () {
 			favoritesItem.innerHTML = `${favoriteData[0]} (${favoriteData[1]})`;
 			// To do: create link, add listener for removeFavorite()
 
-			if (i > 1) favoritesItem.innerHTML += ' 🔼';
-			if (i < 10) favoritesItem.innerHTML += ' 🔽';
+			if (i > 1) {
+				let moveUpLink = emptyLink();
+
+				moveUpLink.addEventListener('click', (e) => {
+					e.preventDefault();
+					moveFavorite(`${faveKey}`, 'up');
+					showFavorites();
+				});
+
+				moveUpLink.innerHTML += '🔼';
+				favoritesItem.appendChild(moveUpLink);
+			}
+
+			if (i < 10) {
+				let moveDownLink = emptyLink();
+
+				moveDownLink.addEventListener('click', (e) => {
+					e.preventDefault();
+					moveFavorite(`${faveKey}`, 'down');
+					showFavorites();
+				});
+
+				moveDownLink.innerHTML += '🔽';
+				favoritesItem.appendChild(moveDownLink);
+			}
+
+			let deleteLink = emptyLink();
+
+			deleteLink.addEventListener('click', (e) => {
+				e.preventDefault();
+				removeFavorite(`${faveKey}`);
+				showFavorites();
+			});
+
+			deleteLink.innerHTML = '<small>❌</small>';
+
+			favoritesItem.appendChild(deleteLink);
 		}
 
 		favoritesList.appendChild(favoritesItem);
 	}
+}
+
+// Move a favorite item up or down
+function moveFavorite (favorite, direction) {
+	alert(`Not implemented yet: move ${favorite} ${direction}`);
 }
 
 // Create switch to mark/unmark as favorite
