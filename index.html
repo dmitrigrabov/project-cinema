@@ -30,18 +30,15 @@
       </div>
 
       <div class="row">
-        <div class="col-12 col-sm-6">
-          <p>Part 1</p>
-        </div>
-        <div class="col-12 col-sm-6">
-            <p>Part 2</p>
+
+        <div class="col-12 col-sm-12">
             <div class="container">
               <form action="index.html" method="post">
-                <div>
-                  <label for="searchMovie">Search for a movie</label>
-                  <input type="movieInput" class="form-control" id="searchForm" placeholder="Enter movie" name="movie">
+                <div class="form-group">
+                  <label for="searchMovie">Search for your favourite movie</label>
+                  <input type="text" class="form-control" id="searchForm" placeholder="Enter movie" name="movie">
                 </div>
-                <button type="submit" class="btn btn-primary" name="submit-movie-search">Submit</button>
+                <button type="submit" id="submitButton" class="btn btn-info" name="submit-movie-search">Submit</button>
               </form>
             </div>
 
@@ -52,6 +49,9 @@
         <div class="col-12 col-sm-12">
           <h2>Totally functional search engine</h2>
           <p>This is where the search results will be shown</p>
+          <div class="container" id="showResults">
+
+          </div>
         </div>
       </div>
 
@@ -68,6 +68,6 @@
       </div>
 
     </div>
-
+    <script src="fetch-movie.js"></script>
   </body>
 </html>
