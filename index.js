@@ -5,25 +5,22 @@ function processQuery(event){
   event.preventDefault();
 
   var formInput = document.getElementById("queryInput").value;
-  console.log(formInput);
-
   if (formInput == ""){
     return alert("Search box can't be blank. Please enter a search term.");
   } else {
-  console.log(fetchingFn(formInput));
+    fetchingFn(formInput);
   }
 }
 
 function fetchingFn(incoming){
   fetch(`http://www.omdbapi.com/?s=${incoming}&apikey=e5643f99`)
   .then(function(response) {
-      console.log(response);
       return response.json();
   }).then(function(data) {
-      console.log(data);
       document.getElementsByClassName("first-search")[0].style.display = "none";
       document.getElementsByClassName("not-first-search")[0].style.display = "block";
       var listOfFilms = data.Search;
+      // console.log(listOfFilms) is part of the spec
       console.log(listOfFilms);
       listOfFilms.forEach(item => makeRowForInput(item));
 
@@ -41,8 +38,6 @@ function makeRowForInput(movie){
   var outputElementParent = document.getElementsByClassName("resultsOutput")[0];
 
   // TODO: create a function that returns movieDetails
-
-  console.log(posterSrc, movieTitle);
 
   var movieDetails = document.createElement("div");
   var posterBox = document.createElement("div");
@@ -99,7 +94,6 @@ function makeRowForInput(movie){
 
 
 function displayFurtherInfo(event){
-  console.log("foo");
   var imdbID = event.currentTarget.id;
   fetchingDetailsFn(imdbID);
 }
@@ -107,9 +101,9 @@ function displayFurtherInfo(event){
 function fetchingDetailsFn(incoming){
   fetch(`http://www.omdbapi.com/?i=${incoming}&apikey=e5643f99`)
   .then(function(response) {
-      console.log(response);
       return response.json();
   }).then(function(data) {
+    // console.log(data) is part of the spec
       console.log(data);
       makeDetailedInfoCard(data);
   }).catch(function(error) {
@@ -123,9 +117,6 @@ function makeDetailedInfoCard(movieDetailsObject){
   var runtime = movieDetailsObject.Runtime;
   var rating = movieDetailsObject.Rated;
   var plot = movieDetailsObject.Plot;
-
-  console.log(movieRow);
-  console.log(runtime, rating, plot);
 
   var extraDetails = document.createElement("div");
   extraDetails.className = `col-9 detailInfo${imdbID}`;
@@ -156,16 +147,14 @@ function makeDetailedInfoCard(movieDetailsObject){
 }
 
 function hideFurtherInfo (event){
-  console.log("bar");
   console.log(event);
   var furtherInfoID = event.path[1].classList[1];
-  console.log(furtherInfoID);
   var imdbID = furtherInfoID.slice(10);
-  console.log(imdbID);
   var childNode = document.getElementsByClassName(furtherInfoID)[0];
-  console.log(childNode);
   var parentNode = document.getElementById(imdbID);
-
+  console.log(parentNode);
+  parentNode.removeEventListener("click", hideFurtherInfo);
+  // parentNode.addEventListener("click", displayFurtherInfo);
   parentNode.removeChild(childNode);
 
 }

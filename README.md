@@ -12,15 +12,17 @@ To get started, fork and clone this repo. Please submit a pull request after you
 
 You should complete as many of the following tasks as you can. You can use Bootstrap to help you
 
-- [ ] Create an HTML page which should have a `form` at the top which contains a `text input` and a `submit button`. Below it should have a placeholder for the returned results.
+- [v] Create an HTML page which should have a `form` at the top which contains a `text input` and a `submit button`. Below it should have a placeholder for the returned results.
 - [ ] Make sure your design is responsive and looks great at different screen widths
-- [ ] Use JavaScript to capture the submit event on in your search form, extract the query string from your input and use that to make an API call to the Open Movie Database API to search for films which match the query string. Console.log the results
-- [ ] Display the data returned by the API including title, year and poster picture
-- [ ] Adjust your layout to create room for a detailed view of movie information
+- [v] Use JavaScript to capture the submit event on in your search form, extract the query string from your input and use that to make an API call to the Open Movie Database API to search for films which match the query string. Console.log the results
+- [v] Display the data returned by the API including title, year and poster picture
+- [%] Adjust your layout to create room for a detailed view of movie information
 - [ ] Capture clicks on your movie results items and use that information to make another request to the API for detailed movie information. Console.log the returned result
-- [ ] Display the detailed movie result in the in the details view you created earlier
+- [%] Display the detailed movie result in the in the details view you created earlier
 
 **Your own feature**
+
+% - instead of having a fixed space in the layout for the detailed results, I opted on having a reveal / collapse system by adding an extra column to the movie's row. This to facilitate movile implementation
 
 - [ ] Implement any feature you would find useful or interesting. Include some info in the `README.md` about what it is.
 
