@@ -31,31 +31,6 @@ function prepPage () {
 	});
 }
 
-// Display the favorites list in the page sidebar
-function showFavorites () {
-	let favoritesList = document.getElementById('favoritesList');
-	while (favoritesList.firstChild) {
-		favoritesList.removeChild(favoritesList.firstChild);
-	}
-
-	for (i = 1; i <= 10; i++) {
-		let favoritesItem = document.createElement('li');
-		let faveKey = 'faveMovie' + i;
-
-		favoritesItem.setAttribute('id', faveKey);
-
-		let savedFavorite = localStorage.getItem(`${faveKey}`);
-		if (savedFavorite) {
-			let favoriteData = savedFavorite.split('--');
-			// To do: create as link that loads results panel
-			favoritesItem.innerHTML = `${favoriteData[0]} (${favoriteData[1]})`;
-			// To do: create link, add listener for removeFavorite()
-		}
-
-		favoritesList.appendChild(favoritesItem);
-	}
-}
-
 // Handle search form submission
 function searchBoxSubmit (e) {
 	e.preventDefault();
@@ -236,6 +211,34 @@ function showMovieDetails (data) {
 	resultBlock.appendChild(resultFavoriteToggle(data));
 
 	detailsPanel.appendChild(resultBlock);
+}
+
+// Display the favorites list in the page sidebar
+function showFavorites () {
+	let favoritesList = document.getElementById('favoritesList');
+	while (favoritesList.firstChild) {
+		favoritesList.removeChild(favoritesList.firstChild);
+	}
+
+	for (i = 1; i <= 10; i++) {
+		let favoritesItem = document.createElement('li');
+		let faveKey = 'faveMovie' + i;
+
+		favoritesItem.setAttribute('id', faveKey);
+
+		let savedFavorite = localStorage.getItem(`${faveKey}`);
+		if (savedFavorite) {
+			let favoriteData = savedFavorite.split('--');
+			// To do: create as link that loads results panel
+			favoritesItem.innerHTML = `${favoriteData[0]} (${favoriteData[1]})`;
+			// To do: create link, add listener for removeFavorite()
+
+			if (i > 1) favoritesItem.innerHTML += ' 🔼';
+			if (i < 10) favoritesItem.innerHTML += ' 🔽';
+		}
+
+		favoritesList.appendChild(favoritesItem);
+	}
 }
 
 // Create switch to mark/unmark as favorite
