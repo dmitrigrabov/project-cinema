@@ -344,6 +344,8 @@ function saveFavorite (faveData) {
 	// Find first available slot in favorites list
 	for (i = 1; i <= 10; i++) {
 		faveKey = 'faveMovie' + i;
+		// localStorage seems to not like being given the key as a variable -
+		// to investigate
 		if (!localStorage.getItem(`${faveKey}`)) {
 			localStorage.setItem(`${faveKey}`, faveData);
 			saved = true;
