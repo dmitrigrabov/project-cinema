@@ -358,7 +358,7 @@ function saveFavorite (faveData) {
 
 // Remove a favorite from local storage
 function removeFavorite (f) {
-	localStorage.removeItem(`${f}`);
+	localStorage.removeItem(f);
 }
 
 // Remove all favorites items from local storage and clear list on page
