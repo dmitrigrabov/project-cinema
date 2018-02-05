@@ -250,14 +250,10 @@ function showFavorites () {
 
 		favoritesItem.appendChild(detailLink);
 
-		if (i > 1) {
-			favoritesItem.appendChild(upDown('up', faveKey));
-		}
+		if (i > 1)  favoritesItem.appendChild(upDown('up', faveKey));
 
 		// To do: prevent from displaying on last item if <10 items
-		if (i < 10) {
-			favoritesItem.appendChild(upDown('down', faveKey));
-		}
+		if (i < 10) favoritesItem.appendChild(upDown('down', faveKey));
 
 		let deleteLink = emptyLink();
 		deleteLink.setAttribute('title', 'Remove this favorite');
@@ -269,12 +265,15 @@ function showFavorites () {
 			showFavorites();
 		});
 
+		// To do: use CSS
 		deleteLink.innerHTML = '<small>❌</small>';
 
 		favoritesItem.appendChild(deleteLink);
 
 		favoritesList.appendChild(favoritesItem);
 	}
+
+	// To do: generate clear all link here if there are any items
 }
 
 // Create links for moving favorites items up or down the list
