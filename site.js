@@ -110,7 +110,7 @@ function showSearchResults (data, page, searchString) {
 	} else {
 		resultList = document.createElement('ol');
 		resultList.setAttribute('id', 'resultList');
-	}	
+	}
 
 	let searchResults = document.getElementById('searchResults');
 
