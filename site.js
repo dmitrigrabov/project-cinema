@@ -230,6 +230,8 @@ function showFavorites () {
 		favoritesList.removeChild(favoritesList.firstChild);
 	}
 
+	// To do: replace this fixed loop with a while loop that
+	// increments a counter and queries localStorage
 	for (i = 1; i <= 10; i++) {
 		let faveKey = 'faveMovie' + i;
 
