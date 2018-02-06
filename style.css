@@ -65,12 +65,12 @@ Extra large ≥1200px
 	}
 }
 
-.siteTitle {
+.site-title {
 	padding: 1.5em !important;
 	background-image: url(images/header-background.jpg);
 }
 
-.siteTitle h1 {
+.site-title h1 {
 	width: 9em;
 	background: #000;
 	color: #fff;
@@ -81,17 +81,17 @@ Extra large ≥1200px
 	border-bottom-right-radius: 0.5em;
 }
 
-#searchForm, .sidebar p {
+#search-form, .sidebar p {
 	padding: 1em;
 }
 
-#searchForm {
+#search-form {
 	background: #eee;
 	border-top: 1px solid #999;
 	border-bottom: 1px dashed #999;
 }
 
-#searchForm input[type=text] {
+#search-form input[type=text] {
 	color: #aaa;
 	background: #fff;
 	border: 1px solid #999;
@@ -100,7 +100,7 @@ Extra large ≥1200px
 	border-bottom-right-radius: 0.5em;
 }
 
-#searchForm input[type=submit] {
+#search-form input[type=submit] {
 	color: #000;
 	background: #fff;
 	border: 1px solid #999;
@@ -112,45 +112,45 @@ Extra large ≥1200px
 	font-size: 0.8em;
 }
 
-.favoritesTitle {
+.favorites-title {
 	font-weight: bold;
 }
 
-#resultList {
+#result-list {
 	margin: 1em 0;
 }
 
-#resultList li {
+#result-list li {
 	font-size: 0.9em;
 }
 
-#detailsPanel {
+#details-panel {
 	padding: 1em;
 }
 
-.titleYear {
+.title-year {
 	font-size: 0.66em;
 }
 
-.imdbIcon {
+.imdb-icon {
 	height: 1em;
 	display: inline-block;
 	margin-left: 0.5em;
 }
 
-#resultsNavigation {
+#results-navigation {
 	padding-left: 1em;
 }
 
-#resultsNavigation a {
+#results-navigation a {
 	display: inline-block;
 	margin-right: 1em;
 }
 
-#clearFavorites {
+#clear-favorites {
 	font-size: small;
 }
 
-#favoritesList a:hover {
+#favorites-list a:hover {
 	text-decoration: none;
 }

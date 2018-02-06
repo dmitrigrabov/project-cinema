@@ -5,7 +5,7 @@ function prepPage () {
 	initializeSearchBox();
 	showFavorites();
 
-	document.getElementById('clearFavorites').addEventListener('click', (e) => {
+	document.getElementById('clear-favorites').addEventListener('click', (e) => {
 		e.preventDefault();
 		clearFavorites();
 	});
@@ -13,10 +13,10 @@ function prepPage () {
 
 // Set listeners on search box
 function initializeSearchBox () {
-	let searchForm = document.getElementById('searchForm');
+	let searchForm = document.getElementById('search-form');
 	searchForm.addEventListener('submit', searchBoxSubmit, false);
 
-	let searchBox = document.getElementById('searchBox');
+	let searchBox = document.getElementById('search-box');
 
 	// Show 'Search' prompt in search box when no text entered
 	searchBox.addEventListener('focus', () => {
@@ -39,7 +39,7 @@ function initializeSearchBox () {
 // Handle search form submission
 function searchBoxSubmit (e) {
 	e.preventDefault();
-	let searchBox = document.getElementById('searchBox');
+	let searchBox = document.getElementById('search-box');
 
 	let searchString = searchBox.value;
 
@@ -47,7 +47,7 @@ function searchBoxSubmit (e) {
 	if (searchString != 'Search') {
 
 		// Remove details view when new search is run
-		let detailsPanel = document.getElementById('detailsPanel');
+		let detailsPanel = document.getElementById('details-panel');
 		while (detailsPanel.firstChild) {
 			detailsPanel.removeChild(detailsPanel.firstChild);
 		}
@@ -102,7 +102,7 @@ function showSearchResults (data, page, searchString) {
 
 	if (!page) page = 1;
 
-	let resultList = document.getElementById('resultList');
+	let resultList = document.getElementById('result-list');
 
 	// If we have results from a previous run, lose them
 	if (resultList) {
@@ -114,10 +114,10 @@ function showSearchResults (data, page, searchString) {
 		resultList.setAttribute('start', ((page-1) * 10) + 1);
 	} else {
 		resultList = document.createElement('ol');
-		resultList.setAttribute('id', 'resultList');
+		resultList.setAttribute('id', 'result-list');
 	}
 
-	let searchResults = document.getElementById('searchResults');
+	let searchResults = document.getElementById('search-results');
 
 	searchResults.appendChild(resultList);
 
@@ -156,7 +156,7 @@ function createItemLink (item) {
 
 // Create list results page navigation
 function resultsNavigation (page, searchString) {
-	let resultsNavigator = document.getElementById('resultsNavigation');
+	let resultsNavigator = document.getElementById('results-navigation');
 
 	// We don't need whatever was on page already
 	if (resultsNavigator) {
@@ -164,7 +164,7 @@ function resultsNavigation (page, searchString) {
 	}
 
 	resultsNavigator = document.createElement('div');
-	resultsNavigator.setAttribute('id', 'resultsNavigation');
+	resultsNavigator.setAttribute('id', 'results-navigation');
 
 	// Create links for going back or forwards a page
 	if (page > 1) {
@@ -206,7 +206,7 @@ function prevNext (direction, page, searchString) {
 
 // Populate details panel with data from endpoint
 function showMovieDetails (data) {
-	let detailsPanel = document.getElementById('detailsPanel');
+	let detailsPanel = document.getElementById('details-panel');
 
 	// We don't need any results from a previous run
 	while (detailsPanel.firstChild) {
@@ -225,7 +225,7 @@ function showMovieDetails (data) {
 
 // Display the favorites list in the page sidebar
 function showFavorites () {
-	let favoritesList = document.getElementById('favoritesList');
+	let favoritesList = document.getElementById('favorites-list');
 	while (favoritesList.firstChild) {
 		favoritesList.removeChild(favoritesList.firstChild);
 	}
@@ -264,7 +264,7 @@ function showFavorites () {
 
 		let deleteLink = emptyLink();
 		deleteLink.setAttribute('title', 'Remove this favorite');
-		deleteLink.setAttribute('class', 'favoriteAction');
+		deleteLink.setAttribute('class', 'favorite-action');
 
 		deleteLink.addEventListener('click', (e) => {
 			e.preventDefault();
@@ -287,7 +287,7 @@ function showFavorites () {
 function upDown (direction, movieID) {
 	let link = emptyLink();
 	link.setAttribute('title', `Move this favorite ${direction} the list`);
-	link.setAttribute('class', 'favoriteAction');
+	link.setAttribute('class', 'favorite-action');
 
 	link.addEventListener('click', (e) => {
 		e.preventDefault();
@@ -308,7 +308,7 @@ function moveFavorite (favorite, direction) {
 function resultFavoriteToggle (data) {
 	let toggle = document.createElement('input');
 	toggle.setAttribute('type', 'checkbox');
-	toggle.setAttribute('id', 'favoriteToggle');
+	toggle.setAttribute('id', 'favorite-toggle');
 
 	let title = data.Title;
 	let year = data.Year;
@@ -326,7 +326,7 @@ function resultFavoriteToggle (data) {
 	let toggleDiv = document.createElement('div');
 	toggleDiv.appendChild(toggle);
 	let toggleLabel = document.createElement('label');
-	toggleLabel.setAttribute('for', 'favoriteToggle');
+	toggleLabel.setAttribute('for', 'favorite-toggle');
 	toggleLabel.textContent = 'Favorite';
 	toggleDiv.appendChild(toggleLabel);
 
@@ -378,7 +378,7 @@ function clearFavorites () {
 
 	showFavorites();
 
-	let toggle = document.getElementById('favoriteToggle');
+	let toggle = document.getElementById('favorite-toggle');
 	if (toggle) toggle.checked = false;
 }
 
@@ -386,7 +386,7 @@ function clearFavorites () {
 function resultTitle (data) {
 	let resultTitle = document.createElement('h2');
 	resultTitle.innerHTML = data.Title
-		+ ' <span class="titleYear">(' + data.Year + ')</span>';
+		+ ' <span class="title-year">(' + data.Year + ')</span>';
 	return resultTitle;
 }
 
@@ -425,7 +425,7 @@ function directorLink (name) {
 	let imdbIcon = document.createElement('img');
 	imdbIcon.setAttribute('alt', 'Search IMDb for ' + name);
 	imdbIcon.setAttribute('title', 'Search IMDb for ' + name);
-	imdbIcon.setAttribute('class', 'imdbIcon');
+	imdbIcon.setAttribute('class', 'imdb-icon');
 	imdbIcon.setAttribute('src', 'images/imdb-logo.png');
 
 	searchLink.appendChild(imdbIcon);
@@ -435,7 +435,7 @@ function directorLink (name) {
 // Create image element for poster in details panel
 function resultPoster (data) {
 	let poster = document.createElement('div');
-	poster.setAttribute('id', 'resultPoster');
+	poster.setAttribute('id', 'result-poster');
 	poster.setAttribute('style', 'float: left; margin: 0 1em 0 0');
 
 	let posterImage = document.createElement('img');
