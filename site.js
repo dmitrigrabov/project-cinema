@@ -137,7 +137,7 @@ function createItemLink (item) {
 	let itemLink = emptyLink();
 
 	itemLink.textContent = item.Title;
-	
+
 	// When items are clicked, request full details from endpoint
 	itemLink.addEventListener('click', (e) => {
 		e.preventDefault();
