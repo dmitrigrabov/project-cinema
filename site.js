@@ -34,6 +34,8 @@ function initializeSearchBox () {
 			searchBox.setAttribute('style',	'color: #aaa');
 		}
 	});
+
+	// To do: Add listener for submitting form with keyboard
 }
 
 // Handle search form submission
@@ -368,6 +370,9 @@ function saveFavorite (faveData) {
 // Remove a favorite from local storage
 function removeFavorite (f) {
 	localStorage.removeItem(f);
+
+	let toggle = document.getElementById('favorite-toggle');
+	if (toggle) toggle.checked = false;
 }
 
 // Remove all favorites items from local storage and clear list on page
@@ -377,9 +382,6 @@ function clearFavorites () {
 	}
 
 	showFavorites();
-
-	let toggle = document.getElementById('favorite-toggle');
-	if (toggle) toggle.checked = false;
 }
 
 // Create HTML heading element for details panel
