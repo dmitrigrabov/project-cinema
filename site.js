@@ -2,8 +2,18 @@ prepPage();
 
 // Initialize event listeners on search box
 function prepPage () {
-	let searchForm = document.getElementById('searchForm');
+	initializeSearchBox();
+	showFavorites();
 
+	document.getElementById('clearFavorites').addEventListener('click', (e) => {
+		e.preventDefault();
+		clearFavorites();
+	});
+}
+
+// Set listeners on search box
+function initializeSearchBox () {
+	let searchForm = document.getElementById('searchForm');
 	searchForm.addEventListener('submit', searchBoxSubmit, false);
 
 	let searchBox = document.getElementById('searchBox');
@@ -12,6 +22,7 @@ function prepPage () {
 	searchBox.addEventListener('focus', () => {
 		if (searchBox.value == 'Search') {
 			searchBox.value = '';
+			// To do: move to stylesheet
 			searchBox.setAttribute('style',	'color: #000');
 		}
 	});
@@ -19,15 +30,9 @@ function prepPage () {
 	searchBox.addEventListener('blur', () => {
 		if (searchBox.value == '') {
 			searchBox.value = 'Search';
+			// To do: move to stylesheet
 			searchBox.setAttribute('style',	'color: #aaa');
 		}
-	});
-
-	showFavorites();
-
-	document.getElementById('clearFavorites').addEventListener('click', (e) => {
-		e.preventDefault();
-		clearFavorites();
 	});
 }
 
