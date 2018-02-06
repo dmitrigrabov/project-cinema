@@ -1,4 +1,4 @@
-var displayMovies = document.getElementById('showResultsContainer');
+var displayMovies = document.getElementById('container2');
 displayMovies.innerHTML = ' ';
 
 function listenForSubmit() {
@@ -15,14 +15,10 @@ function listenForSubmit() {
 listenForSubmit();
 
 function showSearchResults(resultArray) {
-  displayMovies.innerHTML = ' ';
   resultArray.forEach(function(result) {
     var showMovieTitle = document.createElement('h3');
     showMovieTitle.innerHTML = result.Title + ', ' + result.Year;
     displayMovies.appendChild(showMovieTitle);
-    var showMoviePoster = document.createElement('img');
-    showMoviePoster.src = result.Poster;
-    displayMovies.appendChild(showMoviePoster);
   });
 }
 
