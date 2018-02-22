@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<title>MovieThing</title>
+		<link href="https://fonts.googleapis.com/css?family=Bungee+Shade|Oxygen" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12 site-title">
+			<h1>MovieThing</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<form id="search-form">
+				<input type="text" id="search-box" size="20" value="Search" /> <input type="submit" value="Go" id="search-button" />
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-9 col-md-9 col-12">
+			<div id="search-results"></div>
+		</div>
+		<div class="col-lg-3 col-md-3 col-12 favorite-movies">
+			<div class="favorites-title">Favorites</div>
+			<ul id="favorites-list"></ul>
+			<p>
+				<a id="clear-favorites" href="">(clear favorites)</a>
+			</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<div id="details-panel"></div>
+		</div>
+	</div>
+</div>
+<script src="site.js"></script>
+</body>
+</html>

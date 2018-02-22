@@ -1,0 +1,156 @@
+body {
+	margin: 0;
+	color: #fff;
+}
+
+h1, h2, h3 {
+	background: transparent;
+	color: #000;
+}
+
+h1 {
+	font-family: 'Bungee Shade', cursive;
+}
+
+p, div, span, form {
+	background: transparent;
+	color: #000;
+}
+
+p, div, span, form, input {
+	font-family: 'Oxygen', sans-serif;
+}
+
+div[class^='col-'] {
+	padding: 0;
+}
+
+/* 
+Bootstrap sizes 
+Extra small <576px
+Small ≥576px
+Medium ≥768px
+Large ≥992px
+Extra large ≥1200px
+
+*/
+
+@media (min-width: 768px) {
+	h1 {
+		font-size: 3.5em;
+	}
+
+	h2 {
+		font-size: 2em;
+	}
+}
+
+@media (max-width: 767px) {
+	h1 {
+		font-size: 2.5em;
+	}
+
+	h2 {
+		font-size: 1.75em;
+	}
+}
+
+@media (max-width: 575px) {
+	h1 {
+		font-size: 1.75em;
+	}
+
+	h2 {
+		font-size: 1.25em;
+	}
+}
+
+.site-title {
+	padding: 1.5em !important;
+	background-image: url(images/header-background.jpg);
+}
+
+.site-title h1 {
+	width: 9em;
+	background: #000;
+	color: #fff;
+	border: 1px solid #fff;
+	text-align: center;
+	padding: 0.25em 0;
+	border-top-left-radius: 0.5em;
+	border-bottom-right-radius: 0.5em;
+}
+
+#search-form, .sidebar p {
+	padding: 1em;
+}
+
+#search-form {
+	background: #eee;
+	border-top: 1px solid #999;
+	border-bottom: 1px dashed #999;
+}
+
+#search-form input[type=text] {
+	color: #aaa;
+	background: #fff;
+	border: 1px solid #999;
+	padding: 0 0 0 0.5em;
+	border-top-left-radius: 0.5em;
+	border-bottom-right-radius: 0.5em;
+}
+
+#search-form input[type=submit] {
+	color: #000;
+	background: #fff;
+	border: 1px solid #999;
+	border-top-left-radius: 0.5em;
+	border-bottom-right-radius: 0.5em;
+}
+
+.sidebar p {
+	font-size: 0.8em;
+}
+
+.favorites-title {
+	font-weight: bold;
+}
+
+#result-list {
+	margin: 1em 0;
+}
+
+#result-list li {
+	font-size: 0.9em;
+}
+
+#details-panel {
+	padding: 1em;
+}
+
+.title-year {
+	font-size: 0.66em;
+}
+
+.imdb-icon {
+	height: 1em;
+	display: inline-block;
+	margin-left: 0.5em;
+}
+
+#results-navigation {
+	padding-left: 1em;
+}
+
+#results-navigation a {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+#clear-favorites {
+	font-size: small;
+}
+
+#favorites-list a:hover {
+	text-decoration: none;
+}
