@@ -1,8 +1,19 @@
-
 # MovieThing
 
-MovieThing is a movie search engine, powered by the [Open Movie Database](http://www.omdbapi.com).
+A movie search engine - made as a weekend project for week 2 of
+[Constructor Labs](https://constructorlabs.com/).
 
-To search for a film, enter part or all of its title into the search box at top left and click "Go". A list of title matches will appear below. If there are more than 10, a navigation link to the next 10 will appear beneath.
+The site presents a search box which the user can enter part or all of the
+title of a film. Upon clicking the "Go" button, the site will retrieve search
+matches for that string from the [Open Movie
+Database](http://www.omdbapi.com/) and display them below below. If there
+are more than 10, a navigation link to the next 10 will appear beneath.
 
-Click on the title of a film to see details about it displayed in the panel below. If a film is important to you in some fashion, use the "Favorite" checkbox to put it in the list of your favorite movies, which appears at top right. It will be placed into the first empty slot, and you can move it up and down or remove it using the icons that appear alongside.
+The user can click on the title of a film to see details about it displayed
+in the panel below. If the user wishes they can use the "Favorite" checkbox
+to put the film into a list of your favorite movies, which appears at top
+right. The film will be placed into the first empty slot, and the user can
+move it up and down or remove it using the icons that appear alongside. The
+list is kept persistent through the use of LocalStorage.
+
+To run the application, browse to the `index.html` file in the root directory.
