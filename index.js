@@ -1,36 +1,51 @@
-const textInput = document.querySelector('#textinput');
-const textArea = document.querySelector('#placeholder');
+const form = document.querySelector('#textinput');
+const input = document.querySelector('#placeholder');
+const movieInfo = document.querySelector('#movieinfo');
 
-function createApi(textArea) {
-    const search = textArea.textContent.trim();
-    const api = `http://www.omdbapi.com/?s=${search}&apikey=2c6457b6&`;
-    return api;
+function createUrl(input) {
+    const search = input.value.trim();
+    return `http://www.omdbapi.com/?s=${search}&apikey=2c6457b6&`;
 }
 
-function displayResults(response) {
-    
+function createNode(element) {
+    return document.createElement(element);
 }
 
-function searchFilms(api) {
-    fetch(api)
+function append(parent, el) {
+    return parent.appendChild(el);
+}
+
+function searchFilms(url) {
+    fetch(url)
         .then(function(response) {
             return response.json()
-        }).then(function(myJsonData) {
-            console.log(response);
-        });
+        }).then(function(data) {
+            console.log(data);
+            let movies = data.Search/* .results? */;
+            return movies.map(function(movie) {
+                let div = createNode('div');
+                div.innerHTML = `
+                <h2>
+                    ${movie.Title}, ${movie.Year}
+                </h2>
+                <a href="https://www.imdb.com/title/${movie.imdbID}/">
+                    <img src="${movie.Poster}">
+                </a>
+                `;
+                append(movieInfo, div);
+            })
+        })
         .catch(function(error) {
-            // do something
+            console.log(error);
         });
 
 }
 
 function submitForm(event) {
     event.preventDefault();
-    alert('Search submitted.')
-    createApi(textArea);
-    searchFilms(api);
+    searchFilms(createUrl(input));
 }
 
-textInput.addEventListener('submit', submitForm);
-
+form.addEventListener('submit', submitForm);
+movieInfo.addEventListener('click', )
 
