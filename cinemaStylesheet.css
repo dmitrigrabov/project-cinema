@@ -1,0 +1,41 @@
+body {
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+.topnav {
+    background-color: navy;
+    color: white;
+    align-content: center;
+    font-family: sans-serif;
+    text-align: center;
+    padding: 5px;
+}
+.movie-form {
+    display: flex;
+    justify-content: center;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    background-color: lightblue;
+}
+button {
+    padding: 2px;
+    border: 1px solid darkblue;
+    border-radius: 0%;
+}
+.movie-feed {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    background-color: antiquewhite;
+}
+.movie-feed li {
+    padding-top: 3%;
+}
+.section2 {
+    margin-top: 0;
+}
+.section2 ul{
+    margin-top: 0;
+}
