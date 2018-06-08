@@ -12,23 +12,28 @@ function movieFetch(movieRequest) {
     })
     .then(data => {
       // Create array from data results
-      const movieData = [...data.Search];
+      const movieData = data.Search;
+
       const movieMarkup = `
       ${movieData
         .map(
           movie =>
-            // console.log(movie.Title);
             `
           <div class="movie-wrapper">
             <div class="movie-poster">
-              <img src="${movie.Poster}" alt="" class="movie-poster__image">
+              <img src="${
+                movie.Poster === "N/A"
+                  ? (movie.Poster =
+                      "http://via.placeholder.com/150x220?text=image")
+                  : movie.Poster
+              }" alt="" class="movie-poster__image">
             </div>
             <div class="movie-info">
               <h2 class="movie-info__title">${movie.Title}</h2>
-              <span class="movie-info__year">${movie.Year}</span>
+              <div class="movie-info__year">Year: ${movie.Year}</div>
               <a target="_blank" href="https://www.imdb.com/title/${
                 movie.imdbID
-              }">See on IMBD</a>
+              }">See on Internet Movie Database</a>
             </div>
           </div>
           `

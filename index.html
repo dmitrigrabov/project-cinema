@@ -4,17 +4,22 @@
 <head>
   <meta charset="UTF-8">
   <title>Project Cinema</title>
+  <link rel="stylesheet" href="./src/css/style.css">
 </head>
 
 <body>
-  <h1>OMDB Movie search</h1>
-  <form action="" id="movie-request__form">
-    <input placeholder="Type your search here" type="text" name="movie-request__input" id="movie-request__input">
-    <button class="movie-request__submit" type="submit">Search</button>
-  </form>
-  <section class="search-results" id="search-results">
+  <div class="container">
+    <h1>OMDB Movie search</h1>
+    <section class="search-form">
+      <form action="" id="movie-request__form">
+        <input placeholder="Type your search here" type="text" name="movie-request__input" id="movie-request__input">
+        <button class="movie-request__submit" type="submit">Search</button>
+      </form>
+    </section>
+    <section class="search-results" id="search-results">
 
-  </section>
+    </section>
+  </div>
   <script src="./src/js/index.js"></script>
 </body>
 
