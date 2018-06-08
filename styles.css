@@ -30,6 +30,11 @@ form{
   background-color: lightBlue;
 }
 
+.noResult{
+  text-align: center;
+  border: 2px solid #000;
+}
+
 img{
   max-width: none;
 }

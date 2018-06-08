@@ -25,14 +25,21 @@ function submitHandler(event){
               </p>
               <a href="https://www.imdb.com/title/${movie.imdbID}" target="_blank"><img src=${movie.Poster}></a>
           </div>`
-      ).join('')
+      ).join('');
 
       const el = document.querySelector(".results");
 
-      return el.innerHTML = results;
+      el.innerHTML = results;
 
     }).catch(function(error){
-      // Do something if the search fails.
+      const failState = `
+        <div class="noResult">
+          <h2>Sorry, that's not in the database.</h2>
+        </div>
+      `;
+
+      const el = document.querySelector(".results");
+      return el.innerHTML = failState;
     });
 }
 
