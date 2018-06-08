@@ -31,9 +31,10 @@ function movieFetch(movieRequest) {
             <div class="movie-info">
               <h2 class="movie-info__title">${movie.Title}</h2>
               <div class="movie-info__year">Year: ${movie.Year}</div>
-              <a target="_blank" href="https://www.imdb.com/title/${
+              <button class="movie-info__moreinfo">More Info</button>
+              <a class="movie-info__imdb-link" target="_blank" href="https://www.imdb.com/title/${
                 movie.imdbID
-              }">See on Internet Movie Database</a>
+              }">See it on Internet Movie Database</a>
             </div>
           </div>
           `
