@@ -1,0 +1,22 @@
+body{
+  margin: 0;
+}
+
+.searchBar{
+  background-color: #CCC;
+}
+
+form{
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+}
+
+.searchButton{
+  width: 100px;
+}
+
+.results{
+  background-color: skyBlue;
+  min-height: 400px;
+}
