@@ -20,13 +20,46 @@ function submitHandler(event){
                 ${movie.Year}
               </p>
               <a href="https://www.imdb.com/title/${movie.imdbID}" target="_blank"><img src=${movie.Poster}></a>
-          </div>`
+                <div class="${movie.imdbID}">
+                </div>
+          </div>
+          `
       ).join('');
       getMovie.value = "";
 
-      const el = document.querySelector(".results");
+      const resultsEl = document.querySelector(".results");
 
-      el.innerHTML = results;
+      resultsEl.innerHTML = results;
+
+
+            // Get more information
+            function clickHandler(event){
+
+              // Capture movie title
+              if (event.target && event.target.matches("button.titleButton")){
+                const movieName = event.target.textContent;
+
+                const newUrl = `http://www.omdbapi.com/?t=${movieName}&apikey=a46e4310`;
+                fetch(newUrl)
+                .then(function(response) {
+                  return response.json();
+                }).then(function(data) {
+                  const plotToAdd = `
+                    <p>${data.Plot}</p>
+                  `;
+                  const cardEl = document.querySelector(`.${data.imdbID}`);
+                  cardEl.innerHTML = plotToAdd;
+
+                }).catch(function(error) {
+                  // If this fails, do this
+
+                });
+              }
+            };
+
+            const getMoreInfo = document.querySelector(".results");
+
+            getMoreInfo.addEventListener("click", clickHandler);
 
     }).catch(function(error){
       const failState = `
