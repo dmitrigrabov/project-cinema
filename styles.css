@@ -20,3 +20,14 @@ form{
   background-color: skyBlue;
   min-height: 400px;
 }
+
+.movieCard{
+  display: flex;
+  flex-direction: column;
+
+  text-align: center;
+}
+
+img{
+  max-width: none;
+}
