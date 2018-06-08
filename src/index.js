@@ -1,2 +1,5 @@
-// code here
-console.log("woop");
+const form = document.querySelector("#movie-request__form");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+});
