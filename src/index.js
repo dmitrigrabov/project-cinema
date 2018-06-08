@@ -1,5 +1,3 @@
-const getSubmit = document.querySelector("#form");
-
 function submitHandler(event){
   event.preventDefault();
 
@@ -17,15 +15,14 @@ function submitHandler(event){
       // Add that information to the web page.
       const results = data.Search.map(movie =>
           `<div class="movieCard">
-              <h2>
-                ${movie.Title}
-              </h2>
+              <button class="titleButton">${movie.Title}</button>
               <p>
                 ${movie.Year}
               </p>
               <a href="https://www.imdb.com/title/${movie.imdbID}" target="_blank"><img src=${movie.Poster}></a>
           </div>`
       ).join('');
+      getMovie.value = "";
 
       const el = document.querySelector(".results");
 
@@ -35,6 +32,7 @@ function submitHandler(event){
       const failState = `
         <div class="noResult">
           <h2>Sorry, that's not in the database.</h2>
+          <img src="assets/brokencinema.jpg">
         </div>
       `;
 
@@ -42,5 +40,7 @@ function submitHandler(event){
       return el.innerHTML = failState;
     });
 }
+
+const getSubmit = document.querySelector("#form");
 
 getSubmit.addEventListener("submit", submitHandler);

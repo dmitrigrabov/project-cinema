@@ -4,6 +4,7 @@ body{
 
 .searchBar{
   background-color: #CCC;
+  text-align: center;
 }
 
 form{
@@ -19,6 +20,7 @@ form{
 .results{
   background-color: skyBlue;
   min-height: 400px;
+  text-align: center;
 }
 
 .movieCard{
@@ -30,11 +32,22 @@ form{
   background-color: lightBlue;
 }
 
+.titleButton{
+  width: auto;
+  border: none;
+  background-color: aliceblue;
+  font-size: 18px;
+  margin: 10px;
+  padding: 5px;
+  border-radius: 25%;
+}
+
 .noResult{
   text-align: center;
   border: 2px solid #000;
 }
 
 img{
-  max-width: none;
+  max-width: auto;
+  margin: 10px;
 }
