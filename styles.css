@@ -22,10 +22,12 @@ form{
 }
 
 .movieCard{
-  display: flex;
-  flex-direction: column;
-
   text-align: center;
+  border: 2px solid #000;
+}
+
+.movieCard:nth-child(even){
+  background-color: lightBlue;
 }
 
 img{

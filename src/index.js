@@ -13,7 +13,6 @@ function submitHandler(event){
     .then(function(response){
       return response.json();
     }).then(function(data){
-      console.log(data);
 
       // Add that information to the web page.
       const results = data.Search.map(movie =>
@@ -28,13 +27,9 @@ function submitHandler(event){
           </div>`
       ).join('')
 
-      const movieEl = `
-            ${results}
-      `;
-
       const el = document.querySelector(".results");
 
-      return el.innerHTML = movieEl;
+      return el.innerHTML = results;
 
     }).catch(function(error){
       // Do something if the search fails.
