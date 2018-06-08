@@ -4,14 +4,11 @@ const movieRequest = form.querySelector("#movie-request__input");
 const resultsPlaceholder = document.querySelector("#search-results");
 
 // Movie fetch
-function movieFetch(movieRequest) {
+function movieListFetch(movieRequest) {
   fetch(`http://www.omdbapi.com/?s=${movieRequest}&apikey=${omdbAPIKey}`)
-    .then(response => {
-      // console.warn(response);
-      return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
-      // Create array from data results
+      // data results array
       const movieData = data.Search;
 
       const movieMarkup = `
@@ -19,7 +16,7 @@ function movieFetch(movieRequest) {
         .map(
           movie =>
             `
-          <div class="movie-wrapper">
+          <div class="movie-list-wrapper">
             <div class="movie-poster">
               <img src="${
                 movie.Poster === "N/A"
@@ -30,11 +27,15 @@ function movieFetch(movieRequest) {
             </div>
             <div class="movie-info">
               <h2 class="movie-info__title">${movie.Title}</h2>
-              <div class="movie-info__year">Year: ${movie.Year}</div>
-              <button class="movie-info__moreinfo">More Info</button>
+              <div class="movie-info__year"><strong>Year:</strong> ${
+                movie.Year
+              }</div>
               <a class="movie-info__imdb-link" target="_blank" href="https://www.imdb.com/title/${
                 movie.imdbID
-              }">See it on Internet Movie Database</a>
+              }">IMDB</a>
+              <button id="movie-info__moreinfo" class="movie-info__moreinfo" data-title="${
+                movie.Title
+              }">More Info</button>
             </div>
           </div>
           `
@@ -50,7 +51,53 @@ function movieFetch(movieRequest) {
     });
 }
 
+// function movieFetch() {
+
+// }
+
+// Form event handler
 form.addEventListener("submit", function(e) {
   e.preventDefault();
-  movieFetch(movieRequest.value);
+  movieListFetch(movieRequest.value);
+});
+
+// More info button event handler
+resultsPlaceholder.addEventListener("click", function(e) {
+  if (e.target.id == "movie-info__moreinfo") {
+    const movieParentNode = e.target.parentNode;
+    const movieInfoWrapper = document.querySelector("movie-info");
+    const title = e.target.attributes["data-title"].value;
+    fetch(`http://www.omdbapi.com/?t=${title}&apikey=${omdbAPIKey}`)
+      .then(response => {
+        // console.warn(response);
+        return response.json();
+      })
+      .then(data => {
+        // const movieMarkup = `
+        //       <div class="movie-wrapper">
+        //         <p>${data.Plot}</p>
+        //       </div>
+        //   `;
+        // movieParentNode.append(movieMarkup);
+        // console.log(data.Plot);
+
+        // More info elements to display
+        const infoToDisplay = ["Genre", "Plot", "Runtime", "Awards"];
+        const html = Object.keys(data)
+          .map(function(key) {
+            if (infoToDisplay.indexOf(key) !== -1) {
+              return `<li><strong>${key}</strong>: ${data[key]}</li>`;
+            }
+          })
+          .join("");
+        const moreInfoList = document.createElement("ul");
+        moreInfoList.setAttribute("class", "movie-info__moreinfo-details");
+        moreInfoList.innerHTML = html;
+        movieParentNode.appendChild(moreInfoList);
+      })
+      .catch(error => {
+        console.error(error);
+        // debugger;
+      });
+  }
 });

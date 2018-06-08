@@ -1,3 +1,9 @@
+/* font-family: 'Source Sans Pro', sans-serif; */
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+}
 .container {
   width: 80%;
   max-width: 1200px;
@@ -10,7 +16,7 @@
 }
 
 /* Movies list */
-.movie-wrapper {
+.movie-list-wrapper {
   display: grid;
   grid-template-columns: 200px auto;
   padding-bottom: 30px;
@@ -22,9 +28,23 @@
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
+  width: 100px;
+  height: 40px;
+  border: none;
+  background-color: #f1f1f1;
+}
+
+.movie-info__imdb-link {
+  display: block;
 }
 
 .movie-poster img {
   width: 100%;
   max-width: 150px;
+}
+
+/* Movie more info details */
+ul.movie-info__moreinfo-details {
+  list-style-type: none;
+  padding-left: 0;
 }
