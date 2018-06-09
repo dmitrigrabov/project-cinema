@@ -51,10 +51,6 @@ function movieListFetch(movieRequest) {
     });
 }
 
-// function movieFetch() {
-
-// }
-
 // Form event handler
 form.addEventListener("submit", function(e) {
   e.preventDefault();
@@ -81,19 +77,35 @@ resultsPlaceholder.addEventListener("click", function(e) {
         // movieParentNode.append(movieMarkup);
         // console.log(data.Plot);
 
-        // More info elements to display
-        const infoToDisplay = ["Genre", "Plot", "Runtime", "Awards"];
-        const html = Object.keys(data)
-          .map(function(key) {
-            if (infoToDisplay.indexOf(key) !== -1) {
-              return `<li><strong>${key}</strong>: ${data[key]}</li>`;
-            }
-          })
-          .join("");
-        const moreInfoList = document.createElement("ul");
-        moreInfoList.setAttribute("class", "movie-info__moreinfo-details");
-        moreInfoList.innerHTML = html;
-        movieParentNode.appendChild(moreInfoList);
+        // Show/hide the list
+        if (movieParentNode.querySelector(".movie-info__moreinfo-details")) {
+          // Remove list
+          movieParentNode
+            .querySelector(".movie-info__moreinfo-details")
+            .remove();
+
+          // Update button text
+          e.target.textContent = "More Info";
+        } else {
+          // Create list with movie details
+          const infoToDisplay = ["Genre", "Plot", "Runtime", "Awards"];
+          const html = Object.keys(data)
+            .map(function(key) {
+              if (infoToDisplay.indexOf(key) !== -1) {
+                return `<li><strong>${key}</strong>: ${data[key]}</li>`;
+              }
+            })
+            .join("");
+
+          // Update button text
+          e.target.textContent = "Close";
+
+          // Append list
+          const moreInfoList = document.createElement("ul");
+          moreInfoList.setAttribute("class", "movie-info__moreinfo-details");
+          moreInfoList.innerHTML = html;
+          movieParentNode.append(moreInfoList);
+        }
       })
       .catch(error => {
         console.error(error);
