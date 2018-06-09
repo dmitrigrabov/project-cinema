@@ -1,6 +1,11 @@
 /* font-family: 'Source Sans Pro', sans-serif; */
 @import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro");
 
+:root {
+  --primary-color: #f1f1f1;
+  --secondary-color: #fdb813;
+}
+
 body {
   font-family: "Source Sans Pro", sans-serif;
 }
@@ -13,15 +18,33 @@ body {
 /* Search form  */
 .search-form {
   margin-bottom: 60px;
+  background-color: var(--primary-color);
+  padding: 30px;
+}
+
+.search-form input.movie-request__input {
+  width: calc(100% - 140px);
+  padding: 15px;
+  font-size: 1.1rem;
+  color: var(--secondary-color);
+}
+
+.movie-request__submit {
+  width: 100px;
+  padding: 20px;
+  border: none;
+  background-color: var(--secondary-color);
+  color: #fff;
+  font-size: 0.875rem;
 }
 
 /* Movies list */
 .movie-list-wrapper {
   display: grid;
   grid-template-columns: 200px auto;
-  padding-bottom: 30px;
+  padding: 30px;
   margin-bottom: 30px;
-  border-bottom: 1px solid #f1f1f1;
+  background-color: var(--primary-color);
 }
 
 .movie-info__moreinfo {
@@ -31,11 +54,17 @@ body {
   width: 100px;
   height: 40px;
   border: none;
-  background-color: #f1f1f1;
+  background-color: var(--secondary-color);
+  color: #fff;
+  font-size: 0.875rem;
 }
 
+.movie-info__title {
+  border-bottom: 2px solid var(--secondary-color);
+}
 .movie-info__imdb-link {
   display: block;
+  color: #000;
 }
 
 .movie-poster img {
