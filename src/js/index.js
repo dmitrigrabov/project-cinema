@@ -32,7 +32,7 @@ function movieListFetch(movieRequest) {
               }</div>
               <a class="movie-info__imdb-link" target="_blank" href="https://www.imdb.com/title/${
                 movie.imdbID
-              }">IMDB</a>
+              }">IMDb &#8599;</a>
               <button id="movie-info__moreinfo" class="movie-info__moreinfo" data-title="${
                 movie.Title
               }">More Info</button>
@@ -88,7 +88,13 @@ resultsPlaceholder.addEventListener("click", function(e) {
           e.target.textContent = "More Info";
         } else {
           // Create list with movie details
-          const infoToDisplay = ["Genre", "Plot", "Runtime", "Awards"];
+          const infoToDisplay = [
+            "Genre",
+            "Plot",
+            "Runtime",
+            "Awards",
+            "Language"
+          ];
           const html = Object.keys(data)
             .map(function(key) {
               if (infoToDisplay.indexOf(key) !== -1) {
