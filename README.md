@@ -17,8 +17,8 @@ To get started, fork and clone the repo at [https://github.com/dmitrigrabov/proj
 
 You should complete as many of the following tasks as you can.
 
-- [ ] Create an HTML page which should have a `form` at the top which contains a text input and a submit button. Below it should have a placeholder for the returned results.
-- [ ] Use JavaScript to capture the submit `event` in your search form, extract the query string from your input and use that to make an API call to the Open Movie Database API to search for films which match the query string using `fetch`. `console.log` the results
+- [x] Create an HTML page which should have a `form` at the top which contains a text input and a submit button. Below it should have a placeholder for the returned results.
+- [x] Use JavaScript to capture the submit `event` in your search form, extract the query string from your input and use that to make an API call to the Open Movie Database API to search for films which match the query string using `fetch`. `console.log` the results
 - [ ] Display the data returned by the API including title, year and poster picture
 - [ ] Adjust your layout to create room for a detailed view of movie information
 - [ ] Capture clicks on your movie results items and use that information to make another request to the API for detailed movie information. `console.log` the returned result
