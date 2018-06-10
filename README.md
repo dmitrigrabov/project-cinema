@@ -1,50 +1,33 @@
----
-path: "/project-cinema"
-date: "2018-05-28"
-title: "Project cinema"
----
+# ~~Mission Impossible~~ Project Cinema
 
-# Project Cinema
+This assignment's brief is to create a movie search website that allows the user to enter a movie title and return information about the movie.
 
-We want to create a movie search engine. To power it we will use the [Open Movie Database](http://www.omdbapi.com). It provides access to a huge database of films via an **API**, which stands for **Application Programming Interface**. In short, it is a set of rules and procedures you need to follow to use a remote system.
+## My Personal Brief
 
-> Check out this video for some background info on APIs  
-> [https://www.youtube.com/watch?v=s7wmiS2mSXY](https://www.youtube.com/watch?v=s7wmiS2mSXY)
+My emphasis was on getting to grips and learning as much as I could about the fetch, handling and processing of the data that was returned. I experimented with a number of methods of displaying the data. I tried a table but realised that was cumbersome, and a flex box of 2 separate divs was all that was needed. I put the data in a map object with the IMDB film ID as the key. I thought it would be useful to be able to refer back to the movie map if more functionality was to be added at a later stage. The site is by no means finished. I ran out of time to implement a previous results but I am pleased I managed to retrieve more than one page of data. 
 
-To start using the OMDB API you will first need to sign up with them to receive and API key. The key issued to you will allow you 1000 requests per day and you will need to include this key as part of every request.
+## Running the Website
 
-To get started, fork and clone the repo at [https://github.com/dmitrigrabov/project-cinema](https://github.com/dmitrigrabov/project-cinema). Please submit a pull request after your first commit and push commits regularly.
+Ensure that all the files : cine_index.html, cine_index.css, cine_index.js and cinema2.jpg are all within the same folder and open the cine_index.html file in a browser.
 
-You should complete as many of the following tasks as you can.
+## Current Features Implemented
 
-- [ ] Create an HTML page which should have a `form` at the top which contains a text input and a submit button. Below it should have a placeholder for the returned results.
-- [ ] Use JavaScript to capture the submit `event` in your search form, extract the query string from your input and use that to make an API call to the Open Movie Database API to search for films which match the query string using `fetch`. `console.log` the results
-- [ ] Display the data returned by the API including title, year and poster picture
-* Adjust your layout to create room for a detailed view of movie information
-- [ ] Capture clicks on your movie results items and use that information to make another request to the API for detailed movie information. `console.log` the returned result
-- [ ] Display the detailed movie result in the in the details view you created earlier
+1. Basic Movie search on title - pressing enter or clicking the button will return the first 10 movie results that include the movie title entered
+2. Clicking on a movie poster will re-direct the user to the IMDB page in a new tab for that movie
+3. Clicking on the movie title will return the following information for the movie : Age Rating, Plot Summary, Director, Actors and Review ratings from IMDB, Rotten Tomatoes and Metacritic
+4. Clicking on the Next page link will retrieve the next 10 results with the same functionality as previous
 
-**Your own feature**
+## Bugs
 
-- [ ] Implement any feature you would find useful or interesting
+I tested my code as I went along and fixed the major problems, however, a few smaller bugs still exist:
+1. Clicking Next Page twice results in the previous navigation heading not clearing so the header gets messy but the data is still returned
+2. Have not implemented a minimum width so is only responsive up to a point then movie detailed text will overlap over the movie poster
+3. Could not get a placeholder picture to work instead of missing movie poster, but included Alt Text that will also link to imdb page.
+4. Entering a new film title and clicking search after a previous search adds new results to the bottom of the page.
 
-**Stretch goals**
-- [ ] Implement pagination so that users can navigate between all movies in search results rather than just the first ten
-- [ ] Make your design responsive and ensure it looks great at different screen widths
-- [ ] Create a favourites list. It's up to you how you would add items to favourites. You could add a button or otherwise. Display a list of favourites somewhere on your page.
-- [ ] Make the favourites list sortable. Add `up` and `down` buttons to your favourites which on click will move the result in relevant direction
-- [ ] Save favourites locally using `localStorage` so that favourites persist in browser after refresh
-- [ ] Let's create a search preview. It should listen for change events on input events and submit a search request with current query string. Display the search preview results in an absolute positioned container just below the search box.  
-Hint: You may want to kick of the searching after at least 3 characters have been typed.
+## Conclusion
 
-## Objectives
+The biggest lesson that I learnt was to take some time out at the start of the project to sketch out a design, not only for the webpage but also to think about the structure of the code, possible functions and to write algorithms or pseudo code. I would like to finish the website in my spare time... so beware bugs! _"I'll be back..."_
 
-* We want to see great looking webpages
-* Your code should have consistent indentation and sensible naming
-* Use lots of concise functions with a clear purpose
-* Add code comments where it is not immediately obvious what your code does
-* Your code should not throw errors and handle edge cases gracefully. For example not break if server fails to return expected results
-
-## README.md
-
-When finished, include a README.md in your repo. This should explain what the project is, how to run it and how to use it. Someone who is not familiar with the project should be able to look at it and understand what it is and what to do with it.
+## Credits
+Photo courtesy of Jakob Owens on Unsplash
