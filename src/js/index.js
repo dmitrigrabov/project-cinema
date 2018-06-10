@@ -35,9 +35,6 @@ function paginate(page, totalResults) {
 // @param {string} Terms to search
 // @parem {number} Next page to go
 function movieListFetch(searchInput, pageToGo, type = "", year = "") {
-  console.log(
-    `http://www.omdbapi.com/?s=${searchInput}&apikey=${OMBbAPIKey}&y=${year}&t=${type}&page=${pageToGo}`
-  );
   fetch(
     `http://www.omdbapi.com/?s=${searchInput}&apikey=${OMBbAPIKey}&y=${year}&t=${type}&page=${pageToGo}`
   )
@@ -139,6 +136,31 @@ function movieFetch(title, e) {
     });
 }
 
+// Autocomplete fetch
+// @param {string} Movie title
+// @param {Object} event object
+function searchAutocomplete(title, e) {
+  const autocompleteList = document.querySelector("#autocomplete");
+  fetch(`http://www.omdbapi.com/?s=${title}&apikey=${OMBbAPIKey}`)
+    .then(response => {
+      // console.warn(response);
+      return response.json();
+    })
+    .then(data => {
+      const html = data.Search.map(movie => {
+        return `<li class="autocomplete-item">${movie.Title}</li>`;
+      }).join("");
+
+      // Append list
+      autocompleteList.innerHTML = html;
+    })
+    .catch(error => {
+      autocompleteList.innerHTML = "<li>No matches found</li>";
+      // console.error(error);
+      // debugger;
+    });
+}
+
 // Error display box
 // @param {string} Error message to display
 function errorDisplay(msg) {
@@ -161,8 +183,6 @@ function yearsDropdown() {
   ).innerHTML = yearsHTML.join("");
 }
 
-yearsDropdown();
-
 // Form submit event handler
 form.addEventListener("submit", function(e) {
   const type = document.querySelector("#movie-request__filters-type").value;
@@ -177,13 +197,37 @@ form.addEventListener("submit", function(e) {
   movieListFetch(searchInput.value, page, type, year);
 });
 
+// Form input/change event handler
+form.addEventListener("input", function(e) {
+  const autocomplete = document.querySelector("#autocomplete");
+  if (e.target.id == "movie-request__input") {
+    page = 1;
+    pagination.setAttribute("style", "visibility:hidden");
+    if (searchInput.value.length > 3) {
+      // Fetch results
+      searchAutocomplete(searchInput.value, page);
+    }
+  }
+});
+form.addEventListener("change", function(e) {
+  const autocomplete = document.querySelector("#autocomplete");
+  autocomplete.innerHTML = "";
+});
+
+document.querySelector("#autocomplete").addEventListener("click", function(e) {
+  if (e.target.className == "autocomplete-item") {
+    console.log(e.target.className);
+    console.log(e.target.textContent);
+    searchInput.value = e.target.textContent;
+  }
+});
+
 // Form filters toggle event handler
 form.addEventListener("click", function(e) {
   if (e.target.id == "movie-request__filters-toggle") {
     const filters = document.querySelector("#movie-request__filters-list");
     filters.classList.toggle("hidden");
-
-    console.log(filters.display);
+    yearsDropdown();
   }
 });
 

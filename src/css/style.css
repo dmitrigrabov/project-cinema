@@ -44,6 +44,7 @@ h1.main-heading {
 
 .movie-request__form {
   display: block;
+  position: relative;
 }
 @media (min-width: 768px) {
   .movie-request__form {
@@ -75,6 +76,25 @@ h1.main-heading {
   .search-form input.movie-request__input {
     width: calc(100% - 140px);
   }
+}
+
+/* Autocomplete */
+.autocomplete {
+  width: calc(100% - 25px);
+  position: absolute;
+  top: 58px;
+  background-color: #fff;
+  margin: 0;
+  left: 1px;
+  list-style-type: none;
+  padding-left: 20px;
+}
+.autocomplete li {
+  line-height: 30px;
+}
+.autocomplete li:hover {
+  color: #666;
+  cursor: pointer;
 }
 
 /* Search filters */
