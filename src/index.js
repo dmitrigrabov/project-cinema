@@ -45,7 +45,7 @@ function submitHandler(event){
                   return response.json();
                 }).then(function(data) {
                   const plotToAdd = `
-                    <p>${data.Plot}</p>
+                    <p style="text-align: center; margin: 0 25% 2% 25%;">${data.Plot}</p>
                   `;
                   const cardEl = document.querySelector(`.${data.imdbID}`);
                   cardEl.innerHTML = plotToAdd;
