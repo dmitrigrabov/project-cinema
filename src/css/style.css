@@ -10,6 +10,7 @@ body {
   font-family: "Source Sans Pro", sans-serif;
   margin: 0;
   padding: 0;
+  font-size: 16px;
 }
 .container {
   width: 100%;
@@ -47,6 +48,7 @@ h1.main-heading {
 @media (min-width: 768px) {
   .movie-request__form {
     display: flex;
+    flex-wrap: wrap;
   }
 }
 
@@ -73,6 +75,34 @@ h1.main-heading {
   .search-form input.movie-request__input {
     width: calc(100% - 140px);
   }
+}
+
+/* Search filters */
+.movie-request__filters-list {
+  width: 100%;
+  margin-top: 10px;
+  padding-left: 9px;
+}
+.movie-request__filters-list.hidden {
+  display: none;
+}
+.movie-request__filters-list select {
+  margin-right: 10px;
+}
+.movie-request__filters-list label {
+  font-size: 0.875rem;
+}
+
+.movie-request__filters-toggle {
+  border: none;
+  background-color: transparent;
+  margin-top: 10px;
+  font-size: 0.875rem;
+}
+
+.movie-request__filters-toggle:hover {
+  cursor: pointer;
+  opacity: 0.7;
 }
 
 /* Movies list */

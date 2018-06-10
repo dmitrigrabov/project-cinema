@@ -34,9 +34,12 @@ function paginate(page, totalResults) {
 // Movie list fetch
 // @param {string} Terms to search
 // @parem {number} Next page to go
-function movieListFetch(searchInput, pageToGo) {
+function movieListFetch(searchInput, pageToGo, type = "", year = "") {
+  console.log(
+    `http://www.omdbapi.com/?s=${searchInput}&apikey=${OMBbAPIKey}&y=${year}&t=${type}&page=${pageToGo}`
+  );
   fetch(
-    `http://www.omdbapi.com/?s=${searchInput}&apikey=${OMBbAPIKey}&page=${pageToGo}`
+    `http://www.omdbapi.com/?s=${searchInput}&apikey=${OMBbAPIKey}&y=${year}&t=${type}&page=${pageToGo}`
   )
     .then(response => response.json())
     .then(data => {
@@ -97,19 +100,10 @@ function movieFetch(title, e) {
       return response.json();
     })
     .then(data => {
-      // const movieMarkup = `
-      //       <div class="movie-wrapper">
-      //         <p>${data.Plot}</p>
-      //       </div>
-      //   `;
-      // movieParentNode.append(movieMarkup);
-      // console.log(data.Plot);
-
       // Show/hide the list
       if (movieParentNode.querySelector(".movie-info__moreinfo-details")) {
         // Remove list
         movieParentNode.querySelector(".movie-info__moreinfo-details").remove();
-
         // Update button text
         e.target.textContent = "More Info";
       } else {
@@ -156,15 +150,41 @@ function errorDisplay(msg) {
   }, 5000);
 }
 
-// Form event handler
+// Generate year filter select options
+function yearsDropdown() {
+  let yearsHTML = ['<option value="">All</option>'];
+  for (let i = new Date().getFullYear(); i > 1900; i -= 1) {
+    yearsHTML.push(`<option value="${i}">${i}</option>`);
+  }
+  document.querySelector(
+    "#movie-request__filters-year"
+  ).innerHTML = yearsHTML.join("");
+}
+
+yearsDropdown();
+
+// Form submit event handler
 form.addEventListener("submit", function(e) {
+  const type = document.querySelector("#movie-request__filters-type").value;
+  const year = document.querySelector("#movie-request__filters-year").value;
+
   e.preventDefault();
   // Reset pagination
   page = 1;
   pagination.setAttribute("style", "visibility:hidden");
 
   // Fetch results
-  movieListFetch(searchInput.value, page);
+  movieListFetch(searchInput.value, page, type, year);
+});
+
+// Form filters toggle event handler
+form.addEventListener("click", function(e) {
+  if (e.target.id == "movie-request__filters-toggle") {
+    const filters = document.querySelector("#movie-request__filters-list");
+    filters.classList.toggle("hidden");
+
+    console.log(filters.display);
+  }
 });
 
 // More info button event handler
