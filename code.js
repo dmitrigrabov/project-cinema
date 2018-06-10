@@ -1,8 +1,9 @@
 //varibles
-const myForm = document.querySelector("Form");
+const myForm = document.querySelector(".Form");
 const myTextArea= document.querySelector("#searchfield");
 const myButton = document.querySelector(".favButton");
 const myDiv= document.querySelector(".movies");
+const myDropBox= document.querySelector(".dropBox");
 
 let favMovies=[];
 
@@ -36,15 +37,13 @@ function fetchingDeatils(im)
 
 function displayDetails(data, im){
   const movie=document.querySelector(`#${im}`);
-  console.log(data.Ratings);
   if(movie.childElementCount<9){
     let newNode=document.createElement("li");
     newNode.classList.add("details");
-    console.log(data);
     for(let value in data)
       {
         if((value=="Poster") || (value=="Response") || (value=="Ratings")) {
-
+          // do nothing
         }
 
         else{
@@ -61,7 +60,6 @@ function displayMovies(data){
   data.Search.forEach(function(movie){
     let newNode=document.createElement("li");
     newNode.classList.add("movie");
-    newNode.id.add
   for(let value in movie)
   {
     if(value=="imdbID"){
@@ -91,25 +89,34 @@ function resetHandler(){
 }
 function favHandler(event)
 {
+
   if(event.target.classList.value=="fav"){
-    favMovies.push(event.target.parentElement);
-    alert("added to fav");
+    let search=favMovies.find(function(item){
+      return item==event.target.parentElement.id;
+    });
+    if(search==event.target.parentElement.id){
+      alert("movie already in favourite list");
+    }
+    else {
+
+      favMovies.push(event.target.parentElement.id);
+      newNode=document.createElement("option");
+      newNode.id=event.target.parentElement.id;
+     newNode.textContent=event.target.parentElement.firstChild.data;
+      myDropBox.appendChild(newNode);
+    }
   }
   else if (event.target.classList.value=="movie") {
     fetchingDeatils(event.target.id);
-
   }
-
-  //favMovies.push(event.target)
 }
 
 function showFav(event){
-  console.log(favMovies);
-  alert(favMovies);
+
 }
 
 //body
 myForm.addEventListener("submit", submitHandler);
 myDiv.addEventListener("click", favHandler);
 myForm.addEventListener("reset", resetHandler);
-myButton.addEventListener("click", showFav);
+myDropBox.addEventListener("change",showFav);
