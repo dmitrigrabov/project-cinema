@@ -28,7 +28,7 @@ h1.main-heading {
 
 /* Search form  */
 .search-form {
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
   background-color: var(--primary-color);
   padding: 30px;
 }
@@ -125,4 +125,35 @@ h1.main-heading {
 ul.movie-info__moreinfo-details {
   list-style-type: none;
   padding-left: 0;
+}
+
+/* Errors */
+.error-box {
+  display: none;
+  width: calc(100% - 44px);
+  color: #fff;
+  background-color: tomato;
+  padding: 10px 20px;
+}
+
+/* Pagination */
+.pagination {
+  list-style-type: none;
+  visibility: hidden;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  padding-left: 0;
+}
+
+.pagination-index {
+  margin: 0 20px;
+}
+
+/* .pagination li {
+} */
+
+.pagination li:hover {
+  cursor: pointer;
+  opacity: 0.7;
 }

@@ -9,13 +9,21 @@
 
 <body>
   <div class="container">
-    <h1 class="main-heading">OMDB Movie search</h1>
+    <h1 class="main-heading">OMDb Movie search</h1>
     <section class="search-form">
       <form action="" id="movie-request__form" class="movie-request__form">
         <input placeholder="Type your search here" type="text" name="movie-request__input" id="movie-request__input" class="movie-request__input">
         <button class="movie-request__submit" type="submit">Search</button>
       </form>
     </section>
+    <div id="error-box" class="error-box">
+      <p class="error-box__message"></p>
+    </div>
+    <ul id="pagination" class="pagination">
+      <li id="prev-page">PREV </li>
+      <li id="pagination-index" class="pagination-index"></li>
+      <li id="next-page"> NEXT</li>
+    </ul>
     <section class="search-results" id="search-results">
 
     </section>

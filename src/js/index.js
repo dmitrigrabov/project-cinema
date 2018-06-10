@@ -2,16 +2,50 @@ const OMBbAPIKey = "aba7af8e";
 const form = document.querySelector("#movie-request__form");
 const searchInput = form.querySelector("#movie-request__input");
 const resultsPlaceholder = document.querySelector("#search-results");
+const pagination = document.querySelector("#pagination");
+const paginationIndex = pagination.querySelector("#pagination-index");
+const nextPage = pagination.querySelector("#next-page");
+const prevPage = pagination.querySelector("#prev-page");
+let page = 1;
+
+// Results pagination
+// @param {number} Next page to go
+// @parem {number} Total search results
+function paginate(page, totalResults) {
+  const totalPages = Math.ceil(totalResults / 10);
+  if (totalResults > 10) {
+    pagination.setAttribute("style", "visibility:visible");
+    paginationIndex.innerHTML = ` ${page}/${totalPages}  `;
+    if (page <= 1) {
+      prevPage.setAttribute("style", "visibility:hidden");
+      nextPage.setAttribute("style", "visibility:visible");
+    } else if (page > 1 && page !== totalPages) {
+      prevPage.setAttribute("style", "visibility:visible");
+      nextPage.setAttribute("style", "visibility:visible");
+    } else if (page === totalPages) {
+      prevPage.setAttribute("style", "visibility:visible");
+      nextPage.setAttribute("style", "visibility:hidden");
+    }
+  } else {
+    prevPage.setAttribute("style", "visibility:hidden");
+  }
+}
 
 // Movie list fetch
-// @param Terms to search
-function movieListFetch(searchInput) {
-  fetch(`http://www.omdbapi.com/?s=${searchInput}&apikey=${OMBbAPIKey}`)
+// @param {string} Terms to search
+// @parem {number} Next page to go
+function movieListFetch(searchInput, pageToGo) {
+  fetch(
+    `http://www.omdbapi.com/?s=${searchInput}&apikey=${OMBbAPIKey}&page=${pageToGo}`
+  )
     .then(response => response.json())
     .then(data => {
-      // data results array
-      const movieData = data.Search;
+      // Pagination
+      paginate(pageToGo, data.totalResults);
+      page = page + 1;
 
+      // Movie markup for every search result
+      const movieData = data.Search;
       const movieMarkup = `
       ${movieData
         .map(
@@ -44,16 +78,16 @@ function movieListFetch(searchInput) {
         .join("")}
       `;
       resultsPlaceholder.innerHTML = movieMarkup;
-      // console.log(movieData);
     })
     .catch(error => {
-      console.error(error);
-      // debugger;
+      errorDisplay("Nothing found.");
+      // console.error(error);
     });
 }
+
 // Title details fetch
-// @param Movie title
-// @param event object
+// @param {string} Movie title
+// @param {Object} event object
 function movieFetch(title, e) {
   const movieParentNode = e.target.parentNode;
   const movieInfoWrapper = document.querySelector("movie-info");
@@ -111,10 +145,26 @@ function movieFetch(title, e) {
     });
 }
 
+// Error display box
+// @param {string} Error message to display
+function errorDisplay(msg) {
+  const errorBox = document.querySelector("#error-box");
+  errorBox.textContent = msg;
+  errorBox.setAttribute("style", "display:block");
+  setTimeout(function() {
+    errorBox.setAttribute("style", "display:none");
+  }, 5000);
+}
+
 // Form event handler
 form.addEventListener("submit", function(e) {
   e.preventDefault();
-  movieListFetch(searchInput.value);
+  // Reset pagination
+  page = 1;
+  pagination.setAttribute("style", "visibility:hidden");
+
+  // Fetch results
+  movieListFetch(searchInput.value, page);
 });
 
 // More info button event handler
@@ -122,4 +172,13 @@ resultsPlaceholder.addEventListener("click", function(e) {
   if (e.target.id == "movie-info__moreinfo") {
     movieFetch(e.target.attributes["data-title"].value, e);
   }
+});
+
+// Pagination event handlers
+nextPage.addEventListener("click", function() {
+  movieListFetch(searchInput.value, page);
+});
+prevPage.addEventListener("click", function() {
+  movieListFetch(searchInput.value, page - 2);
+  page = page - 2;
 });
