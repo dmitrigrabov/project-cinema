@@ -1,0 +1,56 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  margin: 0;
+  font-family: Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  background-color: lightgray;
+}
+h1 {
+  margin:20px;
+  /* font-family: 'Gloria Hallelujah', cursive; */
+  font-family: 'Permanent Marker', cursive;
+  font-size: 50px;
+  /* font-family: 'Monoton', cursive; */
+}
+#search__form{
+  margin:20px;
+}
+#results__next{
+  color:white;
+}
+
+.search {
+  margin: 0;
+  padding-top: 20px;
+  height: 35vh;
+  text-align: left;
+  color: white;
+  background-image: url(cinema2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center left;
+  font-family: "Snippet", sans-serif;
+}
+li {
+  list-style-type: none;
+  display: flex;
+  margin: 30px;
+  justify-content: flex-start;
+  min-width: 200px;
+}
+#results__info {
+  background: yellow;
+}
+
+/* a {
+  color: inherit;;
+  text-decoration: none;
+} */
+/* .container {
+  text-align: left;
+} */
+
+input {
+  width: 10%;
+}
