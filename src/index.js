@@ -16,12 +16,9 @@ function submitHandler(event){
       const results = data.Search.map(movie =>
           `<div class="movieCard">
               <button class="titleButton">${movie.Title}</button>
-              <p>
-                ${movie.Year}
-              </p>
+              <p>${movie.Year}</p>
               <a href="https://www.imdb.com/title/${movie.imdbID}" target="_blank"><img src=${movie.Poster}></a>
-                <div class="${movie.imdbID}">
-                </div>
+              <div class="${movie.imdbID}"></div>
           </div>
           `
       ).join('');
@@ -65,7 +62,7 @@ function submitHandler(event){
       const failState = `
         <div class="noResult">
           <h2>Sorry, that's not in the database.</h2>
-          <img src="assets/brokencinema.jpg">
+          <a href="https://www.youtube.com/watch?v=15HTd4Um1m4" target="_blank"><img src="assets/brokencinema.jpg"></a>
         </div>
       `;
 

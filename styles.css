@@ -1,10 +1,13 @@
 body{
   margin: 0;
+  font-family: Tahoma;
 }
 
 .searchBar{
+  margin: 0;
   background-color: #CCC;
   text-align: center;
+  overflow: auto;
 }
 
 .searchTerm{
@@ -29,9 +32,11 @@ form{
 }
 
 .results{
+  margin: 0;
   background-color: skyBlue;
   min-height: 400px;
   text-align: center;
+  overflow: auto;
 }
 
 .movieCard{
@@ -61,4 +66,5 @@ form{
 img{
   max-width: auto;
   margin: 10px;
+  cursor: pointer;
 }
