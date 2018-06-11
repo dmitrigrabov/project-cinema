@@ -196,6 +196,9 @@ form.addEventListener("submit", function(e) {
 
   // Fetch results
   movieListFetch(searchInput.value, page, type, year);
+
+  // Clear autocomplete list after submit
+  autocompleteList.innerHTML = "";
 });
 
 // Form input/change event handler
@@ -223,6 +226,7 @@ form.addEventListener("click", function(e) {
     page = 1;
     pagination.setAttribute("style", "visibility:hidden");
 
+    // Clear autocomplete list
     autocompleteList.innerHTML = "";
 
     // Fetch results
