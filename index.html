@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Project Cinema</title>
+  <link rel="stylesheet" href="./src/css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="main-heading">OMDb Movie search</h1>
+    <section class="search-form">
+      <form action="" id="movie-request__form" class="movie-request__form">
+        <input placeholder="Type your search here" type="text" name="movie-request__input" id="movie-request__input" class="movie-request__input">
+        <ul id="autocomplete" class="autocomplete">
+        </ul>
+        <button class="movie-request__submit" type="submit">Search</button>
+        <button class="movie-request__filters-toggle" id="movie-request__filters-toggle" type="button">Search filters</button>
+        <div id="movie-request__filters-list" class="movie-request__filters-list hidden">
+          <label for="movie-request__filters-type">Type</label>
+          <select name="movie-request__filters-type" id="movie-request__filters-type">
+            <option value="movie">movie</option>
+            <option value="series">series</option>
+            <option value="episode">episode</option>
+          </select>
+          <label for="movie-request__filters-year">Year</label>
+          <select name="movie-request__filters-year" id="movie-request__filters-year">
+            <option value="Test 1">Test 1</option>
+            <option value="Test 1">Test 2</option>
+          </select>
+
+        </div>
+      </form>
+    </section>
+    <div id="error-box" class="error-box">
+      <p class="error-box__message"></p>
+    </div>
+    <ul id="pagination" class="pagination">
+      <li id="prev-page">PREV </li>
+      <li id="pagination-index" class="pagination-index"></li>
+      <li id="next-page"> NEXT</li>
+    </ul>
+    <section class="search-results" id="search-results">
+
+    </section>
+  </div>
+  <script src="./src/js/index.js"></script>
+</body>
+
+</html>
