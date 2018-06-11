@@ -6,6 +6,7 @@ const pagination = document.querySelector("#pagination");
 const paginationIndex = pagination.querySelector("#pagination-index");
 const nextPage = pagination.querySelector("#next-page");
 const prevPage = pagination.querySelector("#prev-page");
+const autocompleteList = document.querySelector("#autocomplete");
 let page = 1;
 
 // Results pagination
@@ -209,16 +210,23 @@ form.addEventListener("input", function(e) {
     }
   }
 });
-form.addEventListener("change", function(e) {
-  const autocomplete = document.querySelector("#autocomplete");
-  autocomplete.innerHTML = "";
-});
+// form.addEventListener("change", function(e) {
+//   autocompleteList.innerHTML = "";
+// });
 
-document.querySelector("#autocomplete").addEventListener("click", function(e) {
+form.addEventListener("click", function(e) {
+  // console.log(e.target.className);
   if (e.target.className == "autocomplete-item") {
-    console.log(e.target.className);
-    console.log(e.target.textContent);
-    searchInput.value = e.target.textContent;
+    // console.log(e.target.innerText);
+    searchInput.value = e.target.innerText;
+    // Reset pagination
+    page = 1;
+    pagination.setAttribute("style", "visibility:hidden");
+
+    autocompleteList.innerHTML = "";
+
+    // Fetch results
+    movieListFetch(e.target.innerText, page);
   }
 });
 
