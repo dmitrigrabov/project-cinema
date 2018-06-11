@@ -7,15 +7,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="./index.css">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel|Roboto|Julius+Sans+One" rel="stylesheet">
 </head>
 
 <body>
     <div class="background">
-        <h1 id="title">Open Movie Database Search</h1>
-        <form id="textinput" class="form">
-            <input id="placeholder" autofocus></input>
-            <button id="submitbutton" type="submit">Search Movies</button>
+        <div class="header">
+        <h1 id="title">OPEN MOVIE DATABASE SEARCH</h1>
+        <img class="moviereel" src="/Users/phoebedg/workspace/week-2/day-5/project-cinema/moviereel.png" alt="Movie Reel">
+        <form id="textinput" class="form" onclick="window.scrollTo(0, 0);">
+            <input id="placeholder" class="input" autofocus></input>
+            <button id="submitbutton" class="button" type="submit">Search Movies</button>
         </form>
+        </div>
         <div id="movieinfo" class="movieinfo">
 
         </div>
