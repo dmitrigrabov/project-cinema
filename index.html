@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lato|Arapey|Cinzel" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Movie Search Engine</title>
+  </head>
+  <body>
+
+    <div class="container">
+
+      <div class="header"> <a name="home"></a>
+        <h1>Movie Search Engine</h1>
+      </div>
+
+      <div class="row"> <!--Navbar -->
+        <div class="col-12 col-sm-4">
+          <p>Home</p>
+        </div>
+        <div class="col-12 col-sm-4">
+
+        </div>
+        <div class="col-12 col-sm-4">
+
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-12 col-sm-12">
+            <div class="container">
+              <form action="index.html" method="post">
+                <div class="form-group">
+                  <label for="searchMovie">Search for your favourite movie</label>
+                  <input type="text" class="form-control" id="searchForm" placeholder="Enter movie" name="movie">
+                </div>
+                <button type="submit" id="submitButton" class="btn btn-info" name="submit-movie-search">Submit</button>
+              </form>
+            </div>
+
+        </div>
+      </div>
+      <div class="container" id="showResultsContainer">
+
+      </div>
+      <div class="row">
+        <div class="col-12 col-sm-12">
+          <h2>Totally functional search engine</h2>
+          <div class="container" id="showResults">
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row"> <!--Footer -->
+        <div class="col-12 col-sm-4">
+
+        </div>
+        <div class="col-12 col-sm-4">
+
+        </div>
+        <div class="col-12 col-sm-4">
+
+        </div>
+      </div>
+
+    </div>
+    <script src="fetch-movie.js"></script>
+  </body>
+</html>
