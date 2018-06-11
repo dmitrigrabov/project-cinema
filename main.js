@@ -1,7 +1,9 @@
+//add event listener to form button
 document.getElementById("query-film").addEventListener("submit", function(e) {
-
   e.preventDefault();
+  //define a constant from submitted text
   const filmResult = document.getElementById("submit-text").value
+  //add film result as inner HTML text to form section of website to show what user searched for.
   document.getElementById("search-query").innerHTML = filmResult
   //base url Below
   const apiUrl = "http://www.omdbapi.com/?apikey=e39b8524&type=movie&s=" + filmResult;
@@ -20,11 +22,11 @@ document.getElementById("query-film").addEventListener("submit", function(e) {
       //   console.log(movie.Title);
       //   document.getElementById("search-results").innerHTML += movie.Title + " - " + movie.Year
 
-        let movies = apiJson.Search;
-        let result = "";
-        return movies.forEach(function(movie){
-          console.log(movie);
-          result +=
+      let movies = apiJson.Search;
+      let result = "";
+      return movies.forEach(function(movie) {
+        console.log(movie);
+        result +=
           `<div class="card">
           <h2> Movie Name: ${movie.Title}</h2>
           <ul>
@@ -32,9 +34,9 @@ document.getElementById("query-film").addEventListener("submit", function(e) {
             <img class="card-image" src="${movie.Poster}" alt="Movie poster">
           </ul>
           </div>`
-          document.getElementById('result').innerHTML = result;
-        })
-
+        document.getElementById('result').innerHTML = result;
       })
 
-    });
+    })
+
+});
