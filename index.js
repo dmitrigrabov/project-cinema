@@ -1,10 +1,7 @@
 //Initialize variables
-const APIKey = 'eee5954b';
-const APIQuery = 'http://www.omdbapi.com/?apikey=eee5954b&s=matrix';
 
 //Get HTML element references
 const formRef = document.querySelector('.search__form');
-
 
 //Add click event listeners on document
 document.addEventListener('click', event => {
@@ -14,7 +11,9 @@ document.addEventListener('click', event => {
 //Add submit event listener on form
 formRef.addEventListener('submit', event => {
     event.preventDefault();
-    console.log('submit!');
+    const searchQuery = formRef.search.value;
+    console.log(searchQuery);
+    const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}`;
     fetchResults(APIQuery);
 });
 
