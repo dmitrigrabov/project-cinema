@@ -1,4 +1,5 @@
-//Initialize variables
+//Initialize global variables
+let page = 1;
 
 //Get HTML element references
 const formRef = document.querySelector('.search__form');
@@ -7,15 +8,40 @@ const resultsRef = document.querySelector('.results');
 //Add click event listeners on document
 document.addEventListener('click', event => {
     if (event.target.matches('.result')) fetchDetails(event.target.getAttribute('data-id'));
-    //event.preventDefault();
+    if (event.target.matches('.nav__prev')) prevButtonPressed(event);
+    if (event.target.matches('.nav__next')) nextButtonPressed(event);
 });
 
 //Add submit event listener on form
-formRef.addEventListener('submit', event => {
+formRef.addEventListener('submit', submitSearch);
+
+//Function for search submit
+function submitSearch(event) {
     event.preventDefault();
     const searchQuery = formRef.search.value;
-    fetchResults(searchQuery);
-});
+    const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&type=movie`;
+    fetchResults(APIQuery);
+}
+
+//Function for next button
+function nextButtonPressed(event) {
+    event.preventDefault();
+    page++;
+    const searchQuery = formRef.search.value;
+    const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
+    fetchResults(APIQuery);
+}
+
+//Function for previous button
+function prevButtonPressed(event) {
+    event.preventDefault();
+    if (page > 1) {
+        page--;
+        const searchQuery = formRef.search.value;
+        const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
+    fetchResults(APIQuery);
+    } 
+}
 
 function fetchDetails(imdbID) {
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&i=${imdbID}`;
@@ -41,8 +67,8 @@ function renderDetails(body) {
 }
 
 //Fetch data
-function fetchResults(searchQuery) {
-    const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&type=movie`;
+function fetchResults(APIQuery) {
+    console.log(APIQuery);
     fetch(APIQuery)
     .then(response => {
         if (!response.ok) throw response;
