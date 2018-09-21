@@ -6,14 +6,18 @@ function append(parent, element) {
   return parent.appendChild(element);
 }
 
+let page = 1;
 const body = document.querySelector("body");
 const results = document.querySelector(".results");
 const submit = document.querySelector(".submit-button");
 const searchValue = document.querySelector(".search-input");
 const form = document.querySelector(".search-form");
+const next = document.querySelector(".next");
+const previous = document.querySelector(".previous");
+// const toggle = document.querySelector(".");
 
 function searchMovie(searchWord) {
-  fetch(`http://www.omdbapi.com/?s=${searchWord}&apikey=dd68f9f`)
+  fetch(`http://www.omdbapi.com/?s=${searchWord}&apikey=dd68f9f&page=${page}`)
     .then(function(response) {
       return response.json();
     })
@@ -21,16 +25,23 @@ function searchMovie(searchWord) {
       console.log(data);
       let searchResults = data.Search;
       console.log(searchResults);
+      results.innerHTML = "";
       return searchResults.map(function(movie) {
         let movieDiv = createNode("div");
         let movieTitle = createNode("h1");
         let movieYear = createNode("h3");
         let moviePoster = createNode("img");
+        // let movieDetails = createNode("p");
 
         movieTitle.textContent = `${movie.Title}`;
+
         movieYear.textContent = movie.Year;
+
         moviePoster.src = movie.Poster;
         moviePoster.className = "movie-images";
+
+        // movieDetails.className = "movie-details--off";
+        // movieDetails.textContent = ;
 
         append(results, movieDiv);
         append(movieDiv, movieTitle);
@@ -39,8 +50,6 @@ function searchMovie(searchWord) {
       });
     });
 }
-
-searchMovie("");
 
 form.addEventListener("submit", function(event) {
   event.preventDefault();
@@ -56,4 +65,9 @@ form.addEventListener("submit", function(event) {
     searchMovie(searchValue.value);
     searchValue.value = "";
   }
+});
+
+next.addEventListener("click", function(event) {
+  preventDefault();
+  page++;
 });

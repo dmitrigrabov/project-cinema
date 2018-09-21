@@ -26,7 +26,6 @@ body {
 }
 
 .navbar {
-  padding: 10px;
   grid-column: 1/4;
 }
 
@@ -56,6 +55,9 @@ body {
   grid-area: button;
 }
 
+.submit-button {
+  grid-row: 2/3;
+}
 /* All results */
 
 .results {
@@ -69,4 +71,24 @@ body {
 .movie-images {
   width: 8rem;
   height: 12rem;
+}
+
+.movie-details--off {
+  display: none;
+}
+
+.movie-details--on {
+  display: block;
+}
+
+/* Pagination */
+
+.pagination {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.next {
+  text-align: right;
 }
