@@ -1,21 +1,59 @@
-//Initialize global variables
+//Initialize: global variables
 let page = 1;
 
-//Get HTML element references
+//Initialize: HTML element references
 const formRef = document.querySelector('.search__form');
 const resultsRef = document.querySelector('.results');
+const favouritesRef = document.querySelector('.favourites');
 
-//Add click event listeners on document
+//Initialize: local storage
+const myStorage = window.localStorage;
+
+//Initialize: populate favourites
+favouritesRef.innerHTML = myStorage.getItem('favourites');
+
+//Initialize: tick checkboxes of favourites
+
+//Event listeners: click on document
 document.addEventListener('click', event => {
     if (event.target.matches('.result')) fetchDetails(event.target.getAttribute('data-id'));
     if (event.target.matches('.nav__prev')) prevButtonPressed(event);
     if (event.target.matches('.nav__next')) nextButtonPressed(event);
 });
 
-//Add submit event listener on form
+//Event listeners: submit on form
 formRef.addEventListener('submit', submitSearch);
 
-//Function for search submit
+//Event listeners: change on document for checkboxes
+document.addEventListener('change', event => {
+    if (event.target.matches('.result__checkbox')) {
+        if (event.target.checked) addToFavourites(event.target.getAttribute('data-id'));
+        else removeFromFavourites(event.target.getAttribute('data-id'));
+    }
+});
+
+//Functions: Add to favourites
+function addToFavourites(imdbID) {
+    const body = JSON.parse(myStorage.getItem('body'));
+    movieData = body.Search.filter(item => item.imdbID === imdbID)[0];
+    console.log(movieData);
+    const favourite = document.createElement('li');
+    favourite.setAttribute('class','favourite');
+    favourite.setAttribute('id',imdbID);
+    favourite.innerHTML = movieData.Title;
+    favouritesRef.appendChild(favourite);
+    myStorage.setItem('favourites',favouritesRef.innerHTML);
+}
+
+//Functions: Remove from favourites
+function removeFromFavourites(imdbID) {
+    console.log(`removed ${imdbID} from favourites`);
+    const favouriteToRemove = document.querySelector(`.favourites #${imdbID}`);
+    favouritesRef.removeChild(favouriteToRemove);
+    myStorage.setItem('favourites',favouritesRef.innerHTML);
+}
+
+//Functions: search submit
 function submitSearch(event) {
     event.preventDefault();
     const searchQuery = formRef.search.value;
@@ -23,7 +61,7 @@ function submitSearch(event) {
     fetchResults(APIQuery);
 }
 
-//Function for next button
+//Functions: next page
 function nextButtonPressed(event) {
     event.preventDefault();
     page++;
@@ -32,7 +70,7 @@ function nextButtonPressed(event) {
     fetchResults(APIQuery);
 }
 
-//Function for previous button
+//Functions: previous page
 function prevButtonPressed(event) {
     event.preventDefault();
     if (page > 1) {
@@ -43,6 +81,7 @@ function prevButtonPressed(event) {
     } 
 }
 
+//Functions: fetch detailed movie information
 function fetchDetails(imdbID) {
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&i=${imdbID}`;
     fetch(APIQuery)
@@ -53,6 +92,7 @@ function fetchDetails(imdbID) {
     .catch(error => console.log(error));
 }
 
+//Functions: render detailed movie information
 function renderDetails(body) {
     console.log(body);
     const detailRef = document.querySelector(`#${body.imdbID} .detail`);
@@ -66,7 +106,7 @@ function renderDetails(body) {
                         <p class='detail-imdbRating'>${body.imdbRating}</p>`;
 }
 
-//Fetch data
+//Functions: fetch top level movie information
 function fetchResults(APIQuery) {
     console.log(APIQuery);
     fetch(APIQuery)
@@ -77,9 +117,10 @@ function fetchResults(APIQuery) {
     .catch(error => console.log(error));
 }
 
-//Create search result elements
+//Functions: render search results
 function renderResults(body) {
     console.log(body);
+    myStorage.setItem('body',JSON.stringify(body));
     resultsRef.innerHTML = '';
     body.Search.forEach(item => {
         const result = document.createElement('article');
@@ -91,5 +132,14 @@ function renderResults(body) {
                             <img data-id=${item.imdbID} class='result result__poster' src=${item.Poster}>
                             <div class='detail'></div>`;
         resultsRef.appendChild(result);
+        const favCheckbox = document.createElement('input');
+        favCheckbox.setAttribute('data-id',item.imdbID);
+        favCheckbox.setAttribute('class', 'result result__checkbox');
+        favCheckbox.setAttribute('type', 'checkbox');
+        const favouriteRef = document.querySelectorAll('.favourite');
+        favouriteRef.forEach(fav => {
+            if (fav.getAttribute('id') === item.imdbID) favCheckbox.checked = true;
+        });
+        resultsRef.appendChild(favCheckbox);
     });
 }
