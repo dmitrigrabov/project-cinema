@@ -27,7 +27,7 @@ function searchResult(body){
     posterImage.alt="Movie poster";
     searchResultContainer.appendChild(posterImage);
 
-    searchResultList.appendChild(searchResultContainer)
+    searchResultList.appendChild(searchResultContainer);
 
 
   })
@@ -35,7 +35,7 @@ function searchResult(body){
 
 
 
-search.addEventListener("submit", function(event){
+search.addEventListener("click", function(event){
   event.preventDefault();
   const keyWord=searchText.value;
   const url=`http://www.omdbapi.com/?s=${keyWord}&apikey=d2807699&plot=full`;
@@ -49,7 +49,7 @@ search.addEventListener("submit", function(event){
   .catch(error => console.log(error));
 })
 
-function movieDetails(body){
+function movieDetails(body,id){
   const searchResultDetails=document.createElement("div");
   searchResultDetails.className="search-result-details";
 
@@ -67,9 +67,10 @@ function movieDetails(body){
 
   let movieRatings=document.createElement("p");
   const ratings=body.Ratings.map(rating=>{
-                            //console.log(rating)
-                          return `${rating.Source}: ${rating.Value}`
+
+                          return `</br>${rating.Source}: ${rating.Value}`
                         });
+  console.log(ratings)
   movieCountry.innerHTML=`Ratings: ${ratings}`;
   searchResultDetails.appendChild(movieRatings);
 
@@ -77,22 +78,19 @@ function movieDetails(body){
   moviePlot.innerHTML=`Description: ${body.Plot}`;
   searchResultDetails.appendChild(moviePlot);
 
+  document.getElementById(id).appendChild(searchResultDetails);
 }
 
 
 searchResultList.addEventListener("click",function(event){
   event.preventDefault();
-  //console.log("hi")
   const id=event.target.parentNode.getAttribute("id");
-  const url=`http://www.omdbapi.com/?i=${id}&apikey=d2807699`;
+  const url=`http://www.omdbapi.com/?i=${id}&plot=full&apikey=d2807699`;
   fetch(url)
   .then(response => response.json())
   .then(body =>{
-    movieDetails(body);
-console.log(document.querySelector("#id"))
-    document.querySelector("#id").appendChild(searchResultDetails)
-    console.log(body);
+    movieDetails(body,id);
+
   })
   .catch(error => console.log(error));
-
 })
