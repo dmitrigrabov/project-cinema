@@ -7,10 +7,16 @@ const bodyElement = document.querySelector("body")
 const searchTextElement = document.querySelector(".search__text")
 const searchResultsElement = document.querySelector(".results")
 const filmDisplayElement = document.querySelector(".film-display")
+const modal = document.querySelector(".modal")
+const displaySearchButton = document.querySelector(".search__display-bar")
+const searchBarElement = document.querySelector(".nav__search")
+const homeNavBar = document.querySelector(".nav__home")
+
 
 bodyElement.addEventListener("submit", event => {
   event.preventDefault()
   if (event.target.matches(".search")){
+    modal.style.display = "block"
     apiUrls.updateURL("s", searchTextElement.value)
     apiUrls.fetchResults(apiUrls.getURL())
   }
@@ -19,10 +25,29 @@ bodyElement.addEventListener("submit", event => {
 //closest instead of matches, pay attention in case of bugs
 bodyElement.addEventListener("click", event => {
   if (event.target.closest(".search__result")){
+    modal.style.display = "none"
+    searchResultsElement.innerHTML = ""
+    filmDisplayElement.innerHTML = ""
+    toggleNavBar()
     apiUrls.updateMovieURL("i", event.target.dataset.id)
     apiUrls.fetchMovie(apiUrls.getMovieURL())
   }
+  if (event.target.matches(".search__display-bar")){
+    toggleNavBar()
+
+  }
 })
+
+//look into actual toggle functionality with BEM
+function toggleNavBar(){
+  if (homeNavBar.style.display === "flex"){
+     searchBarElement.style.display = "flex"
+     homeNavBar.style.display = "none"
+  }else{
+    searchBarElement.style.display = "none"
+    homeNavBar.style.display = "flex"
+  }
+}
 
 const apiUrls = {
   searchParameters: {
@@ -61,13 +86,11 @@ const apiUrls = {
     fetch(apiURL)
     .then(response => response.json())
     .then(body => {
-      console.log(body.Search)
       body.Search.forEach(result => {
         searchResultsElement.appendChild(searchTemplate(result))
 
       })
     })
-
   },
 
   fetchMovie: function(apiURL){
