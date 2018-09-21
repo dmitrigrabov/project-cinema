@@ -61,7 +61,8 @@ nav > div {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 1rem;
+  align-items: center;
+  margin: 0.5rem;
   height: 10vh;
   width: 95%;
   border: 1px black solid;
@@ -71,10 +72,12 @@ nav > div {
 .result__poster{
   height: 90%;
   width: auto;
+  align-self: flex-start;
 
 }
 
 .result__title{
+  align-self: center;
 
 }
 
@@ -84,4 +87,23 @@ nav > div {
 
 .result__type{
 
+}
+
+.film-display{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.film-display__header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.film-display__poster{
+  width: 60%;
+  height: auto;
+  align-self: center;
 }
