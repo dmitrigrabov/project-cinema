@@ -7,6 +7,7 @@ const form = document.querySelector(".form");
 const searchInput = document.querySelector(".search");
 searchInput.value = "sorry";
 let currentPage = 1;
+let prevActive = null;
 
 function getMoviesFromSearch (url){
     if (searchInput.value.length === 0) return;
@@ -61,6 +62,20 @@ function renderResultsFromSearch(page) {
 }
 
 const newSearchPageFetch = function (page, totalPageLinks){
+    // let active = document.querySelector(".active");
+    // active.className = "page-number-link active"
+    // if (prevActive) { 
+    //     prevActive.className = "page-number-link";
+    //     prevActive = active;
+    // }
+    // const prevActive = document.querySelector(".active");
+    // if (prevActive !== null) {
+    //     prevActive.classList.remove("active")
+    //     event.target.classList.add("active")
+    // }
+    // console.log(active);
+    // const pageNumberlinks = document.querySelectorAll(".page-number-link");
+    // pageNumberlinks.addEventListener();
     resultsShowingNode.innerHTML = `<br><div><i>Showing page ${page} of ${totalPageLinks}</i></div><br><div>`;
     renderResultsFromSearch(page);
     currentPage = page;
