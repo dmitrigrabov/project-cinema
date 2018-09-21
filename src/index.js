@@ -4,6 +4,7 @@ const apiKey = "edd66bb"; //"2454706d";
 const resultsHeaderNode = document.querySelector(".results-header");
 const resultsListNode = document.querySelector(".results-list");
 const resultsPagesNode = document.querySelector(".results-pages");
+const resultsShowingNode = document.querySelector(".results-showing");
 const form = document.querySelector(".form");
 const searchInput = document.querySelector(".search");
 let currentPage = 1;
@@ -70,10 +71,11 @@ function getMoviesFromPagination (url){
 }
 
 const newSearchPageFetch = function (page){
-    // const url = `${baseUrl}&s=${searchInput.value}&page=${page}`;
-    // console.log(url)
-    // getMoviesFromPagination(url).then(filmList => {
-    //     resultsListNode.innerHTML = '';
-    //     resultsListNode.innerHTML = renderFilmList(filmList);
-    // });
+    const url = `${baseUrl}&s=${searchInput.value}&page=${page}`;
+    resultsShowingNode.innerHTML = `<br><div><i>Showing page ${currentPage}`;
+    currentPage = page;
+    getMoviesFromPagination(url).then(filmList => {
+        resultsListNode.innerHTML = '';
+        resultsListNode.innerHTML = renderFilmList(filmList);
+    });
 }
