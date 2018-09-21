@@ -1,6 +1,8 @@
 
 const urlBase =`http://www.omdbapi.com/?apikey=b749b385&`
 const outputNode = document.querySelector(".films");
+let searchTarget = '';
+let previousSearchTarget = '';
 
 function getMoviesByName(movieName){
  return fetch(`${urlBase}s=${movieName}`)
@@ -22,7 +24,7 @@ function displayFilms(filmResults) {
             <h3>${film.Title}</h3>
             <h4>${film.Year}</h4>
             <p>${film.Type}</p>
-            <p>${film.imdbID}</p>
+            <div class="main__film__moreInfo">yay</div>
         </div>`;
     }).join('');
     outputNode.innerHTML = searchDiv;
@@ -43,15 +45,13 @@ function getMovieByID(movieID){
         })
         .then(function(body){
             displayFilmDetails(body)
-            console.log(body);
+            // console.log(body);
         })
 }
 
 function displayFilmDetails(film){
-    // console.log({film});
-    
-    outputNode.innerHTML = `
-    <div data-imdbid = ${film.imdbID} class='main__film'>
+
+    searchTarget.innerHTML = `
         <img src='${film.Poster}'/>
         <h3>${film.Title}</h3>
         <h4>${film.Released}</h4>
@@ -60,16 +60,17 @@ function displayFilmDetails(film){
         <p>${film.Awards}</p>
         <p>${film.Director}</p>
         <p>${film.Genre}</p>
-        <p>${film.Plot}</p>
-    </div>`;
+        <p>${film.Plot}</p>`;
+    console.log(searchTarget);
 }
 
 outputNode.addEventListener('click', e=>{
     if (event.target.closest('.main__film')){
         const film = event.target.closest('.main__film').dataset.imdbid;
-        console.log(event.target);
-        // console.log(film)
-        // outputNode.innerHTML = '';
+        searchTarget = event.target.closest('.main__film');
+        console.log(event.target.closest('.main__film').lastSibling);
+        
         getMovieByID(film);
     }
 })
+
