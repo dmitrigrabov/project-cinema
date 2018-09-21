@@ -1,31 +1,51 @@
 body {
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    margin: 0;
+    box-sizing: border-box;
+    line-height: 1.5rem;
+    letter-spacing: 0.02rem;
+}
+
+* {
+    box-sizing: inherit;
 }
 
 input {
-    height:2em; 
-    font-size:1em;
-    padding: 0.3em;
-    margin: 1em 0 0 1em;
-    border: 1px solid #333;
+    height:2rem; 
+    font-size: 1rem;
+    padding: 0.3rem;
+    width: 12rem;
+    border: none;
+    box-sizing: border-box;
+    background-color: #fafafa; 
+}
+
+input[type=text]:focus {
+    background-color: white;
 }
 
 header {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    background: #ddd;
+    margin: 0;
+    padding: 1rem;
+    vertical-align: middle;
 }
 
 main {
-    padding: 1em 0 0 1em;
-    line-height: 1.5em;
-    font-size: 1em;
+    padding: 1rem 0 0 1rem;
+    font-size: 1rem;
+    margin: 0;
 }
 
 .main-header {
-    font-size: 1.5rem;
-    padding: 0.5em 0 0 1em;
+    margin: 0;
+    font-size: 1.3rem;
+    padding-top: 0.4rem;
     font-family: 'Libre Baskerville', serif;
-    letter-spacing: 0.2rem
+    letter-spacing: 0.2rem;
 }
 
 .page-number-link {

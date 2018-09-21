@@ -27,6 +27,13 @@ function getMoviesFromSearch (url){
     .catch(error => console.log(error))
 }
 
+function getMoviesFromPagination (url){
+    return fetch(url)
+    .then(response => response.json())
+    .then(body => body.Search)
+    .catch(error => console.log(error))
+}
+
 // render film list
 function renderFilmList(filmList) {
     return filmList.map(film => {
@@ -53,13 +60,6 @@ const pageNumbers = function (body) {
     document.querySelector(".active").click();
 }
 
-function getMoviesFromPagination (url){
-    return fetch(url)
-    .then(response => response.json())
-    .then(body => body.Search)
-    .catch(error => console.log(error))
-}
-
 function renderResultsFromSearch(page) {
     const url = `${baseUrl}&s=${searchInput.value}&page=${page}`;
     getMoviesFromSearch(url).then(filmList => {
@@ -82,7 +82,6 @@ contentNode.addEventListener('click', event => {
         }
     }
 });
-
 
 form.addEventListener('submit', event => {	
     currentPage = 1;   
