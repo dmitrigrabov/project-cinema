@@ -17,7 +17,9 @@ main {
 }
 
 .page-number-link {
-    padding: 0.5rem;
+    padding: 0.7rem;
+    margin: 0.3rem;
+    border: 1rem;
     background-color: rgb(100, 100, 100);
     color: white;
 }

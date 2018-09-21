@@ -1,69 +1,79 @@
-
 const omdUrl = "http://www.omdbapi.com/?type=movie";
-const apiKey = "2454706d";
-const mainNode = document.querySelector(".content");
+const baseUrl = "http://www.omdbapi.com/?apikey=edd66bb";
+const apiKey = "edd66bb"; //"2454706d";
+const resultsHeaderNode = document.querySelector(".results-header");
+const resultsListNode = document.querySelector(".results-list");
+const resultsPagesNode = document.querySelector(".results-pages");
 const form = document.querySelector(".form");
 const searchInput = document.querySelector(".search");
-// let page = document.location["page"];
+let currentPage = 1;
 
-const getFilms = function(page) {
-    const urlObject = getUrlFromSearch(page);
-    if (!urlObject.searchInput) return;
-    // const validPage = urlObject.page ? urlObject.page : "1";
-    fetch(urlObject.url)
+function getMoviesFromSearch (url){
+    if (searchInput.value.length === 0) return;
+    return fetch(url)
     .then(response => response.json())
     .then(body => {
-        listenForSearchInput(page);
-        showSearchResults(body, urlObject.searchInput, page);
+        searchHeaderMessage(body);
+        console.log(body.totalResults)
+        pageNumbers(body);
+        return body.Search
     })
+    .catch(error => console.log(error))
 }
 
-const showSearchResults = function (body, input, page) {
-    if (!body) return;
-    mainNode.innerHTML = '';
+// render a single film
+function renderFilmList(filmList) {
+    return filmList.map(film => {
+        return `
+            <div><b>Title:</b> ${film.Title}, <b>ID:</b> 
+            <a href=${baseUrl}&i=${film.imdbID} target="_blank">${film.imdbID}</a></div>
+        `;
+    }).join('');
+}
+
+form.addEventListener('submit', event => {	    
+    event.preventDefault();
+    const url = `${baseUrl}&s=${searchInput.value}`;
+    getMoviesFromSearch(url).then(filmList => {
+        resultsListNode.innerHTML = '';
+        resultsListNode.innerHTML = renderFilmList(filmList);
+    });
+});
+
+function searchHeaderMessage (body) {
+    resultsHeaderNode.innerHTML = '';
+    let html = `<div><b><i>${body.totalResults} results for "${searchInput.value}"</i></b></div><br>`;
+    resultsHeaderNode.innerHTML = html;
+}
+
+const pageNumbers = function (body) {
+    resultsPagesNode.innerHTML = "";
     const totalPageLinks = Math.floor(body.totalResults / 10) + 1;
-    let html = `<div><b><i>${body.totalResults} results for "${input}"</i></b></div>`;
-    html += `<div><i>Showing page ${page} of ${totalPageLinks}</i></div><br>`;
-    body.Search.forEach(film => {
-        const linkUrl = getUrlFromResultLink(film.imdbID);
-        html += `<div><b>Title:</b> "${film.Title}", <b>ID:</b> <a href="${linkUrl}" target="_blank">${film.imdbID}</a></div>`;
-    });
-    html += `<br><div>Page: `;
+    let html = `<br><div><i>Showing page ${currentPage} of ${totalPageLinks}</i></div>
+                <br><div>Page:`;
     for (let i=1; i<=totalPageLinks; i++) {
-        html += ` <a class="page-number-link" href="#" onClick="nextPageFetch(${i})">&nbsp;${i}&nbsp;</a>`;
-        // html += (i < totalPageLinks) ? `&nbsp;&nbsp;|` : ``;
-    } 
-    html += `</div>`;
-    mainNode.innerHTML = html;
+        html += `<a class="page-number-link" href="#" onClick=newSearchPageFetch(${i})>&nbsp;${i}&nbsp;</a>`
+    }
+    resultsPagesNode.innerHTML = html;
 }
 
-const getUrlFromSearch = function (page) {
-    if (searchInput.value.length === 0) return false;
-    const url = `${omdUrl}&s=${searchInput.value}&page=${page}&apikey=${apiKey}`;
-    return {"url": url, "searchInput": searchInput.value, "page": page};
+
+function getMoviesFromPagination (url){
+    return fetch(url)
+    .then(response => response.json())
+    .then(body => {
+        // searchHeaderMessage(body);
+        // pageNumbers(body);
+        return body.Search
+    })
+    .catch(error => console.log(error))
 }
 
-const nextPageFetch = function (page){
-    getFilms(page);
+const newSearchPageFetch = function (page){
+    // const url = `${baseUrl}&s=${searchInput.value}&page=${page}`;
+    // console.log(url)
+    // getMoviesFromPagination(url).then(filmList => {
+    //     resultsListNode.innerHTML = '';
+    //     resultsListNode.innerHTML = renderFilmList(filmList);
+    // });
 }
-
-const listenForSearchInput = function (page){
-    form.addEventListener('submit', event => {
-        event.preventDefault();
-        getFilms(page);
-    });
-}
-
-const getUrlFromResultLink = function (id) {
-    const url = `${omdUrl}&i=${id}&apikey=${apiKey}`;
-    return url;
-}
-
-const populateSelectedFilm = function (film) {
-    const keys = Object.keys(film);
-    let html = ""
-    keys.forEach(key => {
-        html += `<div><b>${key}</b>: ${film[key]}</div>`;
-    });
-}
-listenForSearchInput("1");
