@@ -24,7 +24,6 @@ function displayFilms(filmResults) {
             <h3>${film.Title}</h3>
             <h4>${film.Year}</h4>
             <p>${film.Type}</p>
-            <div class="main__film__moreInfo">yay</div>
         </div>`;
     }).join('');
     outputNode.innerHTML = searchDiv;
@@ -50,26 +49,23 @@ function getMovieByID(movieID){
 }
 
 function displayFilmDetails(film){
-
-    searchTarget.innerHTML = `
-        <img src='${film.Poster}'/>
-        <h3>${film.Title}</h3>
-        <h4>${film.Released}</h4>
+    const parentNode = searchTarget;
+    const addInfoNode = document.createElement('div');
+    addInfoNode.className = "add-info";
+    addInfoNode.innerHTML = `
         <p>${film.imdbRating}</p>
         <p>${film.Actors}</p>
         <p>${film.Awards}</p>
         <p>${film.Director}</p>
         <p>${film.Genre}</p>
         <p>${film.Plot}</p>`;
-    console.log(searchTarget);
+    parentNode.appendChild(addInfoNode);
 }
 
 outputNode.addEventListener('click', e=>{
     if (event.target.closest('.main__film')){
         const film = event.target.closest('.main__film').dataset.imdbid;
         searchTarget = event.target.closest('.main__film');
-        console.log(event.target.closest('.main__film').lastSibling);
-        
         getMovieByID(film);
     }
 })
