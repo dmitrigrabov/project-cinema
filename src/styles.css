@@ -59,6 +59,7 @@ header {
     padding: 1.5rem 1rem 1.5rem 1rem;
     vertical-align: bottom;
     background: rgb(0, 0, 0);
+    border-bottom: solid 0.1em #ff2108;
 }
 
 .title {
@@ -72,7 +73,6 @@ header {
     text-transform: uppercase;
     list-style: none;
     letter-spacing: 0.2rem;
-    border-bottom: solid 0.1em #ff2108;
 }
 
 .title-light {
@@ -93,14 +93,21 @@ header {
     padding: 0.6rem 0.6rem 0.6rem 0.4rem;
 }
 
+.underline {
+    border-bottom: solid 0.1rem #ff2108;
+    padding-bottom: 0.3rem;
+}
+
 .content {  
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    position:static;
     flex: 3;
     margin: 0;
     padding: 1rem;
     font-size: 1rem;
+
 }
 
 .page-number-link {
@@ -233,7 +240,7 @@ a.page-number-link:hover {
   .footer__contact a {
     font-weight: 700;
     letter-spacing: 0.2em;
-    border-bottom: solid 0.1em #ff2108;
+    /* border-bottom: solid 0.1em #ff2108; */
     padding: 0.2rem 0.3rem 0.1rem 0.3rem;
     background: #666;
     text-decoration: none;
@@ -243,7 +250,7 @@ a.page-number-link:hover {
   .footer__contact a:visited {
     background: #555;
     color:white;
-    border-bottom: solid 0.1rem #ff2108;
+    /* border-bottom: solid 0.1rem #ff2108; */
   }
   
   .footer__contact a:hover {
@@ -252,3 +259,100 @@ a.page-number-link:hover {
     outline: solid 0.1rem #ff2108;
     color:#000;
   }
+
+  .film-content {
+      display: none;
+      background: black;
+      padding: 1rem;
+      margin: 0;
+      color: white;
+  }
+
+  .film-content.on {
+    display: block;
+  }
+
+  .article__list {
+    list-style: none;
+    padding: 0;
+}
+
+.article__main {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    /* ADD MARGIN-BOTTOM TO MAIN if you want to separate articles */
+    margin-bottom: 2rem;
+    height: 900px;
+}
+
+.article__main li {
+    padding: 0.3em 0;
+}
+
+.article__header {
+    display: block;
+    font-size: 1.2rem;
+    background: rgb(245, 244, 241);
+    color: black;
+    padding: 1rem 1rem;
+    height: 30%;
+    margin: 0;    
+}
+
+.article__header a {
+    color: black;
+    text-decoration: none;
+}
+
+.article__header a:hover {
+    color: #ff9900;
+    text-decoration: underline;
+}
+
+.article__image {
+  display: none;
+}
+
+.article__image__src {
+    /* ADDED by Mel display: block - to make the a element behave as a block element and properly 'contain' the image. It's naturally an inline element.*/
+    padding: 20%;
+    display: block;
+    width: 100%;
+}
+
+.article__text {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    font-size: 1rem;
+    background: #ffffff;
+    color: black;
+    padding: 1rem;
+    flex: 3;
+}
+
+.article__text a {
+    /* changed Sunday morning */
+    text-decoration: none;
+    padding: 0.7rem;
+    line-height: 3rem; 
+    background-color: #ffc062;
+    color: rgb(120, 46, 0);
+    font-weight: normal;
+    border-radius: 0.3rem;
+    list-style: none;
+    height: 60%
+}
+
+.article__text a:hover {
+    background-color: #ff9900;
+    color: white;
+}
+
+.article__text div  {
+    padding: 0.5em 0;
+    border: 0;
+}
+
+ 

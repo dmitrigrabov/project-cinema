@@ -4,6 +4,7 @@ const resultsHeaderNode = document.querySelector(".results-header");
 const resultsListNode = document.querySelector(".results-list");
 const resultsPagesNode = document.querySelector(".results-pages");
 const resultsShowingNode = document.querySelector(".results-showing");
+const filmContainer = document.querySelector(".film-content");
 const form = document.querySelector(".form");
 const searchInput = document.querySelector(".search");
 let currentPage = 1;
@@ -48,7 +49,7 @@ function renderFilmList(filmList) {
         return;
     }
     return filmList.map(film => {
-        return `<div class="result-link"><a href=${baseUrl}&i=${film.imdbID} target="_blank">${film.Title}, ${film.Year}</a></div>`;
+        return `<div class="result-link"><a href="#films" id="${film.imdbID}">${film.Title}, ${film.Year}</a></div>`;
     }).join('');
 }
 
@@ -142,12 +143,75 @@ function clearNodes(mode, input) {
     resultsShowingNode.innerHTML = '';
 }
 
+/*
+/////////////////////////////////////
+FETCH
+*/
+
 contentNode.addEventListener('click', event => {
-//     if (event.target.matches('.page-number-link')){
-//         prevThumb = document.querySelector(".active");
-//         if (prevThumb !== null) {
-//             prevThumb.classList.remove("active")
-//             event.target.classList.add("active")     
-//         }
-//     }
+    if (event.target.matches('.result-link a')){
+        fetchSingleMovieByID(event.target.id)
+    };
 });
+
+function fetchSingleMovieByID (id){
+    const url = `${baseUrl}&i=${id}`;
+    return fetch(url)
+    .then(response => response.json())
+    .then(filmObject => {
+        console.log({filmObject})
+        filmContainer.innerHTML = "";
+        filmContainer.classList.add("on");
+        filmContainer.innerHTML = convertMovieObject (filmObject);
+    }).catch(error => console.log(error));
+}
+
+function convertMovieObject (film) {
+    const keys = Object.keys(film);
+    const htmlString = keys.map(item => {
+        return `<div>${item}: ${film[item]}</div>`
+    }).join(' ');
+    // console.log(htmlString);
+    // return htmlString;
+    return film.Website;
+
+    // return 
+    // `<div class="article__main">
+    //     <div class="article__image">
+    //         <a href="${film.Website}" target="_blank" style="background-image:url(${film.Poster})" class="article__image__src"></a>
+    //     </div>
+    //     <div>
+    //         <span class="article__header">
+    //             <div><a href="${film.Website}" target="_blank"><strong>${film.Title}</strong> ${film.Year}</a></div>
+    //         </span>
+    //     </div>
+    // </div>`;
+}
+
+//         <div class="article__text">
+//             <div><h3>Plot</h3>${film.Plot}</div>
+//             <div>IMDB link: <a href="https://www.imdb.com/title/${imdbID}" target="_blank">See ${film.Title} on IMDB (${film.imdbVotes} votes)</a></div>
+//             <div>
+//                 <ul>
+//                     <li>Year: ${film.Year}</li>
+//                     <li>Released: ${film.Released}</li>
+//                     <li>Rated: ${film.Rated}</li>
+//                     <li>Runtime: ${film.Runtime}</li>
+//                     <li>Genre: ${film.Genre}</li>
+//                     <li>Director: ${film.Director}</li>
+//                     <li>Writer: ${film.Writer}</li>
+//                     <li>Actors: ${film.Actors}</li>
+//                     <li>Language: ${film.Language}</li>
+//                     <li>Country: ${film.Country}</li>
+//                     <li>Awards: ${film.Awards}</li>
+//                     <li>Metascore: ${film.Metascore}</li>
+//                     <li>imdbRating: ${film.Metascore}</li>
+//                     <li>imdbVotes: ${film.imdbVotes}</li>
+//                     <li>BoxOffice: ${film.BoxOffice}</li>
+//                     <li>Production:  ${film.Production}</li>
+//                     <li>Website: <a href="${film.Website}" target="_blank"</a></li>
+//                 </ul>
+//             </div>   
+//         </div>
+//     </div>`;
+// }
