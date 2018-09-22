@@ -7,7 +7,7 @@ const resultsShowingNode = document.querySelector(".results-showing");
 const form = document.querySelector(".form");
 const searchInput = document.querySelector(".search");
 let currentPage = 1;
-let prevThumb = null;
+// let prevThumb = null;
 let loaded = 0;
 
 function getMoviesFromSearch (url){
@@ -16,11 +16,11 @@ function getMoviesFromSearch (url){
     return fetch(url)
     .then(response => response.json())
     .then(body => {
-        // if (loaded === 0) { 
+        if (loaded === 0) { 
             searchHeaderMessage(body);
             pageNumbers(body);
             loaded = 1;
-        // }
+        }
         return body.Search;
     }).catch(error => console.log(error));
 }
@@ -40,13 +40,7 @@ function getMoviesFromPagination (url){
 // render film list
 function renderFilmList(filmList) {
     if (filmList === undefined) {
-        console.log("undefined ========================")
-        // resultsHeaderNode.innerHTML = '';
-        // resultsShowingNode.innerHTML = '';
-        // resultsPagesNode.innerHTML = '';
-        // resultsListNode.innerHTML = "";
-        // resultsListNode.classList.remove("open");
-        clearNodes();
+        clearNodes('unknown', searchInput.value);
         return;
     }
     return filmList.map(film => {
@@ -77,6 +71,30 @@ const pageNumbers = function (body) {
     }
     resultsPagesNode.innerHTML = "";
     resultsPagesNode.innerHTML = html;
+    // setActiveButton ();
+}
+
+// function setActiveButton (){
+//     contentNode.addEventListener('click', event => {
+//         console.log({event});
+//         let match = event.target.matches('.page-number-link');
+//         if (match){  
+//             const prevThumb = document.querySelector(".active");
+//             if (prevThumb !== null) {
+//                 prevThumb.classList.remove("active");
+//                 event.target.classList.add("active");
+//                 // console.log({event})
+//             }
+//         }
+//     });
+// }
+
+function setActiveButton (event){
+    const prevThumb = document.querySelector(".active");
+    if (prevThumb !== null) {
+        prevThumb.classList.remove("active")
+        event.target.classList.add("active")
+    }
 }
 
 function renderResultsFromSearch(page, mode) {
@@ -90,23 +108,12 @@ function renderResultsFromSearch(page, mode) {
 function fetchFromButton(page, totalPageLinks) {
     resultsShowingNode.innerHTML = `<div><i>, page ${page} of ${totalPageLinks}</i></div>`;
     resultsListNode.classList.add("open");
-    const url = `${baseUrl}&s=Jaws&page=${page}`;
+    const url = `${baseUrl}&s=${searchInput.value}&page=${page}`;
     getMoviesFromPagination(url).then(filmList => {
         resultsListNode.innerHTML = renderFilmList(filmList);
         currentPage = page;    
     });
-}
-
-contentNode.addEventListener('click', event => {
-    if (event.target.matches('.page-number-link')){   
-        const prevThumb = document.querySelector(".active");
-        console.log("=================== " + prevThumb)
-        if (prevThumb !== null) {
-            prevThumb.classList.remove("active")
-            event.target.classList.add("active")
-        }
-    }
-});
+}  
 
 form.addEventListener('submit', event => {	
     currentPage = 1;   
@@ -123,19 +130,17 @@ searchInput.addEventListener('input', event => {
     if (event.target.value.length >= 3) {
         renderResultsFromSearch(currentPage);
     } else {
-        clearNodes();
+        clearNodes('minimumLetters', input);
     }
 })
 
-function clearNodes() {
+function clearNodes(mode, input) {
     resultsListNode.classList.remove("open");
     resultsListNode.innerHTML = "";
     resultsPagesNode.innerHTML = "";
     resultsShowingNode.innerHTML = '';
-    resultsHeaderNode.innerHTML = 
-    `<div><b><i>
-        Please type at least 3 letters to search...
-    </i></b></div>`;
+    const msg = (mode === 'unknown') ? `The title "${input}" is unknown. Please try again.` : `Type at least 3 letters to search...`;
+    resultsHeaderNode.innerHTML = `<div class="results-showing">${msg}</div>`;
 }
 
         // const title = hightlightedWords(film.Title)

@@ -32,7 +32,8 @@ input[type=text]:focus {
     /* height: 18rem; */
     width: 100%;
     /* background-color: #fff9da; */
-    background-color: rgb(227, 227, 227);
+    /* background-color: rgb(227, 227, 227); */
+    background-color: white;
     display: none;
 }
 
@@ -42,7 +43,6 @@ input[type=text]:focus {
 
 .results-list.open {
     display: block;
-    background-color: rgb(240, 240, 240);
 }
 
 header {
@@ -148,10 +148,15 @@ a.page-number-link:hover {
     padding: 1.5rem 0 1.5rem 0;
 }
 
+.results-showing, .results-header {
+    padding: 1rem 0 0.5rem 0;
+    font-style: italic;
+}
+
 .result-link a {
     display: block;
     /* background-color: rgb(255, 235, 170); */
-    /* background-color: #fffcea; */
+    /* background-color: #fffcea; */q
     background-color: white;
     padding: 0.5rem 1rem 0.5rem 1rem;
     line-height: 1rem;
@@ -160,7 +165,7 @@ a.page-number-link:hover {
 }
 
 .result-link a:hover {
-    background: #333;
+    background: #000;
     color: white;
 }
 
@@ -172,7 +177,7 @@ a.page-number-link:hover {
 	position: relative;
 	background: #ffffff;
     border-radius: 0.6em;
-    z-index: 5;
+    z-index: 1;
     padding: 1rem;
     margin: 1rem 3em;
 }
