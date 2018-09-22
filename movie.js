@@ -98,10 +98,12 @@ function movieDetails(body,id){
 //to fetch more details about the clicked movie from the API
 searchResultList.addEventListener("click",function(event){
   event.preventDefault();
+  //remove other movie details (loaded from previous click)
+  const otherDetails=document.querySelector(".search-result-details")
+  if(otherDetails!==null){
+    otherDetails.parentNode.removeChild(otherDetails);
+  }
 
-  // if(event.currentTarget.childMatches("div")){
-  //   delete event.currentTarget.childMatches("div");
-  // }
   const id=event.target.parentNode.getAttribute("id");
   const url=`http://www.omdbapi.com/?i=${id}&plot=full&apikey=d2807699`;
 
