@@ -5,21 +5,25 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Project Cinema</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Project Cinema by Mariusz Sygnowski</title>
 </head>
 <body>
 
 <div class="container">
-
     <div class="control">
-        <form id="search" class="search">
-            <input class="search__input" type="text" placeholder="type here to search your movie">
-            <button class="search__btn">Search</button>
+        <form id="control__search">
+            <input type="text" class="control__search__input"/>
+            <input type="submit" class="control__search__submit" value="Search" />
         </form>
     </div>
 
-    <div class="results">
+    <div class="buttons">
+        <button class="buttons__button-prev">Prev</button>
+        <div class="results">
 
+        </div>
+        <button class="buttons__button-next">Next</button>
     </div>
 
 </div>

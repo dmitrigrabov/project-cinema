@@ -1,32 +1,83 @@
-const form = document.querySelector('#search'),
-    searchInput = form.querySelector('.search__input'),
-    searchButton = form.querySelector('.search__btn'),
-    results = document.querySelector('.results');
+const form = document.querySelector('#control__search'),
+    searchInput = document.querySelector('.control__search__input'),
+    results = document.querySelector('.results'),
+    buttonsClass = document.querySelector('.buttons'),
+    nextBtn = document.querySelector('.buttons__button-next'),
+    prevBtn = document.querySelector('.buttons__button-prev');
 
-let titleMovies = '',
-    inputValue = '';
+let inputValue = '',
+    pageNumber = 1,
+    totalPages = 0,
+    imdbID = '',
+    fetchUrl = '';
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
+    buttonsClass.style.display = 'grid';
+    results.innerHTML = '';
+    pageNumber = 1;
+    totalPages = 0;
     inputValue = searchInput.value;
-    runFetch(inputValue);
+    runFetch(inputValue, pageNumber);
 });
 
-function runFetch(inputValue) {
-    fetch(`http://www.omdbapi.com/?apikey=f899a3c1&s=${inputValue}`)
+nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    results.innerHTML = '';
+    if (pageNumber >= totalPages) {
+    } else {
+        pageNumber++;
+        runFetch(inputValue, pageNumber);
+    }
+
+});
+prevBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    results.innerHTML = '';
+    if (pageNumber === 1) {
+    } else {
+        pageNumber--;
+        runFetch(inputValue, pageNumber);
+    }
+});
+
+
+function runFetch(inputValue, pageNumber) {
+    fetchUrl = `http://www.omdbapi.com/?apikey=f899a3c1&s=${inputValue}&page=${pageNumber}&i=tt1504019&plot=full`;
+    fetch(fetchUrl)
         .then((response) => {
             return response.json();
         })
         .then((body) => {
+            // console.log(body);
+            totalPages = body.totalResults / 10; //divide by as as there is 10 results per page
+            totalPages = Math.floor(totalPages); //round down as we don't want to have anything after dot
+            console.log(totalPages);
+
             body.Search.forEach(e => {
-                let searchResult = document.createElement('div');
-                searchResult.className = 'results__searchResult';
-                searchResult.innerHTML = `
+                imdbID = e.imdbID;
+                fetch(`http://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=f899a3c1`)
+                    .then((response) => {
+                        return response.json();
+                    })
+                    .then((body) => {
+                        console.log(body);
+                        let searchResult = document.createElement('div');
+                        searchResult.className = 'results__searchResult';
+
+                        let currentPoster = e.Poster;
+                        if (currentPoster === 'N/A') {
+                            currentPoster = 'images/noPoster.jpg';
+                        }
+                        searchResult.innerHTML = `
                     <p class="results__searchResult__title">${e.Title}</p>
                     <p class="results__searchResult__year">${e.Year}</p>
-                    <img class="results__searchResult__poster" src="${e.Poster}"/>
+                    <img class="results__searchResult__poster" src="${currentPoster}"/>
                     `;
-                results.append(searchResult);
+
+                        results.append(searchResult);
+                    })
+
             });
 
         })
