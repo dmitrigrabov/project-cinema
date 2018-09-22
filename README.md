@@ -29,6 +29,8 @@
 
 ## TODO
 
+- [ ] **Filter fetch results to show only movies**
+
 - [ ] **Implement any feature you would find useful or interesting**
 
 - [ ] **Implement pagination so that users can navigate between all movies in search results rather than just the first ten**
