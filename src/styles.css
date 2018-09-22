@@ -1,4 +1,4 @@
-html{
+html {
     scroll-behavior:smooth
 }
 
@@ -69,7 +69,6 @@ header {
     padding: 1.5rem 1rem 1.5rem 1rem;
     vertical-align: bottom;
     background: rgb(0, 0, 0);
-    border-bottom: solid 0.1em #ff2108;
 }
 
 .title {
@@ -83,6 +82,8 @@ header {
     text-transform: uppercase;
     list-style: none;
     letter-spacing: 0.2rem;
+    border-bottom: solid 2px #ff2108;
+
 }
 
 .title-light {

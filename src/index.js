@@ -206,7 +206,7 @@ function convertMovieObject (film) {
                     <li><strong>imdbRating:</strong> ${film.Metascore}</li>
                     <li><strong>imdbVotes:</strong> ${film.imdbVotes}</li>
                     <li><strong>BoxOffice:</strong> ${film.BoxOffice}</li>
-                    <li><strong>Production:</strong>  ${film.Production}</li>
+                    <li><strong>Production:</strong> ${film.Production}</li>
                     ${website}
                 </ul>
             </div>   
