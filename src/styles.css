@@ -1,3 +1,7 @@
+html{
+    scroll-behavior:smooth
+}
+
 body {
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
     margin: 0;
@@ -370,9 +374,9 @@ a.page-number-link:hover {
     height: 60%;
     display: initial;
     background-color: #ddd;
-    padding: 0.5rem;
-    margin-top: 1rem;
-    line-height: 1rem;
+    padding: 0.5em 1rem 0.5rem 1rem;
+    margin-top: 2.5em 1rem 1.5rem 1rem;
+    line-height: 3rem;
     color: black;    
     list-style: none;
     /* border-radius: 0.2rem; */
@@ -387,6 +391,10 @@ a.page-number-link:hover {
 .article__text div  {
     padding: 0.5em 0;
     border: 0;
+}
+
+.article__text li a  {
+    list-style: none;
 }
 
  

@@ -49,7 +49,7 @@ function renderFilmList(filmList) {
         return;
     }
     return filmList.map(film => {
-        return `<div class="result-link"><a href="#films" id="${film.imdbID}">${film.Title}, ${film.Year}</a></div>`;
+        return `<div class="result-link"><a href="#film-frame" id="${film.imdbID}">${film.Title}, ${film.Year}</a></div>`;
     }).join('');
 }
 
@@ -150,6 +150,7 @@ FETCH
 
 contentNode.addEventListener('click', event => {
     if (event.target.matches('.result-link a')){
+        filmContainer.innerHTML = "Loading...";
         fetchSingleMovieByID(event.target.id)
     };
 });
@@ -160,7 +161,6 @@ function fetchSingleMovieByID (id){
     .then(response => response.json())
     .then(filmObject => {
         console.log({filmObject})
-        filmContainer.innerHTML = "";
         filmContainer.classList.add("on");
         filmContainer.innerHTML = convertMovieObject (filmObject);
     }).catch(error => console.log(error));
@@ -214,3 +214,13 @@ function convertMovieObject (film) {
     </div>`;
     return htmlString;
 }
+
+// document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+//     anchor.addEventListener('click', function (event) {
+//         event.preventDefault();
+//         document.querySelector(this.getAttribute('href')).scrollIntoView({
+//             console.log("scolling...");
+//             behavior: 'smooth';
+//         });
+//     });
+// });
