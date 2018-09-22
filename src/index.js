@@ -3,6 +3,7 @@ const urlBase =`http://www.omdbapi.com/?apikey=b749b385&`
 const outputNode = document.querySelector(".films");
 let searchTarget = '';
 let previousSearchTarget = '';
+let addInfoNode = '';
 
 function getMoviesByName(movieName){
  return fetch(`${urlBase}s=${movieName}`)
@@ -37,20 +38,19 @@ document.querySelector('form').addEventListener('submit', e =>{
 })
 
 function getMovieByID(movieID){
-    // console.log(movieID);
     return fetch(`${urlBase}i=${movieID}`)
         .then(function(response){
             return response.json();
         })
         .then(function(body){
             displayFilmDetails(body)
-            // console.log(body);
         })
 }
 
 function displayFilmDetails(film){
     const parentNode = searchTarget;
-    const addInfoNode = document.createElement('div');
+    parentNode.className += ' active';
+    addInfoNode = document.createElement('div');
     addInfoNode.className = "add-info";
     addInfoNode.innerHTML = `
         <p>${film.imdbRating}</p>
@@ -60,13 +60,33 @@ function displayFilmDetails(film){
         <p>${film.Genre}</p>
         <p>${film.Plot}</p>`;
     parentNode.appendChild(addInfoNode);
+    
 }
 
+
+
 outputNode.addEventListener('click', e=>{
+    removeAdditionalInfo();
     if (event.target.closest('.main__film')){
         const film = event.target.closest('.main__film').dataset.imdbid;
         searchTarget = event.target.closest('.main__film');
         getMovieByID(film);
     }
 })
+
+function removeAdditionalInfo(){
+    const filmDivs = document.querySelectorAll('.active');
+    console.log(filmDivs);
+    filmDivs.forEach(filmDiv => {
+        let addInfoDiv = document.querySelectorAll('.add-info');
+        addInfoDiv.forEach(addInfo => {
+        let parentDiv = addInfo.parentNode;
+        parentDiv.removeChild(addInfo);
+        })
+    })
+
+}
+
+
+
 
