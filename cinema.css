@@ -1,0 +1,13 @@
+.container {
+  font-family: serif;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(128,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+ul > li{
+  /* maybe come back to this and try to add cool emoji's */
+  list-style: none;
+}
