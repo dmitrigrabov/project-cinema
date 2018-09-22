@@ -141,8 +141,33 @@ nav > div {
 .film-display__misc{
   display: flex;
   flex-direction: column;
-    justify-content: space-between;
+  justify-content: space-between;
   background-color: #FFFAFA;
   padding: 0.25rem;
 
+}
+
+.film-display__news-container{
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+
+}
+
+.film-display__news-item{
+  display: flex;
+  flex-direction: column;
+}
+
+
+a:link{
+  color: #136CB2;
+  text-decoration: none;
+}
+a:hover{
+  color: black;
+}
+
+a:visited{
+  color: #70579D;
 }

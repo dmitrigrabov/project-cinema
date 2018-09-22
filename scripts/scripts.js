@@ -98,18 +98,21 @@ const apiUrls = {
     fetch(apiURL)
       .then(response => response.json())
       .then(body => {
-        console.log(body)
+        const newsApiString = `https://newsapi.org/v2/everything?q=${body.Title}&apiKey=9ed005ef4eb94baf913fce701c69972f`
         filmDisplayElement.appendChild(fullFilmTemplate(body));
+        this.fetchNews(newsApiString)
       });
   },
 
-
+//tried writing this as pure but no luck
   fetchNews: function(apiURL){
-    fetch(apiURL)
+     fetch(apiURL)
       .then(response => response.json())
       .then(body => {
-
+        filmNewsElement = filmNewsTemplate(body)
+        filmDisplayElement.appendChild(filmNewsElement)
       })
+
   }
 };
 
@@ -164,4 +167,29 @@ function fullFilmTemplate(result) {
   `;
   filmInfoElement.innerHTML = template;
   return filmInfoElement;
+}
+
+function filmNewsTemplate(body){
+  const filmNewsElement = document.createElement("div")
+  filmNewsElement.className = "film-display__news-container"
+  filmNewsElement.innerHTML = `<h4>Recent News</h4>`
+  const newsStories = body.articles.map(story => {
+    return `<span class="film-display__news-item">
+      <a href="${story.url}"">${story.title}</a>
+      <small>
+        <span>${convertDateForDisplay(story.publishedAt)} |</span>
+        <span>${story.source.name}</span>
+      </small>
+    </span>`
+  })
+  filmNewsElement.innerHTML += newsStories.join("")
+  return filmNewsElement
+
+
+}
+
+
+function convertDateForDisplay(date) {
+  const inputDate = new Date(date);
+  return inputDate.toLocaleString();
 }
