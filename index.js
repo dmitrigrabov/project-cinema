@@ -8,6 +8,9 @@ const favouritesRef = document.querySelector('.favs');
 const textboxRef = document.querySelector('.search__input');
 const navRef = document.querySelector('.nav');
 const detailsRef = document.querySelector('.details');
+const resultsTitleRef = document.querySelector('.results__title');
+const resultsWrapperRef = document.querySelector('.results__wrapper');
+const favsMenuRef = document.querySelector('.favs');
 
 //Initialize: local storage
 const myStorage = window.localStorage;
@@ -20,11 +23,30 @@ document.addEventListener('click', event => {
     if (event.target.matches('.result')) fetchDetails(event.target.getAttribute('data-id'));
     if (event.target.matches('.nav__prev')) prevButtonPressed(event);
     if (event.target.matches('.nav__next')) nextButtonPressed(event);
-    if (event.target.matches('.fav__up')) moveFavouriteUp(event.target.getAttribute('data-id'));
-    if (event.target.matches('.fav__down')) moveFavouriteDown(event.target.getAttribute('data-id'));
-    if (event.target.matches('.fav__delete')) removeFromFavourites(event.target.parentNode.getAttribute('data-id'));
+    if (event.target.matches('.fa-sort-up')) moveFavouriteUp(event.target.parentNode.getAttribute('data-id'));
+    if (event.target.matches('.fa-sort-down')) moveFavouriteDown(event.target.parentNode.getAttribute('data-id'));
+    if (event.target.matches('.fav__title')) fetchDetails(event.target.parentNode.getAttribute('data-id'));
     if (event.target.matches('.details, .detail')) toggleDetails();
+    if (event.target.matches('.fa-star')) toggleFavoritesMenu();
+    if (event.target.matches('.fa-sign-out-alt')) logout();
 });
+
+function toggleFavoritesMenu() {
+    console.log('hi');   
+    favsMenuRef.classList.toggle('favs--display');
+}
+
+function logout() {
+    myStorage.clear();
+    myStorage.favourites = '[]';
+    resetPage();
+    refreshFavourites();
+}
+
+function resetPage() {
+    detailsRef.classList.add('details--hidden');
+    resultsWrapperRef.classList.add('results__wrapper--hidden');
+}
 
 textboxRef.addEventListener('input', event => {
     if (event.target.value.length >= 3) {};
@@ -32,7 +54,7 @@ textboxRef.addEventListener('input', event => {
 
 function toggleDetails() {
     detailsRef.classList.toggle('details--hidden');
-    resultsRef.classList.toggle('results--hidden');
+    resultsWrapperRef.classList.toggle('results__wrapper--hidden');
 }
 
 //Event listeners: submit on form
@@ -58,14 +80,28 @@ resultsRef.addEventListener('scroll', event => {
 function moveFavouriteUp(imdbID) {
     let currentFavs = JSON.parse(myStorage.favourites);
     console.log(currentFavs);
+    const favToMoveUp = currentFavs.filter(item => item.imdbID === imdbID)[0];
+    const rank = currentFavs.indexOf(favToMoveUp);
+    if (rank > 0) {
+        currentFavs[rank] = currentFavs[rank-1];
+        currentFavs[rank-1] = favToMoveUp;
+        myStorage.favourites = JSON.stringify(currentFavs);
+        refreshFavourites();
+    }
 }
 
 function moveFavouriteDown(imdbID) {
     let currentFavs = JSON.parse(myStorage.favourites);
     console.log(currentFavs);
+    const favToMoveDown = currentFavs.filter(item => item.imdbID === imdbID)[0];
+    const rank = currentFavs.indexOf(favToMoveDown);
+    if (rank < currentFavs.length - 1) {
+        currentFavs[rank] = currentFavs[rank+1];
+        currentFavs[rank+1] = favToMoveDown;
+        myStorage.favourites = JSON.stringify(currentFavs);
+        refreshFavourites();
+    }
 }
-
-
 
 //Functions: reload favourites HTML elements from local storage
 function refreshFavourites() {
@@ -84,10 +120,9 @@ function generateFavourite(imdbID,title) {
     const favourite = document.createElement('div');
     favourite.setAttribute('class','fav');
     favourite.setAttribute('data-id',imdbID);
-    favourite.innerHTML =  `<i>${title}</i>
-                            <i class="fav__up">Up</i>
-                            <i class="fav__down">Down</i> 
-                            <i class="fav__delete">Delete</i>`;
+    favourite.innerHTML =  `<i class="fas fa-sort-up"></i>
+                            <i class="fas fa-sort-down"></i>
+                            <a class='fav__title'>${title}</a>`;
     return favourite;
 }
 
@@ -120,8 +155,9 @@ function submitSearch(event) {
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&type=movie`;
     fetchResults(APIQuery);
     detailsRef.classList.add('details--hidden');
-    resultsRef.classList.remove('results--hidden');
-
+    resultsWrapperRef.classList.remove('results__wrapper--hidden');
+    resultsTitleRef.innerHTML = `Search results for ${searchQuery}:`;
+    formRef.reset();
 }
 
 //Functions: next page
@@ -157,8 +193,8 @@ function fetchDetails(imdbID) {
 
 //Functions: render detailed movie information
 function renderDetails(body) {
-    resultsRef.classList.toggle('results--hidden');
-    detailsRef.classList.toggle('details--hidden');
+    resultsWrapperRef.classList.add('results__wrapper--hidden');
+    detailsRef.classList.remove('details--hidden');
     detailsRef.innerHTML = 
                        `<h1 data-id=${body.imdbID} class='detail detail__title'>${body.Title} (${body.Year}) <input id='check' data-id=${body.imdbID} class='detail__checkbox' type='checkbox'><label class='fa' for='check'></label></h1>
                         <h2 class='detail__plot'>${body.Plot}</h2> 

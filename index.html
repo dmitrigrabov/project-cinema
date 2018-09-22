@@ -10,11 +10,22 @@
     <title>YETFLIX</title>
 </head>
 
-<header>YETFLIX</header>
+<header>
+    <div class="top-menu">
+        <div class='favs-menu'>
+            <i class="fas fa-star"></i>
+            <div class='favs'></div> 
+        </div>
+        
+        <a href='#' class="logo">YETFLIX</a>
+        <i class="fas fa-sign-out-alt"></i>
+    </div>
+
+    
+    
+</header>
 
 <body>
-
-<div class='favs'></div>    
 
 <div class='search'>
     <form class='search__form'>
@@ -23,7 +34,11 @@
     </form>
 </div>
 
-<div class='results'></div>
+<div class='results__wrapper'>
+    <p class='results__title'></p>
+    <div class='results'></div>
+</div>
+
 <div class='details details--hidden'></div>
 
 <nav class='nav'>
