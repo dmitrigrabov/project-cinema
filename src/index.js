@@ -5,6 +5,7 @@ let searchTarget = '';
 let previousSearchTarget = '';
 let addInfoNode = '';
 
+//fetches movies from API - search by names
 function getMoviesByName(movieName){
  return fetch(`${urlBase}s=${movieName}`)
     .then(function(response) {
@@ -15,21 +16,25 @@ function getMoviesByName(movieName){
     })
 }
 
-getMoviesByName('cars');
+//default search for when the page loads
+getMoviesByName('batman');
 
+//creates a list of film by name
 function displayFilms(filmResults) {
     let searchDiv = filmResults.map(film => {
        return `
        <div data-imdbid=${film.imdbID} class='main__film'>
-            <img src='${film.Poster}'/>
-            <h3>${film.Title}</h3>
-            <h4>${film.Year}</h4>
-            <p>${film.Type}</p>
+            <img class='poster' src='${film.Poster}'/>
+            <h3 class='title'>${film.Title}</h3>
+            <h4 class='year'>(${film.Year})</h4>
+            <p class='type'><b>type:</b> ${film.Type}</p>
         </div>`;
     }).join('');
     outputNode.innerHTML = searchDiv;
+    // setBackground()
 }
 
+//event listener on the search form and button
 document.querySelector('form').addEventListener('submit', e =>{
     e.preventDefault();
     const movieName = document.querySelector('#search').value;
@@ -37,6 +42,8 @@ document.querySelector('form').addEventListener('submit', e =>{
     document.querySelector('#search').value = '';
 })
 
+
+//fetches movie infomation by ID
 function getMovieByID(movieID){
     return fetch(`${urlBase}i=${movieID}`)
         .then(function(response){
@@ -47,24 +54,26 @@ function getMovieByID(movieID){
         })
 }
 
+
+//creates and appends a div with additional informaion
 function displayFilmDetails(film){
     const parentNode = searchTarget;
     parentNode.className += ' active';
     addInfoNode = document.createElement('div');
     addInfoNode.className = "add-info";
     addInfoNode.innerHTML = `
-        <p>${film.imdbRating}</p>
-        <p>${film.Actors}</p>
-        <p>${film.Awards}</p>
-        <p>${film.Director}</p>
-        <p>${film.Genre}</p>
-        <p>${film.Plot}</p>`;
+        <p><b>imdb rating:</b> ${film.imdbRating}</p>
+        <p><b>cast:</b> ${film.Actors}</p>
+        <p><b>awards:</b> ${film.Awards}</p>
+        <p><b>director:</b> ${film.Director}</p>
+        <p><b>genre:</b> ${film.Genre}</p>
+        <p><b>plot:</b> ${film.Plot}</p>`;
     parentNode.appendChild(addInfoNode);
     
 }
 
 
-
+//event listener on each film div
 outputNode.addEventListener('click', e=>{
     removeAdditionalInfo();
     if (event.target.closest('.main__film')){
@@ -74,6 +83,8 @@ outputNode.addEventListener('click', e=>{
     }
 })
 
+
+//removes additional info from the film div
 function removeAdditionalInfo(){
     const filmDivs = document.querySelectorAll('.active');
     console.log(filmDivs);

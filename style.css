@@ -1,0 +1,121 @@
+body{
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    background-color: midnightblue;
+}
+
+.app{
+    display: flex;
+    flex-direction: column;
+    align-content:  center;
+    align-items: center;
+    align-self: center;
+    margin: .3em;
+    max-width: 800px;
+    background-color: white;
+    
+}
+
+html {
+    box-sizing: border-box;
+    font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+    color: midnightblue;
+  }
+
+  *,
+  *:before,
+  *:after {
+    /* display: none; */
+    box-sizing: inherit;
+  }
+
+  header{
+      display: flex;
+      flex-direction: row;
+      align-content: center;
+      align-items: baseline;
+      flex-wrap: wrap;
+  }
+
+.logo{
+    margin-right: 1em;
+}
+
+h1{
+    font-family: 'Ultra', serif;
+    font-weight: 200;
+    margin: 0px;
+}
+
+.web-name{
+    margin-right: 1em;
+}
+input{
+    border: .1em solid midnightblue;
+}
+
+button{
+    color: midnightblue;
+}
+
+main{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 800px;
+}
+
+.poster{
+    grid-area: poster;
+    justify-self: end;
+    
+}
+
+.title{
+    grid-area: title;
+    margin-top: .1em;
+    margin-bottom: .3em;
+}
+
+.year{
+    grid-area: year;
+    margin: .0px;
+}
+
+.type{
+    grid-area: type;
+    margin: 0px;
+}
+
+.add-info{
+    grid-area: add-info;
+    margin: 0px;
+}
+
+.main__film{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        'poster title'
+        'poster year'
+        'poster type'
+        'poster add-info';
+    align-items: start;
+    margin-top: 1em;
+    grid-column-gap: 1em;
+    max-width: 800px;
+}
+
+
+.poster{
+    max-width: 47vw;
+}
+
+/* @media(min-width: 768px) {
+    body{
+        background: url(https://m.media-amazon.com/images/M/MV5BMTYwNjAyODIyMF5BMl5BanBnXkFtZTYwNDMwMDk2._V1_SX300.jpg) midnightblue;
+    }
+} */
