@@ -3,7 +3,10 @@ body{
     display: flex;
     flex-direction: column;
     align-content: center;
-    background-color: midnightblue;
+    background: midnightblue no-repeat center center fixed;
+    background-blend-mode: screen;
+    background-size: cover;
+   
 }
 
 .app{
@@ -114,8 +117,6 @@ main{
     max-width: 47vw;
 }
 
-/* @media(min-width: 768px) {
-    body{
-        background: url(https://m.media-amazon.com/images/M/MV5BMTYwNjAyODIyMF5BMl5BanBnXkFtZTYwNDMwMDk2._V1_SX300.jpg) midnightblue;
-    }
-} */
+@media(min-width: 768px) {
+
+}

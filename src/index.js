@@ -19,7 +19,7 @@ function getMoviesByName(movieName){
 //default search for when the page loads
 getMoviesByName('batman');
 
-//creates a list of film by name
+//creates a list of films by name
 function displayFilms(filmResults) {
     let searchDiv = filmResults.map(film => {
        return `
@@ -31,7 +31,16 @@ function displayFilms(filmResults) {
         </div>`;
     }).join('');
     outputNode.innerHTML = searchDiv;
-    // setBackground()
+    let img = filmResults[0].Poster;
+    console.log(img);
+    setBackgroundImgForDesktop(img);
+}
+
+
+function setBackgroundImgForDesktop(img){
+    console.log(img);
+    document.body.style.backgroundImage=`url("${img}")`;
+    document.querySelector('body').className = "opacityClass";
 }
 
 //event listener on the search form and button
@@ -87,7 +96,6 @@ outputNode.addEventListener('click', e=>{
 //removes additional info from the film div
 function removeAdditionalInfo(){
     const filmDivs = document.querySelectorAll('.active');
-    console.log(filmDivs);
     filmDivs.forEach(filmDiv => {
         let addInfoDiv = document.querySelectorAll('.add-info');
         addInfoDiv.forEach(addInfo => {
