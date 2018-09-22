@@ -135,17 +135,14 @@ const addToFavourites = (id, e) => {
 };
 
 const getFavourites = data => {
-  // const favouritesData = JSON.parse(data);
-  const keys = [];
-  for (let key in data) {
-    keys.push(key);
-  }
-  keys.forEach(key => {
-    const favouriteFilm = makeFavourite(key);
+  for (let i = 0; i < data.length; i++) {
+    const film = JSON.parse(data.getItem(data.key(i)));
+    const favouriteFilm = makeFavourite(film.id);
     const parent = document.querySelector('#fav-list');
     addElementToParent(parent, favouriteFilm);
-  });
+  }
 };
+
 /* event listeners */
 
 document.querySelector('#search').addEventListener('submit', e => {
