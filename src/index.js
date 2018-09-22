@@ -10,7 +10,7 @@ let currentPage = 1;
 let loaded = 0;
 
 function getMoviesFromSearch (url){
-    if (searchInput.value.length === 0) return;
+    if (searchInput.value === "") return;
     resultsListNode.innerHTML = `<div class="padding">Loading...</div>`;
     return fetch(url)
     .then(response => response.json())
@@ -62,7 +62,6 @@ function searchHeaderMessage (body) {
 const pageNumbers = function (body) {
     const n = body.totalResults ? body.totalResults : 1;
     const totalPageLinks = Math.floor(n / 10) + 1;
-    console.log(body)
     let html = ``;
     if (totalPageLinks <= 1) {
         resultsShowingNode.innerHTML = "";
@@ -137,14 +136,13 @@ searchInput.addEventListener('input', event => {
 })
 
 function clearNodes(mode, input) {
-    console.log("======== nodes cleared ===========")
     resultsListNode.classList.remove("open");
     resultsListNode.innerHTML = "";
     resultsPagesNode.innerHTML = "";
     resultsShowingNode.innerHTML = '';
 }
 
-// contentNode.addEventListener('click', event => {
+contentNode.addEventListener('click', event => {
 //     if (event.target.matches('.page-number-link')){
 //         prevThumb = document.querySelector(".active");
 //         if (prevThumb !== null) {
@@ -152,4 +150,4 @@ function clearNodes(mode, input) {
 //             event.target.classList.add("active")     
 //         }
 //     }
-// });
+});
