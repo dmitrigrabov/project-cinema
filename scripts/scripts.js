@@ -7,7 +7,7 @@
 const bodyElement = document.querySelector("body");
 const searchTextElement = document.querySelector(".search__text");
 const searchResultsElement = document.querySelector(".results");
-const filmDisplayElement = document.querySelector(".film-display");
+const filmDisplayElement = document.querySelector(".film-container");
 const modal = document.querySelector(".modal");
 const displaySearchButton = document.querySelector(".search__display-bar");
 const searchBarElement = document.querySelector(".nav__search");
@@ -76,7 +76,7 @@ const apiUrls = {
   },
 
   getMovieURL: function() {
-    return `http://www.omdbapi.com/?apikey=210776d9${this.movieParameters.i}`;
+    return `http://www.omdbapi.com/?apikey=210776d9${this.movieParameters.i}&plot=long`;
   },
 
   fetchResults: function(apiURL) {
@@ -98,8 +98,18 @@ const apiUrls = {
     fetch(apiURL)
       .then(response => response.json())
       .then(body => {
+        console.log(body)
         filmDisplayElement.appendChild(fullFilmTemplate(body));
       });
+  },
+
+
+  fetchNews: function(apiURL){
+    fetch(apiURL)
+      .then(response => response.json())
+      .then(body => {
+
+      })
   }
 };
 
@@ -124,12 +134,32 @@ function fullFilmTemplate(result) {
   const template = `
     <div class="film-display">
       <div class="film-display__header">
-        <h2>${result.Title}</h2>
+        <h2>${result.Title} </h2>
         <h2>(${result.Year})</h2>
       </div>
-      <img class="film-display__poster" src=${result.Poster}/>
-      <h4>Cast: ${result.Actors}<h4>
+      <div class="film-display__info">
+        <img class="film-display__poster" src=${result.Poster}/>
+        <div class="film-display__key-facts"
+          <span>${result.Genre} | ${result.Runtime} | ${result.Rated}</span>
+          <span> Director: ${result.Director}</span>
+          <span> Written By: ${result.Writer}</span>
+        </div>
+      </div>
+      <span class="film-display__cast"><strong>Cast:</strong> ${result.Actors}<span>
       <p>${result.Plot}<p>
+      <div class="film-display__ratings">
+        <h5>Ratings & Awards</h5>
+        <span>${result.Awards}</span>
+        <span>${result.Ratings[0].Source}: ${result.Ratings[0].Value}</span>
+        <span>${result.Ratings[1].Source}: ${result.Ratings[1].Value}</span>
+        <span>${result.Ratings[2].Source}: ${result.Ratings[2].Value}</span>
+      </div>
+      <div class="film-display__misc">
+      <h5>Miscellaneous</h5>
+      <span>Released: ${result.Released}, Box Office: ${result.BoxOffice}. DVD: ${result.DVD}</span>
+      <span>${result.Country} | ${result.Language} | ${result.Production} </span>
+      <span> ${result.Website}</span>
+      </div>
     </div>
   `;
   filmInfoElement.innerHTML = template;

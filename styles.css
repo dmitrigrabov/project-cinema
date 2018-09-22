@@ -94,16 +94,55 @@ nav > div {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 1px solid black;
+  padding: 0.5rem;
+  background-color: #F5FFFA
+
 }
 
 .film-display__header{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.film-display__info{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
 }
 
 .film-display__poster{
-  width: 60%;
+  width: 40%;
   height: auto;
   align-self: center;
+}
+
+.film-display__key-facts{
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+  justify-content: space-between;
+}
+
+
+.film-display__cast{
+  margin-top: 1rem;
+}
+
+.film-display__ratings{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #FFFAFA;
+  padding: 0.25rem;
+}
+
+.film-display__misc{
+  display: flex;
+  flex-direction: column;
+    justify-content: space-between;
+  background-color: #FFFAFA;
+  padding: 0.25rem;
+
 }
