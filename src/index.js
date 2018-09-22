@@ -1,10 +1,13 @@
 import * as storage from './localStorage.js';
-// import * as get from './dataGetters';
 
 const myStorage = window.localStorage;
 
 if (storage.storageAvailable('localStorage')) {
-  // console.log(`Welcome, lets start saving locally!`);
+  // localStorage.clear();
+  for (let key in myStorage) {
+    console.log(key);
+  }
+  console.log(myStorage);
 } else {
   console.log('Please enable local storage to save your favourites.');
 }
@@ -22,7 +25,13 @@ const searchFilmBytitle = title => {
   fetch(setUrl(paramsInit, title))
     .then(response => response.json())
     .then(body => displaySearchResults(body.Search))
-    .catch(error => console.log(error));
+    .catch(error => {
+      if (films === undefined) {
+        alert('No films match your query, please search again');
+      } else {
+        alert(error);
+      }
+    });
 };
 
 const getFilmByID = id => {
@@ -103,16 +112,40 @@ const createFilmDetails = film => {
 
 const writeFilmDetails = (parent, film) => {
   document.querySelector(parent).innerHTML = createFilmDetails(film);
-  document.querySelector('#fav').addEventListener('click', e => {
-    const date = new Date(Date.now()).toDateString().slice(4);
-    const favData = Object.assign(
-      {},
-      { id: e.target.attributes[2].value, title: film.Title, favOn: date }
-    );
-    console.log(favData);
-  });
+  setFavButton(film);
 };
 
+/* favourites list */
+const makeFavourite = id => {
+  const favFilm = JSON.parse(myStorage[id]);
+  const favourite = document.createElement('li');
+  favourite.classList.add('fav-list__film');
+  favourite.setAttribute('data-id', id);
+  favourite.innerHTML = `
+            <span class='fav-list__film__title'>${favFilm['title']}</span>
+            <span class='fav-list__film__faved'>${favFilm['favDate']}</span>
+            <button class='fav-list__film__remove'>Remove</button>`;
+  return favourite;
+};
+
+const addToFavourites = (id, e) => {
+  const favouriteFilm = makeFavourite(id, e);
+  const parent = document.querySelector('#fav-list');
+  addElementToParent(parent, favouriteFilm);
+};
+
+const getFavourites = data => {
+  // const favouritesData = JSON.parse(data);
+  const keys = [];
+  for (let key in data) {
+    keys.push(key);
+  }
+  keys.forEach(key => {
+    const favouriteFilm = makeFavourite(key);
+    const parent = document.querySelector('#fav-list');
+    addElementToParent(parent, favouriteFilm);
+  });
+};
 /* event listeners */
 
 document.querySelector('#search').addEventListener('submit', e => {
@@ -127,6 +160,30 @@ document.querySelector('#search-results').addEventListener('click', e => {
   console.log(id);
   getFilmByID(id);
 });
+
+const setFavButton = film => {
+  document.querySelector('#fav').addEventListener('click', e => {
+    // e.target.classList.toggle('fav--active');
+    const date = new Date(Date.now())
+      .toDateString()
+      .slice(4)
+      .split(' ');
+    const favData = Object.assign(
+      {},
+      {
+        id: e.target.attributes[2].value,
+        title: film.Title,
+        isFav: true,
+        favDate: `${date[1]} ${date[0]}, ${date[2]}`
+      }
+    );
+    const id = favData.id;
+    const details = JSON.stringify(favData);
+
+    myStorage.setItem(id, `${details}`);
+    addToFavourites(id, e);
+  });
+};
 
 /* utility functions */
 
@@ -149,5 +206,7 @@ const addElementToParent = (parent, element) => {
 };
 
 /* init  */
+console.log(myStorage);
+getFavourites(myStorage);
 
-searchFilmBytitle('Kidulthood');
+// searchFilmBytitle('Kidulthood');
