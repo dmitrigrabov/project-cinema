@@ -168,50 +168,49 @@ function fetchSingleMovieByID (id){
 
 function convertMovieObject (film) {
     const keys = Object.keys(film);
-    const htmlString = keys.map(item => {
+    const str = keys.map(item => {
         return `<div>${item}: ${film[item]}</div>`
     }).join(' ');
     // console.log(htmlString);
     // return htmlString;
-    return film.Website;
-
-    // return 
-    // `<div class="article__main">
-    //     <div class="article__image">
-    //         <a href="${film.Website}" target="_blank" style="background-image:url(${film.Poster})" class="article__image__src"></a>
-    //     </div>
-    //     <div>
-    //         <span class="article__header">
-    //             <div><a href="${film.Website}" target="_blank"><strong>${film.Title}</strong> ${film.Year}</a></div>
-    //         </span>
-    //     </div>
-    // </div>`;
+    // return film.Plot;
+    const website = film.Website ? `<li><a href="${film.Website}" target="_blank">Visit website</a></li>` : ``;
+    const htmlString = 
+    `<div class="article__main">
+        <div class="article__image">
+            <img src="${film.Poster}" class="article__image__src">
+        </div>
+         <div>
+            <span class="article__header">
+                <div><strong>${film.Title}</strong> ${film.Year}</div>
+            </span>
+        </div>
+        </div>
+        <div class="article__text">
+            <h3>Plot</h3>${film.Plot}
+            <div><a href="https://www.imdb.com/title/${film.imdbID}" target="_blank">More details on IMDB</a></div>
+            <div>
+                <ul>
+                    <li><strong>Year:</strong> ${film.Year}</li>
+                    <li><strong>Released:</strong> ${film.Released}</li>
+                    <li><strong>Rated:</strong> ${film.Rated}</li>
+                    <li><strong>Runtime:</strong> ${film.Runtime}</li>
+                    <li><strong>Genre:</strong> ${film.Genre}</li>
+                    <li><strong>Director:</strong> ${film.Director}</li>
+                    <li><strong>Writer:</strong> ${film.Writer}</li>
+                    <li><strong>Actors:</strong> ${film.Actors}</li>
+                    <li><strong>Language:</strong> ${film.Language}</li>
+                    <li><strong>Country:</strong> ${film.Country}</li>
+                    <li><strong>Awards:</strong> ${film.Awards}</li>
+                    <li><strong>Metascore:</strong> ${film.Metascore}</li>
+                    <li><strong>imdbRating:</strong> ${film.Metascore}</li>
+                    <li><strong>imdbVotes:</strong> ${film.imdbVotes}</li>
+                    <li><strong>BoxOffice:</strong> ${film.BoxOffice}</li>
+                    <li><strong>Production:</strong>  ${film.Production}</li>
+                    ${website}
+                </ul>
+            </div>   
+        </div>
+    </div>`;
+    return htmlString;
 }
-
-//         <div class="article__text">
-//             <div><h3>Plot</h3>${film.Plot}</div>
-//             <div>IMDB link: <a href="https://www.imdb.com/title/${imdbID}" target="_blank">See ${film.Title} on IMDB (${film.imdbVotes} votes)</a></div>
-//             <div>
-//                 <ul>
-//                     <li>Year: ${film.Year}</li>
-//                     <li>Released: ${film.Released}</li>
-//                     <li>Rated: ${film.Rated}</li>
-//                     <li>Runtime: ${film.Runtime}</li>
-//                     <li>Genre: ${film.Genre}</li>
-//                     <li>Director: ${film.Director}</li>
-//                     <li>Writer: ${film.Writer}</li>
-//                     <li>Actors: ${film.Actors}</li>
-//                     <li>Language: ${film.Language}</li>
-//                     <li>Country: ${film.Country}</li>
-//                     <li>Awards: ${film.Awards}</li>
-//                     <li>Metascore: ${film.Metascore}</li>
-//                     <li>imdbRating: ${film.Metascore}</li>
-//                     <li>imdbVotes: ${film.imdbVotes}</li>
-//                     <li>BoxOffice: ${film.BoxOffice}</li>
-//                     <li>Production:  ${film.Production}</li>
-//                     <li>Website: <a href="${film.Website}" target="_blank"</a></li>
-//                 </ul>
-//             </div>   
-//         </div>
-//     </div>`;
-// }

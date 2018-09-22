@@ -4,17 +4,23 @@ body {
     box-sizing: border-box;
     line-height: 1.5rem;
     letter-spacing: 0.02rem;
-    background-color: rgb(227, 227, 227);
+    background-color: black;
+    display: 
 }
-
+  
 * {
     box-sizing: inherit;
+}
+
+a, a.li, li.a, li a, a li {
+    list-style: none;
 }
 
 .app {
     display: flex;
     flex-direction: column;
     flex-grow: initial;
+    background-color:rgb(227, 227, 227);
 }
 
 input {
@@ -104,10 +110,10 @@ header {
     justify-content: flex-start;
     position:static;
     flex: 3;
-    margin: 0;
-    padding: 1rem;
+    margin: 1rem;
+    padding: 0;
     font-size: 1rem;
-
+    background-color:rgb(227, 227, 227);
 }
 
 .page-number-link {
@@ -143,7 +149,7 @@ a.page-number-link:hover {
 }
 
 .results-pages {
-    padding: 1.5rem 0 1.5rem 0;
+    padding: 1rem 0 1rem 0;
     overflow: auto;
     white-space: nowrap;
 }
@@ -155,8 +161,6 @@ a.page-number-link:hover {
 
 .result-link a {
     display: block;
-    /* background-color: rgb(255, 235, 170); */
-    /* background-color: #fffcea; */
     background-color: white;
     padding: 0.5rem 1rem 0.5rem 1rem;
     line-height: 1rem;
@@ -178,15 +182,20 @@ a.page-number-link:hover {
 	background: #ffffff;
     border-radius: 0.6em;
     z-index: 1;
-    padding: 1rem;
-    margin: 1rem 2em 1rem 2em;
+    padding: 1.3rem;
+    margin: 1rem 3em 3rem 3em;
+    display:initial;
+}
+
+.info-bubble.off {
+    display:none;
 }
 
 .info-bubble:after {
 	content: '';
 	position: absolute;
 	left: 0;
-	top: 70%;
+	top: 60%;
 	width: 0;
 	height: 0;
 	border: 1.781rem solid transparent;
@@ -222,11 +231,12 @@ a.page-number-link:hover {
     margin: 0;
     font-size: 1rem;
     line-height: 3rem;
-    background-color: #222;
+    background-color: #333;
+    color:white;
+
   }
   
   .footer__contact {
-    color: white;
     text-align: center;
   }
 
@@ -239,7 +249,6 @@ a.page-number-link:hover {
   
   .footer__contact a {
     font-weight: 700;
-    letter-spacing: 0.2em;
     /* border-bottom: solid 0.1em #ff2108; */
     padding: 0.2rem 0.3rem 0.1rem 0.3rem;
     background: #666;
@@ -248,7 +257,7 @@ a.page-number-link:hover {
   
   .footer__contact a:link, 
   .footer__contact a:visited {
-    background: #555;
+    background: #666;
     color:white;
     /* border-bottom: solid 0.1rem #ff2108; */
   }
@@ -264,12 +273,14 @@ a.page-number-link:hover {
       display: none;
       background: black;
       padding: 1rem;
-      margin: 0;
+      margin-top: 2rem;
       color: white;
   }
 
   .film-content.on {
     display: block;
+    padding:2rem;
+    margin-bottom: 2rem;
   }
 
   .article__list {
@@ -281,44 +292,61 @@ a.page-number-link:hover {
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
+    padding: 0;
     /* ADD MARGIN-BOTTOM TO MAIN if you want to separate articles */
-    margin-bottom: 2rem;
-    height: 900px;
+    /* margin-bottom: 2rem; */
+    /* height: 900px; */
 }
 
 .article__main li {
     padding: 0.3em 0;
 }
 
+.article__main li a {
+    list-style: none;
+}
+
+.article__main a, a.article__main li {
+    list-style: none;
+}
+
 .article__header {
     display: block;
-    font-size: 1.2rem;
-    background: rgb(245, 244, 241);
-    color: black;
-    padding: 1rem 1rem;
+    font-size: 2.2rem;
+    background-color:rgb(227, 227, 227);
+    color:  #ff2108;
+    padding: 1rem 2rem;
     height: 30%;
     margin: 0;    
+    text-decoration: none;
+    border-bottom: 1px solid #ddd;
+    background: #eee;
+    line-height: 3rem;
 }
 
 .article__header a {
     color: black;
+    background: #eee;
     text-decoration: none;
+    list-style: none;
 }
 
 .article__header a:hover {
-    color: #ff9900;
+    background: #eee;
     text-decoration: underline;
 }
 
 .article__image {
-  display: none;
+  display: initial;
 }
 
 .article__image__src {
     /* ADDED by Mel display: block - to make the a element behave as a block element and properly 'contain' the image. It's naturally an inline element.*/
-    padding: 20%;
+    /* padding: 60%; */
     display: block;
     width: 100%;
+    object-fit: cover;
+    /* object-fit: contain d; */
 }
 
 .article__text {
@@ -326,28 +354,34 @@ a.page-number-link:hover {
     justify-content: flex-start;
     flex-direction: column;
     font-size: 1rem;
-    background: #ffffff;
+    background: #fff;
     color: black;
-    padding: 1rem;
+    padding: 0 2rem 2rem 2rem;
+    margin: 0;
     flex: 3;
+    list-style: none;
 }
 
 .article__text a {
     /* changed Sunday morning */
     text-decoration: none;
-    padding: 0.7rem;
-    line-height: 3rem; 
-    background-color: #ffc062;
-    color: rgb(120, 46, 0);
     font-weight: normal;
-    border-radius: 0.3rem;
     list-style: none;
-    height: 60%
+    height: 60%;
+    display: initial;
+    background-color: #ddd;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    line-height: 1rem;
+    color: black;    
+    list-style: none;
+    /* border-radius: 0.2rem; */
 }
 
 .article__text a:hover {
-    background-color: #ff9900;
+    background: #666;
     color: white;
+    /* border: solid 1px #ff2108; */
 }
 
 .article__text div  {
