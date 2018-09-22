@@ -77,14 +77,14 @@ form {
   align-self: center;
 }
 
-.is__hidden {
-  display: none;
-}
-
 .info__panel {
   background: #1d2d47;
+  max-width: 50%;
+  color: #fff;
   position: absolute;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-row-gap: 1em;
   align-self: center;
 }
 
@@ -92,7 +92,34 @@ form {
   background: none;
   border: none;
   color: #fff;
-  align-self: flex-end;
+  padding: 10px;
+}
+.close {
+  display: grid;
+  justify-items: end;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  background: #152135;
+}
+.img__title__date__genre {
+  padding-left: 20px;
+  background: #1d2d47;
+}
+.desc {
+  background: #1d2d47;
+  padding: 10px;
+}
+.director__starring {
+  padding-left: 20px;
+  background: #152135;
+}
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #152135;
+}
+.stars {
 }
 
 .checked {
