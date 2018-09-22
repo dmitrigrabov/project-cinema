@@ -92,3 +92,11 @@ body {
 .next {
   text-align: right;
 }
+
+.more {
+  color: grey;
+}
+
+.movie-ID {
+  display: hidden;
+}
