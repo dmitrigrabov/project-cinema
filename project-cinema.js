@@ -11,12 +11,12 @@ const body = document.querySelector("body");
 const results = document.querySelector(".results");
 const submit = document.querySelector(".submit-button");
 const searchValue = document.querySelector(".search-input");
+let searchString = "";
 const form = document.querySelector(".search-form");
 const next = document.querySelector(".next");
 const previous = document.querySelector(".previous");
-// const toggle = document.querySelector(".");
 
-function searchMovie(searchWord) {
+function searchMovie(searchWord, page) {
   fetch(`http://www.omdbapi.com/?s=${searchWord}&apikey=dd68f9f&page=${page}`)
     .then(function(response) {
       return response.json();
@@ -63,11 +63,15 @@ form.addEventListener("submit", function(event) {
     append(results, showSearch);
 
     searchMovie(searchValue.value);
+    searchString = searchValue.value;
+    console.log(searchString);
     searchValue.value = "";
+    console.log(searchString);
   }
 });
 
 next.addEventListener("click", function(event) {
-  preventDefault();
+  event.preventDefault();
   page++;
+  searchMovie(searchString, page);
 });
