@@ -2,12 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Movie Search</title>
+    <title>YETFLIX</title>
 </head>
 
-<header>Movie Search</header>
+<header>YETFLIX</header>
 
 <body>
 
@@ -15,14 +18,15 @@
 
 <div class='search'>
     <form class='search__form'>
-        <input class='search__input' name="search" placeholder="Search..."  type="text">
-        <input class='search__button' type="submit" name="submit" value="Search!"> 
+        <input class='search__input' name="search" placeholder="Search..."  type="text" autocomplete="off">
+        <button type="submit"><i class="search__icon fa fa-search"></i></button>
     </form>
 </div>
 
 <div class='results'></div>
+<div class='details details--hidden'></div>
 
-<nav>
+<nav class='nav'>
     <a href="#" class="nav__prev">&#8249;</a>
     <a href="#" class="nav__next">&#8250;</a>
 </nav>

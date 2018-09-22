@@ -1,0 +1,207 @@
+/* Default styling */
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: Helvetica, sans-serif;
+}
+
+header {
+    font-family: 'Pathway Gothic One', sans-serif;
+    color: #e50914;
+    text-align: center;
+    font-size: 4rem;
+}
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+h4 {
+
+}
+
+h5 {
+
+}
+
+h6 {
+}
+
+h7 {
+    
+}
+
+body {
+    background: #272727;
+    color: #c2c2c2;
+    font-size: 11pt;
+}
+
+.search {
+    padding-top: 2rem;
+}
+
+.search__input {
+    width: 200px;
+    height: 25px;
+    border: 2px solid #c2c2c2;
+    border-radius: 4px;
+    background: #272727;
+    color: #c2c2c2;
+    padding-left: 10px;
+}
+
+.search__input:focus {
+    outline-width: 0;
+}
+.search__form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search__icon {
+    font-size: 1.5rem;
+    color: #c2c2c2;
+    margin-left: 20px;
+}
+
+.results {
+    display: block;
+    overflow: auto;
+    white-space: nowrap;
+    margin: 4rem 0 1rem 0;
+}
+
+.results--hidden {
+    display: none;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+
+.result {
+    display: inline-block;
+    text-align: center;
+    padding: 0;
+    text-decoration: none;
+    width: 35%;
+    margin: 0 0.2rem 0 0.2rem;
+}
+
+.result__wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.result__title {
+    width: 100%;
+    padding: 0.2rem;
+    white-space: initial;
+    font-size: 0.5rem;
+    font-weight: 300;
+}
+
+.result__poster {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.details {
+    display: block;
+    transition: 0.3s;
+}
+
+.details--hidden {
+    display: none;
+}
+
+.detail__title {
+    font-size: 1rem;
+    padding-top: 1rem;
+}
+
+.detail__plot {
+    font-size: 0.6rem;
+    font-weight: 300;
+}
+
+.detail__poster {
+    width: 60%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.detail__info {
+    font-size: 0.6rem;
+    font-weight: 200;
+    padding-top: 0.3rem;
+}
+
+.detail__director {
+    font-size: 0.6rem;
+    font-weight: 200;
+    padding-top: 0.3rem;
+}
+
+.detail__actors {
+    font-size: 0.6rem;
+    font-weight: 200;
+    padding-top: 0.3rem;
+}
+
+.detail__awards {
+    font-size: 0.6rem;
+    font-weight: 200;    
+    padding-top: 0.3rem;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #c2c2c2;
+}
+
+.detail__checkbox {
+    display: none;  
+}
+
+.detail__checkbox  + label.fa {
+    color: #c2c2c2;
+    font-size: 15px;
+}
+
+.detail__checkbox:checked +label.fa {
+    color: rgb(243, 217, 70);
+}
+
+.detail__checkbox + label.fa:before {
+    display: inline-block;
+    content: "\f005";
+}
+
+.detail__checkbox:checked +label.fa:before {
+    content: "\f005";
+    position: relative;
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) {
+
+}
+
+
+/* Desktop */
+@media screen and (min-width: 960px) {
+
+}
