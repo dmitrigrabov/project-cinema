@@ -3,6 +3,10 @@
   display: none;
 }
 
+.hidden {
+  display: none;
+}
+
 .fav--active {
   background: green;
 }

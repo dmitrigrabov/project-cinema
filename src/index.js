@@ -119,39 +119,15 @@ const makeFavourite = id => {
             <span class='favourites__list__film__faved'>${
               favFilm['favDate']
             }</span>
-            <button class='favourites__list__film__remove'>Remove</button>`;
+            <button class='favourites__list__film__remove'>Delete</button>`;
   return favourite;
 };
 
-const addToFavourites = (id, e) => {
-  const favouriteFilm = makeFavourite(id, e);
-  const parent = document.querySelector('#fav-list');
-  addElementToParent(parent, favouriteFilm);
-};
-
-const getFavourites = data => {
-  const parent = document.querySelector('#favourites__list');
-  parent.innerHTML = '';
-  for (let i = 0; i < data.length; i++) {
-    const film = JSON.parse(data.getItem(data.key(i)));
-    const favouriteFilm = makeFavourite(film.id);
-    addElementToParent(parent, favouriteFilm);
-  }
-  document.querySelector('#favourites__count').textContent = myStorage.length;
-};
-
-/* event listeners */
-
-document.querySelector('#search').addEventListener('submit', e => {
-  e.preventDefault();
-  const query = e.currentTarget.query.value;
-  searchFilmBytitle(query);
-});
-
-document.querySelector('#search-results').addEventListener('click', e => {
-  const id = e.target.parentNode.attributes[1].nodeValue;
-  getFilmByID(id);
-});
+// const addToFavourites = (id, e) => {
+//   const favouriteFilm = makeFavourite(id, e);
+//   const parent = document.querySelector('#fav-list');
+//   addElementToParent(parent, favouriteFilm);
+// };
 
 const setFavButton = film => {
   document.querySelector('#fav').addEventListener('click', e => {
@@ -178,6 +154,53 @@ const setFavButton = film => {
     getFavourites(myStorage);
   });
 };
+
+const getFavourites = data => {
+  const parent = document.querySelector('#favourites__list');
+  parent.innerHTML = '';
+  for (let i = 0; i < data.length; i++) {
+    const film = JSON.parse(data.getItem(data.key(i)));
+    const favouriteFilm = makeFavourite(film.id);
+    addElementToParent(parent, favouriteFilm);
+  }
+  document.querySelector('#favourites__count').textContent = myStorage.length;
+};
+
+/* event listeners */
+
+/* Search */
+
+document.querySelector('#search').addEventListener('submit', e => {
+  e.preventDefault();
+  const query = e.currentTarget.query.value;
+  searchFilmBytitle(query);
+});
+
+/* Film details */
+
+document.querySelector('#search-results').addEventListener('click', e => {
+  const id = e.target.parentNode.dataset.id;
+  getFilmByID(id);
+});
+
+/* Favourites */
+
+document.querySelector('#favourites').addEventListener('click', e => {
+  if (e.target.innerText === 'Delete') {
+    const id = e.target.parentNode.dataset.id;
+    e.target.parentNode.classList.add('hidden');
+
+    myStorage.removeItem(id);
+    document.querySelector('#favourites__count').textContent = myStorage.length;
+  } else if (e.target.innerText === 'Delete all') {
+    myStorage.clear();
+    getFavourites(myStorage);
+  }
+});
+
+/* Delete all favourites */
+
+/* Delete individual favourite */
 
 /* utility functions */
 
