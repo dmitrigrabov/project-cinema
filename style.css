@@ -137,7 +137,7 @@ body {
 
 .buttons__button-next {
     position: fixed;
-    right: calc(50% - 1.9rem);
+    right: calc(50% - 1.7rem);
     bottom: calc(0% + 0.2rem);
     font-size: 1.3rem;
     border: none;
@@ -154,7 +154,7 @@ body {
 .buttons__button-prev {
     position: fixed;
     top: calc(0% + 0.2rem);
-    right: calc(50% - 1.9rem);
+    right: calc(50% - 1.7rem);
     font-size: 1.3rem;
     color: black;
     opacity: 0.6;
@@ -168,11 +168,28 @@ body {
 
 .results {
     display: grid;
+    grid-gap: 1rem;
 }
 
 .results__searchResult {
     display: grid;
     grid-template-rows: auto auto 1fr min-content;
+    grid-gap: 0.5rem;
+}
+
+.results__searchResult p:first-child {
+    margin-top: 0.5rem;
+}
+
+.results__searchResult p{
+    padding-left: 0.5rem;
+    margin: 0;
+    grid-gap: 0.5rem;
+}
+
+.results__searchResult p:nth-child(3) {
+    margin: 0;
+    padding: 0;
 }
 
 .results__searchResult:nth-child(odd) {
@@ -192,14 +209,12 @@ body {
 @media (min-width: 500px) {
     .results {
         grid-template-columns: 1fr 1fr;
-        grid-gap: 1rem;
     }
 }
 
 @media (min-width: 768px) {
     .results {
         grid-template-columns: 1fr 1fr;
-        grid-gap: 1rem;
     }
 }
 
