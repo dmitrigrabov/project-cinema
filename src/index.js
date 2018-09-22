@@ -10,39 +10,46 @@ let currentPage = 1;
 let prevThumb = null;
 let loaded = 0;
 
-function getMoviesFromSearch (url, state){
+function getMoviesFromSearch (url){
     if (searchInput.value.length === 0) return;
-    resultsListNode.innerHTML = 'Loading...';
+    resultsListNode.innerHTML = `<div class="padding">Loading...</div>`;
     return fetch(url)
     .then(response => response.json())
     .then(body => {
-        // console.log({body})
-        if (loaded === 0 || state === 'input') { 
+        // if (loaded === 0) { 
             searchHeaderMessage(body);
             pageNumbers(body);
             loaded = 1;
-        }
+        // }
         return body.Search;
     }).catch(error => console.log(error));
 }
 
 function getMoviesFromPagination (url){
+    resultsListNode.innerHTML = `<div class="padding">Loading...</div>`;
     return fetch(url)
     .then(response => response.json())
-    .then(body => body.Search)
+    .then(body => {
+        searchHeaderMessage(body);
+        pageNumbers(body);
+        return body.Search
+    })
     .catch(error => console.log(error))
 }
 
 // render film list
 function renderFilmList(filmList) {
     if (filmList === undefined) {
+        console.log("undefined ========================")
+        // resultsHeaderNode.innerHTML = '';
         // resultsShowingNode.innerHTML = '';
         // resultsPagesNode.innerHTML = '';
+        // resultsListNode.innerHTML = "";
+        // resultsListNode.classList.remove("open");
+        clearNodes();
         return;
     }
     return filmList.map(film => {
-        console.log("inside filmList")
-        // const title = hightlightedWords(film.Title)
         return `<div class="result-link"><a href=${baseUrl}&i=${film.imdbID} target="_blank">${film.Title}, ${film.Year}</a></div>`;
     }).join('');
 }
@@ -62,37 +69,38 @@ const pageNumbers = function (body) {
         resultsShowingNode.innerHTML = "";
         return;
     } else {
-        console.log(totalPageLinks);
         resultsShowingNode.innerHTML = `<div><i>, page ${currentPage} of ${totalPageLinks}</i></div><div>`;
         for (let i=1; i<=totalPageLinks; i++) {
             const active = i === 1 ? " active" : "";
-            html += `<a class="page-number-link${active}" href="#" onClick=newSearchPageFetch(${i},${totalPageLinks})>&nbsp;${i}&nbsp;</a>`
+            html += `<a class="page-number-link${active} shadow-light" href="#" onClick="fetchFromButton(${i},${totalPageLinks});">&nbsp;${i}&nbsp;</a>`
         }
-        document.querySelector(".active").click();
     }
     resultsPagesNode.innerHTML = "";
     resultsPagesNode.innerHTML = html;
 }
 
-function renderResultsFromSearch(page, state) {
-    if (searchInput.value.length === 0) return;
-    resultsListNode.classList.add("active");
+function renderResultsFromSearch(page, mode) {
+    resultsListNode.classList.add("open");
     const url = `${baseUrl}&s=${searchInput.value}&page=${page}`;
-    getMoviesFromSearch(url, state).then(filmList => {
+    getMoviesFromSearch(url, mode).then(filmList => {
         resultsListNode.innerHTML = renderFilmList(filmList);
     });
 }
 
-const newSearchPageFetch = function (page, totalPageLinks){
+function fetchFromButton(page, totalPageLinks) {
     resultsShowingNode.innerHTML = `<div><i>, page ${page} of ${totalPageLinks}</i></div>`;
-    renderResultsFromSearch(page);
-    currentPage = page;
+    resultsListNode.classList.add("open");
+    const url = `${baseUrl}&s=Jaws&page=${page}`;
+    getMoviesFromPagination(url).then(filmList => {
+        resultsListNode.innerHTML = renderFilmList(filmList);
+        currentPage = page;    
+    });
 }
 
 contentNode.addEventListener('click', event => {
-    console.log(event.target)
-    if (event.target.matches('.page-number-link')){
+    if (event.target.matches('.page-number-link')){   
         const prevThumb = document.querySelector(".active");
+        console.log("=================== " + prevThumb)
         if (prevThumb !== null) {
             prevThumb.classList.remove("active")
             event.target.classList.add("active")
@@ -103,7 +111,9 @@ contentNode.addEventListener('click', event => {
 form.addEventListener('submit', event => {	
     currentPage = 1;   
     event.preventDefault();
-    renderResultsFromSearch(currentPage, 'submit');
+    if (event.target.value.length >= 3) {
+        renderResultsFromSearch(currentPage);
+    }
 });
 
 searchInput.addEventListener('input', event => {
@@ -111,14 +121,24 @@ searchInput.addEventListener('input', event => {
     const input = event.target.value;
     if (input[input.length-1] === ' ') return;
     if (event.target.value.length >= 3) {
-        renderResultsFromSearch(currentPage, 'input');
+        renderResultsFromSearch(currentPage);
     } else {
-        resultsListNode.innerHTML = "";
-        resultsListNode.classList.remove("active");
+        clearNodes();
     }
-    // console.log(input)
 })
 
+function clearNodes() {
+    resultsListNode.classList.remove("open");
+    resultsListNode.innerHTML = "";
+    resultsPagesNode.innerHTML = "";
+    resultsShowingNode.innerHTML = '';
+    resultsHeaderNode.innerHTML = 
+    `<div><b><i>
+        Please type at least 3 letters to search...
+    </i></b></div>`;
+}
+
+        // const title = hightlightedWords(film.Title)
 
 // function hightlightedWords(title){
 //     const titleArray = title.split(" ")
@@ -135,4 +155,12 @@ searchInput.addEventListener('input', event => {
 //         return found ? `<span class="highlighted">${hay}</span>` : hay;
 //     });
 //     return output;
+// }
+
+
+// const fetchFromButton = function (page, totalPageLinks){
+//     // resultsShowingNode.innerHTML = `<div><i>, page ${page} of ${totalPageLinks}</i></div>`;
+//     // console.log("clicked ===============")
+//     getMoviesFromPagination(url);
+//     currentPage = page;
 // }
