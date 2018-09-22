@@ -98,10 +98,14 @@ const apiUrls = {
     fetch(apiURL)
       .then(response => response.json())
       .then(body => {
-        const newsApiString = `https://newsapi.org/v2/everything?q=${body.Title}&apiKey=9ed005ef4eb94baf913fce701c69972f`
+        console.log(body.Title)
         filmDisplayElement.appendChild(fullFilmTemplate(body));
-        this.fetchNews(newsApiString)
+        this.fetchNews(this.getNewsURL(body.Title))
       });
+  },
+
+  getNewsURL: function(searchString){
+    return `https://newsapi.org/v2/everything?q="${searchString}"&sortBy=relevancy&pageSize=6&apiKey=9ed005ef4eb94baf913fce701c69972f`
   },
 
 //tried writing this as pure but no luck

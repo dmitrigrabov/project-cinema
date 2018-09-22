@@ -9,7 +9,11 @@ body {
 
 nav > div {
   height: 10vh;
-  background-color: black;
+  background-color: #FBFBFC;
+  background:url(
+
+  data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKklEQVQoU2P8/fvPfwYiAOMgUvjr108GNjZ2DFdT7kZ0kyk3Ed2RRJsIAKsgLXVT7f82AAAAAElFTkSuQmCC
+    ) repeat;
 }
 
 .nav__home{
@@ -19,7 +23,25 @@ nav > div {
 }
 
 .logo{
-  color: yellow;
+  margin-left: 1rem;
+  color: #E10703;
+  font-family: 'Six Caps', sans-serif;
+  align-self: center;
+  letter-spacing: 0.8rem;
+  font-size: 2rem;
+  font-weight:bold;
+}
+
+.search__display-bar{
+  color: #F89B0A;
+  font-size: 1.5rem;
+  align-self: center;
+  margin-right: 1rem;
+}
+
+.search__display-bar:hover{
+  color: #050505;
+
 }
 
 
@@ -28,9 +50,38 @@ nav > div {
   display: none;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
 }
 
+
+main{
+  background-color: #696969;
+  height: 90vh;
+  display: flex;
+  flex-direction: column
+
+}
+
+.landing-page{
+  background-color: #E10703;
+  height: 90vh;
+  display: flex;
+  flex-direction: column
+}
+
+.landing-icon{
+  font-size: 6rem;
+  align-self: center;
+  margin-top: 5rem;
+  color: #FBFBFC;
+
+
+}
+
+.landing-text{
+  color: #FBFBFC;
+  align-self: center;
+  font-size: 1.5rem;
+}
 
 
 .modal{
@@ -157,6 +208,8 @@ nav > div {
 .film-display__news-item{
   display: flex;
   flex-direction: column;
+  background-color: snow;
+  margin: 0.5em;
 }
 
 
