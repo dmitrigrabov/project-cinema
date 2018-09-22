@@ -13,9 +13,9 @@
 
 - [ ] **Work using mobile first, that is create the mobile version first and add tablet and desktop versions after.**
 - A mobile-first responsive design responsive that looks great at different screen widths
-- [ ] ~~Create an HTML page which should have a `form` at the top which contains a text input and a submit button. Below it should have a placeholder element for the returned results.~~
+  <!-- - [ ] ~~Create an HTML page which should have a `form` at the top which contains a text input and a submit button. Below it should have a placeholder element for the returned results.~~
 - [ ] ~~Use JavaScript to capture the `submit` event in your search form, extract the query string from the text input and use that to make an API call to the Open Movie Database API to search for films which match the query string using `fetch`. `console.log` the results~~
-- [ ] ~~Display the data returned by the API including title, year and poster picture~~
+- [ ] ~~Display the data returned by the API including title, year and poster picture~~ -->
 
 ### Movie details
 
@@ -29,11 +29,11 @@
 
 ## TODO
 
-- [ ] **Filter fetch results to show only movies**
+<!-- - [ ] **Filter fetch results to show only movies** -->
 
 - [ ] **Implement any feature you would find useful or interesting**
 
-- [ ] **Implement pagination so that users can navigate between all movies in search results rather than just the first ten**
+<!-- - [ ] **Implement pagination so that users can navigate between all movies in search results rather than just the first ten** -->
 
 - [ ] **Include a screenshot of your app in the README.**
 
@@ -43,11 +43,11 @@
 
 ### stretch goal - favourites
 
-- [ ] Create a favourites list. It's up to you how you would add items to favourites. You could add a button or otherwise. Display a list of favourites somewhere on your page.
+<!-- - [ ] Create a favourites list. It's up to you how you would add items to favourites. You could add a button or otherwise. Display a list of favourites somewhere on your page. -->
 
 - [ ] Make the favourites list sortable. Add `up` and `down` buttons to your favourites which on click will move the result in relevant direction.
 
-- [ ] Save favourites locally using `localStorage` so that favourites persist in browser after refresh.
+<!-- - [ ] Save favourites locally using `localStorage` so that favourites persist in browser after refresh. -->
 
 ---
 

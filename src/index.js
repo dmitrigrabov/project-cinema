@@ -5,6 +5,7 @@ const myStorage = window.localStorage;
 if (storage.storageAvailable('localStorage')) {
   // localStorage.clear();
   console.log(`You’re all set to save your favourite films`);
+  console.log(myStorage);
 } else {
   console.log('Please enable local storage to save your favourites.');
 }
@@ -44,6 +45,7 @@ const getFilmByID = id => {
 const displaySearchResults = films => {
   console.log(films);
   const searchResults = createElement('div');
+  searchResults.setAttribute('id', `page-${params.pageNum}`);
   films.Search.forEach(film => {
     const filmListing = createFilmSearchListing(
       film.imdbID,
@@ -83,10 +85,10 @@ const createArticle = (articleClass = '') => {
 const createPagination = data => {
   const numPages = Math.ceil(Number(data.totalResults) / 10);
   document.querySelector('.page-total').textContent = numPages;
+  // document.querySelector('#page-nav').classList.toggle('hidden');
 };
 
 const nextPage = document.querySelector('#page-nav .next');
-console.log(nextPage);
 nextPage.addEventListener('click', e => {
   const currentPageNum = document.querySelector('.page-current');
   const totalPageNum = document.querySelector('.page-total');
@@ -107,6 +109,11 @@ prevPage.addEventListener('click', e => {
   searchFilmBytitle(params.query);
   document.querySelector('.page-current').textContent = params.pageNum;
 });
+
+/* infinite scroll */
+const infiniteScroll = () => {
+  const trigger = document.querySelector('#');
+};
 
 /* film details */
 
@@ -155,12 +162,6 @@ const makeFavourite = id => {
   return favourite;
 };
 
-// const addToFavourites = (id, e) => {
-//   const favouriteFilm = makeFavourite(id, e);
-//   const parent = document.querySelector('#fav-list');
-//   addElementToParent(parent, favouriteFilm);
-// };
-
 const setFavButton = film => {
   document.querySelector('#fav').addEventListener('click', e => {
     // TODO: highlight favourited film when display details
@@ -181,7 +182,7 @@ const setFavButton = film => {
     const id = favData.id;
     const details = JSON.stringify(favData);
 
-    myStorage.setItem(id, `${details}`);
+    myStorage.setItem(`${myStorage.length}`, `${details}`);
     // addToFavourites(id, e);
     getFavourites(myStorage);
   });
@@ -191,9 +192,12 @@ const getFavourites = data => {
   const parent = document.querySelector('#favourites__list');
   parent.innerHTML = '';
   for (let i = 0; i < data.length; i++) {
-    const film = JSON.parse(data.getItem(data.key(i)));
-    const favouriteFilm = makeFavourite(film.id);
-    addElementToParent(parent, favouriteFilm);
+    // if isFav = true
+    console.log(data[i]);
+    if (data[i].includes('"isFav":true')) {
+      const favouriteFilm = makeFavourite(`${i}`);
+      parent.insertBefore(favouriteFilm, parent.firstChild);
+    }
   }
   document.querySelector('#favourites__count').textContent = myStorage.length;
 };
@@ -220,10 +224,16 @@ document.querySelector('#search-results').addEventListener('click', e => {
 
 document.querySelector('#favourites').addEventListener('click', e => {
   if (e.target.innerText === 'Delete') {
+    console.log(e.target);
     const id = e.target.parentNode.dataset.id;
     e.target.parentNode.classList.add('hidden');
-
-    myStorage.removeItem(id);
+    console.log(typeof myStorage);
+    console.log(typeof myStorage[id]);
+    // const myFilm = JSON.parse(myStorage[id]);
+    // myFilm.isFav = false;
+    // console.log(myFilm);
+    const updatedFav = myStorage[id].replace('isFav":true', 'isFav":false');
+    myStorage.setItem(id, updatedFav);
     document.querySelector('#favourites__count').textContent = myStorage.length;
   } else if (e.target.innerText === 'Delete all') {
     myStorage.clear();
