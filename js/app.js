@@ -24,6 +24,7 @@ form.addEventListener('submit', (e) => {
 nextBtn.addEventListener('click', (e) => {
     e.preventDefault();
     results.innerHTML = '';
+    nextBtn.style.border = 'none';
     if (pageNumber >= totalPages) {
     } else {
         pageNumber++;
@@ -43,7 +44,7 @@ prevBtn.addEventListener('click', (e) => {
 
 
 function runFetch(inputValue, pageNumber) {
-    fetchUrl = `http://www.omdbapi.com/?apikey=f899a3c1&s=${inputValue}&page=${pageNumber}&i=tt1504019&plot=full`;
+    fetchUrl = `https://www.omdbapi.com/?apikey=f899a3c1&s=${inputValue}&page=${pageNumber}&i=tt1504019&plot=full`;
     fetch(fetchUrl)
         .then((response) => {
             return response.json();
@@ -56,7 +57,7 @@ function runFetch(inputValue, pageNumber) {
 
             body.Search.forEach(e => {
                 imdbID = e.imdbID;
-                fetch(`http://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=f899a3c1`)
+                fetch(`https://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=f899a3c1`)
                     .then((response) => {
                         return response.json();
                     })
@@ -72,6 +73,7 @@ function runFetch(inputValue, pageNumber) {
                         searchResult.innerHTML = `
                     <p class="results__searchResult__title">${e.Title}</p>
                     <p class="results__searchResult__year">${e.Year}</p>
+                    <p></p>
                     <img class="results__searchResult__poster" src="${currentPoster}"/>
                     `;
 
