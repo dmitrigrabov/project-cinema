@@ -9,18 +9,20 @@ if (storage.storageAvailable('localStorage')) {
   console.log('Please enable local storage to save your favourites.');
 }
 
-const paramsInit = {
-  base: 'http://www.omdbapi.com/?apikey=507b4100&type=movie'
+const params = {
+  base: 'http://www.omdbapi.com/?apikey=507b4100&type=movie',
+  pageNum: 1
 };
 
 const setUrl = (paramsInit, query = '', id = '') => {
-  return `${paramsInit.base}&s=${query}&i=${id}`;
+  // console.log(`${paramsInit.base}&page=${params.pageNum}&s=${query}&i=${id}`);
+  return `${paramsInit.base}&page=${params.pageNum}&s=${query}&i=${id}`;
 };
 
 const searchFilmBytitle = title => {
-  fetch(setUrl(paramsInit, title))
+  fetch(setUrl(params, title))
     .then(response => response.json())
-    .then(body => displaySearchResults(body.Search))
+    .then(body => displaySearchResults(body))
     .catch(error => {
       if (films === undefined) {
         alert('No films match your query, please search again');
@@ -31,7 +33,7 @@ const searchFilmBytitle = title => {
 };
 
 const getFilmByID = id => {
-  fetch(setUrl(paramsInit, '', id))
+  fetch(setUrl(params, '', id))
     .then(response => response.json())
     .then(body => writeFilmDetails('#film-details', body))
     .catch(error => console.log(error));
@@ -40,8 +42,9 @@ const getFilmByID = id => {
 /*  Search resutls */
 
 const displaySearchResults = films => {
+  console.log(films);
   const searchResults = createElement('div');
-  films.forEach(film => {
+  films.Search.forEach(film => {
     const filmListing = createFilmSearchListing(
       film.imdbID,
       film.Title,
@@ -54,6 +57,7 @@ const displaySearchResults = films => {
   searchResultsWrapper.innerHTML = '';
 
   addElementToParent(searchResultsWrapper, searchResults);
+  createPagination(films);
 };
 
 const createFilmSearchListing = (id, title, year, poster) => {
@@ -75,6 +79,34 @@ const createArticle = (articleClass = '') => {
 
   return article;
 };
+
+const createPagination = data => {
+  const numPages = Math.ceil(Number(data.totalResults) / 10);
+  document.querySelector('.page-total').textContent = numPages;
+};
+
+const nextPage = document.querySelector('#page-nav .next');
+console.log(nextPage);
+nextPage.addEventListener('click', e => {
+  const currentPageNum = document.querySelector('.page-current');
+  const totalPageNum = document.querySelector('.page-total');
+  e.preventDefault();
+  +currentPageNum.textContent < +totalPageNum.textContent // Prevent next page advancing beyond total no. of pages
+    ? params.pageNum++
+    : false;
+
+  searchFilmBytitle(params.query);
+  currentPageNum.textContent = params.pageNum;
+});
+
+const prevPage = document.querySelector('#page-nav .prev');
+prevPage.addEventListener('click', e => {
+  e.preventDefault();
+  params.pageNum > 1 ? params.pageNum-- : false; // Prevent previous page returning negative page number
+
+  searchFilmBytitle(params.query);
+  document.querySelector('.page-current').textContent = params.pageNum;
+});
 
 /* film details */
 
@@ -173,6 +205,7 @@ const getFavourites = data => {
 document.querySelector('#search').addEventListener('submit', e => {
   e.preventDefault();
   const query = e.currentTarget.query.value;
+  params.query = query;
   searchFilmBytitle(query);
 });
 
@@ -197,10 +230,6 @@ document.querySelector('#favourites').addEventListener('click', e => {
     getFavourites(myStorage);
   }
 });
-
-/* Delete all favourites */
-
-/* Delete individual favourite */
 
 /* utility functions */
 
