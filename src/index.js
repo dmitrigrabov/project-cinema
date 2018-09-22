@@ -4,10 +4,7 @@ const myStorage = window.localStorage;
 
 if (storage.storageAvailable('localStorage')) {
   // localStorage.clear();
-  for (let key in myStorage) {
-    console.log(key);
-  }
-  console.log(myStorage);
+  console.log(`You’re all set to save your favourite films`);
 } else {
   console.log('Please enable local storage to save your favourites.');
 }
@@ -21,7 +18,6 @@ const setUrl = (paramsInit, query = '', id = '') => {
 };
 
 const searchFilmBytitle = title => {
-  // console.log(setUrl(paramsInit, title));
   fetch(setUrl(paramsInit, title))
     .then(response => response.json())
     .then(body => displaySearchResults(body.Search))
@@ -35,7 +31,6 @@ const searchFilmBytitle = title => {
 };
 
 const getFilmByID = id => {
-  // console.log(setUrl(paramsInit, '', id));
   fetch(setUrl(paramsInit, '', id))
     .then(response => response.json())
     .then(body => writeFilmDetails('#film-details', body))
@@ -46,7 +41,6 @@ const getFilmByID = id => {
 
 const displaySearchResults = films => {
   const searchResults = createElement('div');
-  // console.log(films);
   films.forEach(film => {
     const filmListing = createFilmSearchListing(
       film.imdbID,
@@ -68,10 +62,8 @@ const createFilmSearchListing = (id, title, year, poster) => {
   const releaseYear = createElement('p', year);
   const filmPoster = createImageElement(poster);
   addElementToParent(filmListing, filmTitle);
-  // console.log(filmListing);
   addElementToParent(filmListing, releaseYear);
   addElementToParent(filmListing, filmPoster);
-  // console.log(filmListing);
   filmListing.setAttribute('data-ID', id);
 
   return filmListing;
@@ -87,7 +79,6 @@ const createArticle = (articleClass = '') => {
 /* film details */
 
 const createFilmDetails = film => {
-  console.log(film);
   return `<h2>Details</h2>
 <h3 class="film-details__title">${film.Title}</h3>
 <button id="fav" class="fav" data-id="${film.imdbID}">Like</button>
@@ -119,12 +110,16 @@ const writeFilmDetails = (parent, film) => {
 const makeFavourite = id => {
   const favFilm = JSON.parse(myStorage[id]);
   const favourite = document.createElement('li');
-  favourite.classList.add('fav-list__film');
+  favourite.classList.add('favourites__list__film');
   favourite.setAttribute('data-id', id);
   favourite.innerHTML = `
-            <span class='fav-list__film__title'>${favFilm['title']}</span>
-            <span class='fav-list__film__faved'>${favFilm['favDate']}</span>
-            <button class='fav-list__film__remove'>Remove</button>`;
+            <span class='favourites__list__film__title'>${
+              favFilm['title']
+            }</span>
+            <span class='favourites__list__film__faved'>${
+              favFilm['favDate']
+            }</span>
+            <button class='favourites__list__film__remove'>Remove</button>`;
   return favourite;
 };
 
@@ -135,12 +130,14 @@ const addToFavourites = (id, e) => {
 };
 
 const getFavourites = data => {
+  const parent = document.querySelector('#favourites__list');
+  parent.innerHTML = '';
   for (let i = 0; i < data.length; i++) {
     const film = JSON.parse(data.getItem(data.key(i)));
     const favouriteFilm = makeFavourite(film.id);
-    const parent = document.querySelector('#fav-list');
     addElementToParent(parent, favouriteFilm);
   }
+  document.querySelector('#favourites__count').textContent = myStorage.length;
 };
 
 /* event listeners */
@@ -152,14 +149,13 @@ document.querySelector('#search').addEventListener('submit', e => {
 });
 
 document.querySelector('#search-results').addEventListener('click', e => {
-  console.log(e.target.parentNode.attributes);
   const id = e.target.parentNode.attributes[1].nodeValue;
-  console.log(id);
   getFilmByID(id);
 });
 
 const setFavButton = film => {
   document.querySelector('#fav').addEventListener('click', e => {
+    // TODO: highlight favourited film when display details
     // e.target.classList.toggle('fav--active');
     const date = new Date(Date.now())
       .toDateString()
@@ -178,7 +174,8 @@ const setFavButton = film => {
     const details = JSON.stringify(favData);
 
     myStorage.setItem(id, `${details}`);
-    addToFavourites(id, e);
+    // addToFavourites(id, e);
+    getFavourites(myStorage);
   });
 };
 
@@ -203,7 +200,4 @@ const addElementToParent = (parent, element) => {
 };
 
 /* init  */
-console.log(myStorage);
 getFavourites(myStorage);
-
-// searchFilmBytitle('Kidulthood');

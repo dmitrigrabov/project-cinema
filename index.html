@@ -10,17 +10,20 @@
 </head>
 
 <body>
-    <form id='search' class>
+    <form id="search" class>
         <label class="search__label" for="search-tf">Find a film</label>
         <input class="search__input" id="search-tf" name="query" type="text" placeholder="Enter a film title">
         <button class="btn search__btn">Search</button>
     </form>
-    <section id='account'>
-        <ul id="fav-list"></ul>
+    <section id="account">
+        <div id="favourites">
+            <h3 id="favourites__title">You’ve saved <span id="favourites__count">0</span> favourite films</h3>
+            <ul id="favourites__list"></ul>
+        </div>
     </section>
-    <section id='search-results'></section>
-    <section id='film-details'></section>
-    <script src="./src/index.js" type='module'></script>
+    <section id="search-results"></section>
+    <section id="film-details"></section>
+    <script src="./src/index.js" type="module"></script>
 </body>
 
 </html>
