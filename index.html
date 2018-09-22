@@ -3,23 +3,28 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>FilmSeek</title>
+    <title>FLIXPLORER</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700|Open+Sans:400,400i,600,700');</style>
     <link href="src/styles.css" rel="stylesheet" type="text/css" media="screen"/>
 </head>
 <body>
-    <header>
-        <h1 class="main-header">&#10148; FLIXPLORER</h1>
-        <form class="form">
-            <input type="text" class="search" name="search" placeholder="&#128269; Search">
-        </form>
+    <header class="header">
+        <h1 class="title shadow">
+            <li class="title-light">FLIX</li>
+            <li class="title-dark">PLORER</li>
+        </h1>
     </header>
     <main class="content">
-        <div class="results-header"></div>
-        <div class="results-showing"></div>
-        <div class="results-pages"></div>
+        <form class="form">
+            <input type="text" class="search shadow" name="search" placeholder="&#128269; Search" autocomplete="off">
+        </form>
         <div class="results-list"></div>
+        <div class="results-pages"></div>
+        <div class="results-message-wrapper">
+            <div class="results-header"></div>
+            <div class="results-showing"></div>
+        </div>
     </main>
     <script src="src/index.js">
 </body>
