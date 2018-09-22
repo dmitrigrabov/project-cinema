@@ -10,42 +10,68 @@ const initialFetch = `http://www.omdbapi.com/?s=Jaws&apikey=eabbbb71`
 //querySelectors
 const searchBox = document.querySelector(".search__input");
 const moviesParentNode = document.querySelector(".moviesfeed");
-const movieDetails = document.querySelector(".moviesfeed__details");
 
 //Initial Fetch
 fetchContent(initialFetch);
 
-//Listeners
-form.addEventListener("submit", goSearch);
-
-document.addEventListener("click", event => {
-    if (event.target.matches(".moviesfeed__btn")) fetchFullArticle(event);
-});
-
-// Main search query
-function goSearch(event) {
+//Submit Search
+form.addEventListener("submit", event => {
     event.preventDefault();
     searchText = searchBox.value;
     const APIQuery = `http://www.omdbapi.com/?s=${searchText}&apikey=eabbbb71`;
     fetchContent(APIQuery)
-}
+});
 
-// Full article query
+//Load Full Content
+document.addEventListener("click", event => {
+    if (event.target.matches(".moviesfeed__btn")) {
+        fetchFullArticle(event);
+    }
+});
+
+// Load Full Query
 function fetchFullArticle(event) {
     event.preventDefault();
-
     let filmID = event.target.dataset.id;
     const APIQuery = `http://www.omdbapi.com/?i=${filmID}&apikey=eabbbb71`;
-
-    document.querySelectorAll('.moviesfeed__btn').forEach(item => {
-    let parentSection = item.closest(".moviesfeed__details").getAttribute("id");
-        
+    const moviesButtons = document.querySelectorAll('.moviesfeed__btn');
+    const movieDetails = document.querySelectorAll(".moviesdetails");
+    
+    moviesButtons.forEach(item => {
+    let parentSection = item.closest(".moviesfeed__full").getAttribute("id"); 
+    let buttonClasses = item.classList;
         if (filmID === parentSection) {
-            /// THIS IS WHERE I AM HAVING TROUBLE
-            console.log(`This ID`)
-            fetchFullContent(APIQuery);
-            console.log(`${APIQuery}`);
+            // TOFIX scope of these functions - not sure how to approach
+            // fetchFullContent(APIQuery);
+            // displayFullFilm(body)
+
+            fetch(APIQuery)
+            .then(function(response) {
+            return response.json();
+            })
+            .then(function(body) {
+                movieDetails.forEach(movie => {
+                console.log(buttonClasses); 
+                console.log(movie.classList);  
+                movie.classList.add('active');
+
+                let movieID = movie.dataset.id;
+                    if (movieID === parentSection) {
+                    movie.innerHTML = filmsLayoutFilm(body);
+                    }
+                })
+            })
+            .catch(function(error) {
+            displayErrorToUser("Server failed to return data");
+            });
         }
+
+        // let activeElement =  document.querySelector(".active")
+        // if (activeElement !== null) {
+        //     activeElement.classList.toggle("active")
+        //     }
+        //    item.classList.toggle("active")
+
     });
 }
 
@@ -59,18 +85,18 @@ function filmsLayoutSearchResult(item) {
     const title = `${item.Title}`;
     const year = `${item.Year}`;
     const id = `${item.imdbID}`;
-    
-    const posterurl = `${item.Poster}`
+    // const posterurl = `${item.Poster}`
+    // <figure class="moviesfeed__poster"><img src="${posterurl}"></figure>
     return `
-    <section class="moviesfeed__details" id="${id}">
-        <figure class="moviesfeed__poster"><img src="${posterurl}"></figure>
-        <header>
-            <h2 class="movie__title">${title}</h2>
-            <p>${year}</p>
-        </header>
-        <button class="btn moviesfeed__btn" data-id="${id}">More details<button>
-    </section>`;
+        <section class="moviesfeed__full" id="${id}">
+            <div class="moviesfeed__content">
+                <header><h2 class="movie__title">${title}</h2><p>${year}</p></header>
+                <button class="btn moviesfeed__btn" data-id="${id}">More details</button>
+            </div>
+            <div class="moviesdetails" data-id="${id}"></div>
+        </section>`;
   };  
+
 function displaySearchList(filmArticles) {
     moviesParentNode.innerHTML = "";
     filmArticles.Search.map(function(item) {
@@ -79,20 +105,27 @@ function displaySearchList(filmArticles) {
         return moviesParentNode.appendChild(article);
     });
 }  
-function filmsLayoutFilm(item)  {
-    // fallbacks or empty if data is null TODO
-    const director = `${item.Director}`;
-    const plot = `<p>${item.Plot}</p>`;
-    const actors = `<p>${item.Actors}</p>`;
-    return `<h3>${director}</h3>${plot}${actors}`;
-    }
-function displayFullFilm(item) {
-    console.log(filmsLayoutFilm(item));
-    movieDetails.innerHTML = filmsLayoutFilm(item);
 
-    /// THIS IS WHERE I AM HAVING TROUBLE
-    return moviesParentNode.appendChild(movieDetails);
-}  
+function filmsLayoutFilm(body)  {
+    // fallbacks or empty if data is null TODO
+    const title = `${body.Title}`;
+    const director = `Director: ${body.Director}`;
+    const plot = `<h3>Plot summary</h3><p>${body.Plot}</p>`;
+    const actors = `<p><strong>Actors:</strong> ${body.Actors}</p>`;
+    return `<h3>${title} : ${director}</h3>${plot}${actors}`;
+}
+
+
+// function displayFullFilm(body) {
+//     const movieDetails = document.querySelectorAll(".moviesdetails");
+//     movieDetails.forEach(movie => {
+        
+//         let movieID = movie.dataset.id;
+//          if (movieID === parentSection) {
+//             movieDetails.innerHTML = filmsLayoutFilm(body);
+//          }
+//     })
+// }  
 
 
 /* 
@@ -113,17 +146,17 @@ function fetchContent(APIQuery) {
         });
     }
 
-function fetchFullContent(APIQuery) {
-    fetch(APIQuery)
-        .then(function(response) {
-        return response.json();
-        })
-        .then(function(body) {
-        displayFullFilm(body);
-        })
-        .catch(function(error) {
-        displayErrorToUser("Server failed to return data");
-        });
-    }    
+// function fetchFullContent(APIQuery) {
+//     fetch(APIQuery)
+//         .then(function(response) {
+//         return response.json();
+//         })
+//         .then(function(body) {
+//         displayFullFilm(body);
+//         })
+//         .catch(function(error) {
+//         displayErrorToUser("Server failed to return data");
+//         });
+//     }    
 
 function displayErrorToUser() {};
