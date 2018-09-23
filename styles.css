@@ -242,8 +242,24 @@ main{
   justify-content: space-between;
   border-bottom: 1px red solid;
   margin: 0rem 1rem;
-
 }
+
+.favourite-element__none{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Assistant', sans-serif;
+  font-size: 1.5rem;
+  text-align:center;
+  margin: 0rem 1.5rem;
+}
+
+.favourite-element__none > h4{
+  padding-bottom: 1rem;
+  border-bottom: 1px black solid;
+}
+
 
 
 a:link{

@@ -36,11 +36,17 @@ bodyElement.addEventListener("click", event => {
     apiUrls.updateMovieURL("i", event.target.dataset.id);
     apiUrls.fetchMovie(apiUrls.getMovieURL());
   }
+  if (event.target.closest(".favourite-element")){
+    apiUrls.updateMovieURL("i", event.target.dataset.id);
+    apiUrls.fetchMovie(apiUrls.getMovieURL());
+  }
   if (event.target.matches(".search__display-bar")) {
     toggleNavBar();
   }
   if (event.target.matches(".add-favourite-button")){
-    apiUrls.favourites = JSON.parse(myStorage.favourites)
+    if (myStorage.favourites){
+      apiUrls.favourites = JSON.parse(myStorage.favourites)
+    }
     apiUrls.favourites.push(apiUrls.getMovieURL())
     myStorage.setItem("favourites", JSON.stringify(apiUrls.favourites))
     populateFavourites()
@@ -229,9 +235,20 @@ function favouriteTemplate(result){
 function populateFavourites(){
   let localFaves = myStorage.getItem("favourites")
   localFaves = JSON.parse(localFaves)
-  localFaves.forEach(fave => {
-    apiUrls.fetchFavourites(fave)
-  })
+  if (localFaves){
+    favouritesContainer.innerHTML = ""
+    localFaves.forEach(fave => {
+      apiUrls.fetchFavourites(fave)
+    })
+  }else{
+    const noFavesElement = document.createElement("div")
+    noFavesElement.className = "favourite-element__none"
+    noFavesElement.innerHTML = `
+    <h4>You don't have any favourites</h4>
+    <h6>Search to get started</h6>
+    `
+    favouritesContainer.appendChild(noFavesElement)
+  }
 }
 
 
