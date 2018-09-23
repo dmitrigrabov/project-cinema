@@ -16,6 +16,8 @@ function searchResult(body){
     let searchResultTitle=document.createElement("h2");
     let searchResultYear=document.createElement("h3");
     let posterImage=document.createElement("img");
+    let favorite=document.createElement("form");
+    let favoriteAdd=document.createElement("input");
 
     searchResultTitle.innerHTML=`${movie.Title}`;
     searchResultTitle.className="movie-title";
@@ -30,7 +32,21 @@ function searchResult(body){
     posterImage.alt="Movie poster";
     searchResultContainer.appendChild(posterImage);
 
+
+    favorite.className="favorite"
+    favorite.action="/favorite"
+    favorite.method="get"
+    favoriteAdd.type="submit"
+    favoriteAdd.value="Add to favorites"
+    favoriteAdd.class="favorite-add"
+    favorite.appendChild(favoriteAdd)
+
+
+    searchResultContainer.appendChild(favorite);
+
     searchResultList.appendChild(searchResultContainer);
+
+
 
 
     })
@@ -113,7 +129,7 @@ searchSubmit.addEventListener("click", function(event){
 pagination.addEventListener("click",event => {
   event.preventDefault();
   page=event.target.textContent;
-console.log(page)
+
   loadAPI(page);
 
 })
@@ -181,7 +197,7 @@ function movieDetails(body,id){
 //to fetch more details about the clicked movie from the API
 searchResultList.addEventListener("click",function(event){
   event.preventDefault();
-  console.log("hello")
+
   //remove other movie details (loaded from previous click)
   const otherDetails=document.querySelector(".search-result-details")
   if(otherDetails!==null){
@@ -191,7 +207,7 @@ searchResultList.addEventListener("click",function(event){
   const id=event.target.parentNode.getAttribute("id");
   const url=`http://www.omdbapi.com/?i=${id}&plot=full&apikey=d2807699`;
 
-  if(event.target.parentNode.lastChild.matches("img")){
+  if(event.target.parentNode.lastChild.matches("form")){
     fetch(url)
     .then(response => response.json())
     .then(body =>{
@@ -202,4 +218,16 @@ searchResultList.addEventListener("click",function(event){
 
   }
 
+  
+
 })
+//
+// const favoritesList=document.querySelectorAll(".favorite")
+//
+// searchResultList.addEventListener("click",event => {
+//   event.preventDefault();
+//   if(event.target){
+//       console.log(event.target.parentNode)
+//   }
+//
+// })
