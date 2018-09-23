@@ -12,6 +12,10 @@ const modal = document.querySelector(".modal");
 const displaySearchButton = document.querySelector(".search__display-bar");
 const searchBarElement = document.querySelector(".nav__search");
 const homeNavBar = document.querySelector(".nav__home");
+const favouritesContainer = document.querySelector(".favourites-container")
+
+const myStorage = window.localStorage
+
 
 bodyElement.addEventListener("submit", event => {
   event.preventDefault();
@@ -34,6 +38,12 @@ bodyElement.addEventListener("click", event => {
   }
   if (event.target.matches(".search__display-bar")) {
     toggleNavBar();
+  }
+  if (event.target.matches(".add-favourite-button")){
+    apiUrls.favourites = JSON.parse(myStorage.favourites)
+    apiUrls.favourites.push(apiUrls.getMovieURL())
+    myStorage.setItem("favourites", JSON.stringify(apiUrls.favourites))
+    populateFavourites()
   }
 });
 
@@ -59,6 +69,8 @@ const apiUrls = {
     i: "",
     plot: ""
   },
+
+  favourites: [],
 
   updateURL: function(parameter, update) {
     this.searchParameters[parameter] = `&${parameter}=${update}`;
@@ -104,6 +116,15 @@ const apiUrls = {
       });
   },
 
+  fetchFavourites: function(apiURL){
+    fetch(apiURL)
+      .then(response => response.json())
+      .then(body => {
+        console.log("fetched")
+        favouritesContainer.appendChild(favouriteTemplate(body))
+      })
+  },
+
   getNewsURL: function(searchString){
     return `https://newsapi.org/v2/everything?q="${searchString}"&sortBy=relevancy&pageSize=6&apiKey=9ed005ef4eb94baf913fce701c69972f`
   },
@@ -137,12 +158,14 @@ function searchTemplate(result) {
 }
 
 function fullFilmTemplate(result) {
+  console.log(result)
   const filmInfoElement = document.createElement("div");
   const template = `
     <div class="film-display">
       <div class="film-display__header">
         <h2>${result.Title} </h2>
         <h2>(${result.Year})</h2>
+        <button class="add-favourite-button">Favourites</button>
       </div>
       <div class="film-display__info">
         <img class="film-display__poster" src=${result.Poster}/>
@@ -159,7 +182,6 @@ function fullFilmTemplate(result) {
         <span>${result.Awards}</span>
         <span>${result.Ratings[0].Source}: ${result.Ratings[0].Value}</span>
         <span>${result.Ratings[1].Source}: ${result.Ratings[1].Value}</span>
-        <span>${result.Ratings[2].Source}: ${result.Ratings[2].Value}</span>
       </div>
       <div class="film-display__misc">
       <h5>Miscellaneous</h5>
@@ -192,8 +214,32 @@ function filmNewsTemplate(body){
 
 }
 
+function favouriteTemplate(result){
+  const favouriteElement = document.createElement("div");
+  const template = `
+    <div class="favourite-element" data-id=${result.imdbID}>
+      <h4 class="result__title" data-id=${result.imdbID}>${result.Title}</h4>
+      <h5 class="result__year" data-id=${result.imdbID}>(${result.Year})</h5>
+    </div>
+  `;
+  favouriteElement.innerHTML = template;
+  return favouriteElement;
+}
+
+function populateFavourites(){
+  let localFaves = myStorage.getItem("favourites")
+  localFaves = JSON.parse(localFaves)
+  localFaves.forEach(fave => {
+    apiUrls.fetchFavourites(fave)
+  })
+}
+
 
 function convertDateForDisplay(date) {
   const inputDate = new Date(date);
   return inputDate.toLocaleString();
 }
+
+
+
+populateFavourites()

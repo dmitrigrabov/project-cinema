@@ -44,17 +44,29 @@ nav > div {
 
 }
 
-
+.search{
+  display:flex;
+  flex-direction: row;
+  width: 100%;
+  font-size: 4em;
+}
 
 .nav__search{
   display: none;
   flex-direction: row;
-  justify-content: space-between;
+
+}
+
+.search__text{
+  width: 100%;
+  height: 100%;
+  font-size: 0.6em
+
 }
 
 
 main{
-  background-color: #696969;
+  background-color: #050505;
   height: 90vh;
   display: flex;
   flex-direction: column
@@ -65,7 +77,8 @@ main{
   background-color: #E10703;
   height: 90vh;
   display: flex;
-  flex-direction: column
+  flex-direction: column;
+  margin: 0rem 1rem;
 }
 
 .landing-icon{
@@ -73,14 +86,25 @@ main{
   align-self: center;
   margin-top: 5rem;
   color: #FBFBFC;
-
-
 }
 
 .landing-text{
   color: #FBFBFC;
   align-self: center;
-  font-size: 1.5rem;
+  font-family: 'Assistant', sans-serif;
+  font-size: 1.3rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+}
+
+.favourites-container{
+  background-color: #FBFBFC;
+  width: 80vw;
+  height: 40vh;
+  align-self: center;
+  border-radius: 5%;
+  border-left: 3px solid #050505;
+  border-right: 3px solid #050505;
 }
 
 
@@ -210,6 +234,15 @@ main{
   flex-direction: column;
   background-color: snow;
   margin: 0.5em;
+}
+
+.favourite-element{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 1px red solid;
+  margin: 0rem 1rem;
+
 }
 
 
