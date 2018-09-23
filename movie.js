@@ -3,7 +3,7 @@ const searchText = document.querySelector(".search-area-text");
 const searchResultList = document.querySelector(".search-result-list");
 const pagination = document.querySelector(".pagination");
 const localStorage = window.localStorage;
-const favMovieObj = [];
+const favMovieObj = JSON.parse(localStorage.getItem("favList")) || [];
 const myFavorite = document.createElement("button");
 const body = document.querySelector("body");
 
