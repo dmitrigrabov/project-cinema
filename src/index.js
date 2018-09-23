@@ -160,20 +160,24 @@ function fetchSingleMovieByID (id){
     return fetch(url)
     .then(response => response.json())
     .then(filmObject => {
-        console.log({filmObject})
+        // console.log({filmObject})
         filmContainer.classList.add("on");
         filmContainer.innerHTML = convertMovieObject (filmObject);
     }).catch(error => console.log(error));
 }
 
+Array.prototype.siftOut = function(ignore) {
+    return this.filter(item => ignore.indexOf(item) < 0);
+}
+
 function convertMovieObject (film) {
     const keys = Object.keys(film);
-    const str = keys.map(item => {
-        return `<div>${item}: ${film[item]}</div>`
-    }).join(' ');
-    // console.log(htmlString);
-    // return htmlString;
-    // return film.Plot;
+    // const str = keys.map(item => {
+    //     return `<div>${item}: ${film[item]}</div>`
+    // }).join(' ');
+
+    const keep = keys.siftOut(["Poster", "Title", "Plot"]);
+    console.log(keep)
     const website = film.Website ? `<li><a href="${film.Website}" target="_blank">Visit website</a></li>` : ``;
     const htmlString = 
     `<div class="article__main">
