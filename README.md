@@ -65,7 +65,7 @@
 
 - **Refactoring**
 
-- [ ] TODO: Refactor code to make use of export/import to keep JS easy to navigate and maintain.
+  - [ ] TODO: Refactor code to make use of export/import to keep JS easy to navigate and maintain.
 
 ---
 
