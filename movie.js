@@ -3,12 +3,13 @@ const searchText = document.querySelector(".search-area-text");
 const searchResultList = document.querySelector(".search-result-list");
 const pagination = document.querySelector(".pagination");
 const localStorage = window.localStorage;
-const favMovieObj = {};
+const favMovieObj = [];
 const myFavorite = document.createElement("button");
 const body = document.querySelector("body");
-const mySearchResults = document.createElement("button");
+
 let localData;
 let totalSearchResults = 0;
+let n=0;
 //this is to insert search results using dom
 function searchResult(body) {
   body.Search.forEach(movie => {
@@ -42,12 +43,14 @@ function searchResult(body) {
 
       const movieObj = {
         id: movieId,
+        index: n,
         title: favoriteMovie[0].textContent,
         year: favoriteMovie[1].textContent,
         image: favoriteMovie[2].getAttribute("src")
         // details:favoriteMovie[4].textContent
       };
-      favMovieObj[movieId] = movieObj;
+      n++;
+      favMovieObj.push(movieObj) ;
       localStorage.setItem("favList", JSON.stringify(favMovieObj));
       console.log(localStorage);
     });
@@ -183,18 +186,13 @@ if (searchResultList !== null) {
   });
 }
 
-myFavorite.innerHTML = "Favorites";
-mySearchResults.innerHTML = "Search Results";
+myFavorite.innerHTML = "Go to my favorites";
+
 
 body.insertBefore(myFavorite, pagination);
-body.insertBefore(mySearchResults, pagination);
+
 
 myFavorite.addEventListener("click", function(event) {
   event.preventDefault();
   window.location.href = "favorite.html";
-});
-
-mySearchResults.addEventListener("click", function(event) {
-  event.preventDefault();
-  window.location.href = "movie.html";
 });
