@@ -60,9 +60,10 @@
   - [ ] TODO: Implement a watch list feature to save films that you want to see as well as favourites.
 
 - **Search**
+
   - [ ] TODO: Create a search preview. It should listen for change events on input events and submit a search request with current query string. Display the search preview results in an absolute positioned container just below the search box. Kick of the searching after at least 3 characters have been typed.
 
-**Refactoring**
+- **Refactoring**
 
 - [ ] TODO: Refactor code to make use of export/import to keep JS easy to navigate and maintain.
 
