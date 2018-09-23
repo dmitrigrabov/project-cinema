@@ -41,7 +41,8 @@ function displayFilms(filmResults) {
         filmNode.innerHTML = `<img class='poster' src='${film.Poster}'/>
                             <h3 class='title'>${film.Title}</h3>
                             <h4 class='year'>(${film.Year})</h4>
-                            <p class='type'><b>type:</b> ${film.Type}</p>`
+                            <p class='type'><b>type:</b> ${film.Type}</p>
+                            <i class="fav-button far fa-heart">`
         outputNode.appendChild(filmNode);                    
     })
     let img = filmResults[0].Poster;
@@ -94,15 +95,26 @@ function displayFilmDetails(film){
         <p><b>director:</b> ${film.Director}</p>
         <p><b>genre:</b> ${film.Genre}</p>
         <p><b>plot:</b> ${film.Plot}</p>`;
-    parentNode.appendChild(addInfoNode);
-    
+    parentNode.appendChild(addInfoNode);    
 }
 
 
 //event listener on each film div
 outputNode.addEventListener('click', e=>{
+
+    if(event.target.closest('.fav-button')){
+        let favourite = event.target.closest(`.main__film`);
+        console.log(favourite);
+        favourite = favourite.firstChild;
+        console.log(favourite);
+        const posterNode = document.createElement("div");
+        console.log(posterNode);
+        posterNode.innerHTML = favourite;
+        console.log(posterNode);
+        document.querySelector('.favourites').appendChild(posterNode);
+    }
   
-    if (event.target.closest('.main__film')){
+    else if (event.target.closest('.main__film')){
         removeAdditionalInfo();
         const film = event.target.closest('.main__film').dataset.imdbid;
         searchTarget = event.target.closest('.main__film');

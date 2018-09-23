@@ -30,7 +30,6 @@ html {
   *,
   *:before,
   *:after {
-    /* display: none; */
     box-sizing: inherit;
   }
 
@@ -59,16 +58,26 @@ input{
     border: .1em solid midnightblue;
 }
 
-button{
-    color: midnightblue;
+.submit-search{
+    background-color: midnightblue;
+    border-radius: 8px;
+}
+.search-button{
+    background-color: midnightblue;
+    color: white;
 }
 
 main{
     display: flex;
     flex-direction: column;
+}
+
+/* .films{
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     max-width: 800px;
-}
+} */
 
 .poster{
     grid-area: poster;
@@ -92,21 +101,36 @@ main{
     margin: 0px;
 }
 
+.fav-button{
+    grid-area: favourite;
+    color: midnightblue;
+    border: none;
+}
+
 .add-info{
     grid-area: add-info;
     margin: 0px;
 }
 
+.load-next-page{
+    font-size: .8em;
+    color:white;
+    background-color: midnightblue;
+    border-radius: 8px;
+    align-self: right;
+}
+
 .main__film{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 2fr 1fr 1fr ;
     grid-template-rows: auto;
     grid-template-areas: 
-        'poster title'
-        'poster year'
-        'poster type'
-        'poster add-info';
+        'poster title title'
+        'poster year favourite'
+        'poster type type'
+        'poster add-info add-info ';
     align-items: start;
+    align-content: center;
     margin-top: 1em;
     grid-column-gap: 1em;
     max-width: 800px;
