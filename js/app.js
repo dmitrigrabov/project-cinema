@@ -5,59 +5,62 @@ const form = document.querySelector('#control__search'),
     nextBtn = document.querySelector('.buttons__button-next'),
     prevBtn = document.querySelector('.buttons__button-prev');
 
-let inputValue = '',
-    pageNumber = 1,
-    totalPages = 0,
-    imdbID = '',
-    fetchUrl = '';
+let params = {
+    inputValue: '',
+    pageNumber: 1,
+    totalPages: 0,
+    imdbID: '',
+    apiKey: 'f899a3c1',
+    fetchUrl: ''
+};
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     buttonsClass.style.display = 'grid';
     results.innerHTML = '';
-    pageNumber = 1;
-    totalPages = 0;
-    inputValue = searchInput.value;
-    runFetch(inputValue, pageNumber);
+    params.pageNumber = 1;
+    params.totalPages = 0;
+    params.inputValue = searchInput.value;
+    runFetch(params.inputValue, params.pageNumber);
 });
 
 nextBtn.addEventListener('click', (e) => {
     e.preventDefault();
     results.innerHTML = '';
-    nextBtn.style.border = 'none';
-    if (pageNumber >= totalPages) {
-    } else {
-        pageNumber++;
-        runFetch(inputValue, pageNumber);
-    }
+    // if (params.pageNumber >= params.totalPages) {
+    // } else {
+    //     params.pageNumber++;
+    runFetch();
+    // }
 
 });
 prevBtn.addEventListener('click', (e) => {
     e.preventDefault();
     results.innerHTML = '';
-    if (pageNumber === 1) {
-    } else {
-        pageNumber--;
-        runFetch(inputValue, pageNumber);
-    }
+    // if (params.pageNumber === 1) {
+    // } else {
+    //     params.pageNumber--;
+    runFetch();
+    // }
 });
 
+function setUrl() {
+    return params.fetchUrl = `https://www.omdbapi.com/?apikey=${params.apiKey}&s=${params.inputValue}&page=${params.pageNumber}&i=tt1504019&plot=full&i=${params.imdbID}`;
+}
 
-function runFetch(inputValue, pageNumber) {
-    fetchUrl = `https://www.omdbapi.com/?apikey=f899a3c1&s=${inputValue}&page=${pageNumber}&i=tt1504019&plot=full`;
-    fetch(fetchUrl)
+function runFetch() {
+    fetch(setUrl())
         .then((response) => {
             return response.json();
         })
         .then((body) => {
             // console.log(body);
-            totalPages = body.totalResults / 10; //divide by as as there is 10 results per page
-            totalPages = Math.floor(totalPages); //round down as we don't want to have anything after dot
-            console.log(totalPages);
+            // params.totalPages = body.totalResults / 10; //divide by as as there is 10 results per page
+            // params.totalPages = Math.floor(params.totalPages); //round down as we don't want to have anything after dot
 
             body.Search.forEach(e => {
-                imdbID = e.imdbID;
-                fetch(`https://www.omdbapi.com/?i=${imdbID}&plot=full&apikey=f899a3c1`)
+                params.imdbID = e.imdbID;
+                fetch(setUrl())
                     .then((response) => {
                         return response.json();
                     })
@@ -76,7 +79,6 @@ function runFetch(inputValue, pageNumber) {
                     <p></p>
                     <img class="results__searchResult__poster" src="${currentPoster}"/>
                     `;
-
                         results.append(searchResult);
                     })
 
