@@ -1,4 +1,18 @@
 @media (min-width: 768px) {
+  
+  #title{
+      font-size: 2rem;
+    margin: 2rem 1rem;
+  }
+  
+  header{
+    height: 6rem;
+  }
+  
+  .btn__account{
+    font-size: 2.5rem;
+    margin-right: 1rem
+  }
   .search__label {
     display: block;
     margin: 37vh 0 0 0;
@@ -9,15 +23,17 @@
 
   .search__input {
     margin-top: 2rem;
+    padding-left: 1rem;
   }
 
   .search-results__page {
     padding-top: 15vh;
-
-grid-template-columns: repeat(4, 25vw);
+    grid-template-columns: repeat(4, 25vw);
+    overflow-y: none;
   }
   
   .film {
+  justify-self: center;
   display: flex;
   flex-direction: column;
   flex: 1;

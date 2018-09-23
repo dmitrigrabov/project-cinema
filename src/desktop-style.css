@@ -1,0 +1,60 @@
+@media (min-width: 1068px) {
+  header {
+    height: 8rem;
+  }
+  #title {
+    font-size: 4rem;
+  }
+
+  .btn__account {
+    font-size: 4rem;
+    margin-right: 2rem;
+  }
+  .search__input {
+    width: 50vw;
+    font-size: 3rem;
+    font-weight: 400;
+    padding: 3rem;
+  }
+
+  /* search results */
+  .search-results__page {
+    padding-top: 15vh;
+    grid-template-columns: repeat(5, 20vw);
+    justify-content: space-around;
+  }
+
+  .film {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 0 0.5rem;
+    width: 18vw;
+  }
+
+  .film:hover {
+  }
+
+  .film__title {
+    width: 16vw;
+    font-size: 1.3rem;
+  }
+
+  .film__poster {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+    width: 16vw;
+    height: 23vw;
+    border: 6px solid white;
+    object-fit: cover;
+    transition: all 0.5s;
+  }
+
+  .film__poster:hover {
+    border-color: orangered;
+  }
+
+  #page-nav {
+    font-size: 1.5rem;
+    justify-content: center;
+  }
+}

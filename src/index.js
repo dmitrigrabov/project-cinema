@@ -2,7 +2,15 @@ import * as storage from './localStorage.js';
 
 const myStorage = window.localStorage;
 
-window.scrollBy(0, -20);
+window.addEventListener('load', function() {
+  // Set a timeout...
+  setTimeout(function() {
+    // Hide the address bar!
+    window.scrollTo(0, 1);
+  }, 0);
+});
+
+// window.scrollBy(0, -20);
 
 if (storage.storageAvailable('localStorage')) {
   // localStorage.clear();
@@ -119,6 +127,7 @@ const addPaginationControls = () => {
 
     searchFilmBytitle(params.query);
     currentPageNum.textContent = params.pageNum;
+    document.querySelector('#film-details').innerHTML = '';
     e.stopPropagation();
   });
 
@@ -129,6 +138,7 @@ const addPaginationControls = () => {
 
     searchFilmBytitle(params.query);
     document.querySelector('.page-current').textContent = params.pageNum;
+    document.querySelector('#film-details').innerHTML = '';
     e.stopPropagation();
   });
 };

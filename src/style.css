@@ -48,14 +48,14 @@ header {
 }
 
 #title {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-family: var(--display-font);
   margin-top: 1.25rem;
 }
 
 .btn__account {
-  font-size: 2rem;
-  margin-right: 0.5rem;
+  font-size: 1.8rem;
+  margin-right: 0.25rem;
 }
 /* account */
 #account {
@@ -74,7 +74,7 @@ header {
   background-size: cover;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100.5vh;
 }
 
 .search__label {
@@ -91,6 +91,7 @@ header {
   padding-left: 0.2rem;
   font-size: 1.5rem;
   font-weight: 600;
+  border-radius: 0;
 }
 
 .search__btn {
