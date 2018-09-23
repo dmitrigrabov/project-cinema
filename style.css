@@ -17,7 +17,7 @@ body {
 
 .container {
     display: grid;
-    grid-auto-rows: min-content 10fr;
+    grid-auto-rows: min-content 1fr;
     width: 100vw;
     margin: 0 auto;
     padding: 0 0.7rem;
@@ -208,12 +208,23 @@ body {
 
 
 @media (min-width: 500px) {
+    .control {
+        display: grid;
+        justify-content: center;
+    }
+
+    #control__search {
+        width: 30rem;
+    }
+
     .results {
         grid-template-columns: 1fr 1fr;
     }
 }
 
 @media (min-width: 768px) {
+
+
     .results {
         grid-template-columns: 1fr 1fr;
     }

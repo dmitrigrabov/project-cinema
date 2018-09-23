@@ -50,7 +50,7 @@ function setUrlWithTypedSearch() {
     return `https://www.omdbapi.com/?&plot=full&apikey=${params.apiKey}&s=${params.inputValue}&page=${params.pageNumber}`;
 }
 
-function setUrlForEachMovieWithImdbIDNumber() {
+function setUrlForEachMovieWithImdbIDNumber() { //I need imdbID to get full details of every found movie
     return `https://www.omdbapi.com/?i=${params.imdbID}&plot=full&apikey=${params.apiKey}&page=${params.pageNumber}`;
 }
 
@@ -60,7 +60,6 @@ function runFetch() {
             return response.json();
         })
         .then((body) => {
-            console.log(body);
             params.totalPages = body.totalResults / 10; //divide by as as there is 10 results per page
             params.totalPages = Math.ceil(params.totalPages); //round up as I want to have all possible number of pages
 
@@ -97,9 +96,9 @@ function runFetch() {
                             <p class="results__searchResult__title">${movieParams.title}</p>
                             <p class="results__searchResult__year">${movieParams.year}</p>
                             <p class="results__searchResult__description">${movieParams.description}</p>
-                            <p class="emptyBox"></p>                            
+                            <p class="emptyBox"></p>                        
                             `;
-
+                        //using class emptyBox to push up all elements to the top box - without this emptyBox not all searchResult div will looks the same - sometimes I don't have description so it will be empty
                         results.append(searchResult);
                     })
 
