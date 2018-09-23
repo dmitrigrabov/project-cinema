@@ -5,14 +5,16 @@ const resultsListNode = document.querySelector(".results-list");
 const resultsPagesNode = document.querySelector(".results-pages");
 const resultsShowingNode = document.querySelector(".results-showing");
 const filmContainer = document.querySelector(".film-content");
+const filmContainerIpad = document.querySelector(".film-content-ipad");
 const form = document.querySelector(".form");
 const searchInput = document.querySelector(".search");
 let currentPage = 1;
 let loaded = 0;
+let currentID = "";
 
 function getMoviesFromSearch (url){
     if (searchInput.value === "") return;
-    resultsListNode.innerHTML = `<div class="padding">Loading...</div>`;
+    resultsListNode.innerHTML = `<div class="padding">LOADING...</div>`;
     return fetch(url)
     .then(response => response.json())
     .then(body => {
@@ -27,7 +29,7 @@ function getMoviesFromSearch (url){
 }
 
 function getMoviesFromPagination (url){
-    resultsListNode.innerHTML = `<div class="padding">Loading...</div>`;
+    resultsListNode.innerHTML = `<div class="padding">LOADING...</div>`;
     return fetch(url)
     .then(response => response.json())
     .then(body => {
@@ -134,7 +136,8 @@ searchInput.addEventListener('input', event => {
             resultsHeaderNode.innerHTML = `<div class="results-showing">${msg}</div>`;
         }
     }
-})
+})    
+resultsHeaderNode.innerHTML = `<div class="results-showing">Please start by typing in your search...</div>`;
 
 function clearNodes(mode, input) {
     resultsListNode.classList.remove("open");
@@ -150,8 +153,10 @@ FETCH
 
 contentNode.addEventListener('click', event => {
     if (event.target.matches('.result-link a')){
-        filmContainer.innerHTML = "Loading...";
-        fetchSingleMovieByID(event.target.id)
+        filmContainer.innerHTML = "LOADING...";
+        filmContainerIpad.innerHTML = "LOADING...";
+        currentID = event.target.id;
+        fetchSingleMovieByID(event.target.id);
     };
 });
 
@@ -160,71 +165,106 @@ function fetchSingleMovieByID (id){
     return fetch(url)
     .then(response => response.json())
     .then(filmObject => {
-        // console.log({filmObject})
-        filmContainer.classList.add("on");
-        filmContainer.innerHTML = convertMovieObject (filmObject);
+        if (window.innerWidth < 768) {
+            filmContainer.classList.add("on");
+            filmContainer.innerHTML = convertMovieObject (filmObject);
+        } else {
+            filmContainerIpad.innerHTML = convertMovieObject (filmObject);
+        }
     }).catch(error => console.log(error));
 }
 
-Array.prototype.siftOut = function(ignore) {
+Array.prototype.filterOut = function(ignore) {
     return this.filter(item => ignore.indexOf(item) < 0);
 }
 
+function getViewportSize () {
+    return window.innerWidth < 768 ? 'mobile' : 'ipad';
+}
+let viewport = getViewportSize();
+console.log(viewport);
+
+window.addEventListener('resize', event => {
+    let currentViewPort = getViewportSize ();
+    if (currentViewPort !== viewport) {
+        fetchSingleMovieByID(currentID);
+        viewport = currentViewPort;
+    }
+});
+
 function convertMovieObject (film) {
     const keys = Object.keys(film);
-    // const str = keys.map(item => {
-    //     return `<div>${item}: ${film[item]}</div>`
-    // }).join(' ');
-
-    const keep = keys.siftOut(["Poster", "Title", "Plot"]);
-    console.log(keep)
+    const excludedArray = ["Website","Poster","Title","Plot","Response"]
+    const listOfDetails = keys.filterOut(excludedArray).map(item => {
+        return (film[item] !== "N/A") ? `<li><strong>${item}:</strong> ${film[item]}</li>` : ``;
+    }).join('');
     const website = film.Website ? `<li><a href="${film.Website}" target="_blank">Visit website</a></li>` : ``;
-    const htmlString = 
-    `<div class="article__main">
-        <div class="article__image">
-            <img src="${film.Poster}" class="article__image__src">
-        </div>
-         <div>
-            <span class="article__header">
-                <div><strong>${film.Title}</strong> ${film.Year}</div>
-            </span>
-        </div>
+    let htmlString = '';
+    if (viewport === 'mobile') {
+        htmlString = 
+        `<div class="article__main">
+            <div class="article__image">
+                <img src="${film.Poster}" class="article__image__src">
+            </div>
+            <div>
+                <span class="article__header">
+                    <div><strong>${film.Title}</strong> ${film.Year}</div>
+                </span>
+            </div>
+            </div>
+            <div class="article__text">
+                <h3>Plot</h3>${film.Plot}
+                <div><a href="https://www.imdb.com/title/${film.imdbID}" target="_blank">More details on IMDB</a></div>
+                <div>
+                    <ul>
+                        ${listOfDetails}
+                        ${website}
+                    </ul>
+                </div>   
+            </div>
+        </div>`
+    } else {
+        htmlString = 
+        `<div class="article__main">
+            <div>
+                <span class="article__header">
+                    <div><strong>Mad Love</strong> 2015</div>
+                </span>
+            </div>
+            <div class="article__photo__wrapper">
+                <div class="article__image">
+                    <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjM0MTQwMzk0Ml5BMl5BanBnXkFtZTgwMzMzNjU0NjE@._V1_SX300.jpg" class="article__image__src">
+                </div>
+                <div class="article__photo__keypoint">
+                    <ul>
+                        <li><strong>Year:</strong> 2015</li>
+                        <li><strong>Released:</strong> 16 Sep 2015</li>
+                        <li><strong>Runtime:</strong> 107 min</li>
+                        <li><strong>Genre:</strong> Drama, Romance</li>
+                        <li><strong>Director:</strong> Philippe Ramos</li>
+                        <li><strong>Writer:</strong> Philippe Ramos (dialogue), Philippe Ramos (screenplay)</li>
+                        <li><strong>Actors:</strong> Melvil Poupaud, Dominique Blanc, Diane Rouxel, Lise Lamétrie</li>
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="article__text">
-            <h3>Plot</h3>${film.Plot}
-            <div><a href="https://www.imdb.com/title/${film.imdbID}" target="_blank">More details on IMDB</a></div>
+            <h3>Plot</h3>1959. Guilty of a double-murder, a man is beheaded. At the bottom of the basket that just welcomed it, the head of the dead man tells his story: everything was going so well. Admired priest...
+            <div><a href="https://www.imdb.com/title/tt4019142" target="_blank">More details on IMDB</a></div>
             <div>
                 <ul>
-                    <li><strong>Year:</strong> ${film.Year}</li>
-                    <li><strong>Released:</strong> ${film.Released}</li>
-                    <li><strong>Rated:</strong> ${film.Rated}</li>
-                    <li><strong>Runtime:</strong> ${film.Runtime}</li>
-                    <li><strong>Genre:</strong> ${film.Genre}</li>
-                    <li><strong>Director:</strong> ${film.Director}</li>
-                    <li><strong>Writer:</strong> ${film.Writer}</li>
-                    <li><strong>Actors:</strong> ${film.Actors}</li>
-                    <li><strong>Language:</strong> ${film.Language}</li>
-                    <li><strong>Country:</strong> ${film.Country}</li>
-                    <li><strong>Awards:</strong> ${film.Awards}</li>
-                    <li><strong>Metascore:</strong> ${film.Metascore}</li>
-                    <li><strong>imdbRating:</strong> ${film.Metascore}</li>
-                    <li><strong>imdbVotes:</strong> ${film.imdbVotes}</li>
-                    <li><strong>BoxOffice:</strong> ${film.BoxOffice}</li>
-                    <li><strong>Production:</strong> ${film.Production}</li>
-                    ${website}
+                    <li><strong>Language:</strong> French</li>
+                    <li><strong>Country:</strong> France</li>
+                    <li><strong>Awards:</strong> 1 win.</li>
+                    <li><strong>Ratings:</strong> [object Object]</li>
+                    <li><strong>imdbRating:</strong> 7.1</li>
+                    <li><strong>imdbVotes:</strong> 142</li>
+                    <li><strong>imdbID:</strong> tt4019142</li>
+                    <li><strong>Type:</strong> movie</li>
+                    <li><a href="N/A" target="_blank">Visit website</a></li>
                 </ul>
             </div>   
-        </div>
-    </div>`;
+        </div>`
+    }
     return htmlString;
 }
-
-// document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-//     anchor.addEventListener('click', function (event) {
-//         event.preventDefault();
-//         document.querySelector(this.getAttribute('href')).scrollIntoView({
-//             console.log("scolling...");
-//             behavior: 'smooth';
-//         });
-//     });
-// });
