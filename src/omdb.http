@@ -1,1 +1,3 @@
-http://www.omdbapi.com/?apikey=507b4100&s=&s=titanic
+
+
+http://www.omdbapi.com/?apikey=507b4100&type=movie&page=1&s=&i=tt0095016

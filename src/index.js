@@ -2,15 +2,9 @@ import * as storage from './localStorage.js';
 
 const myStorage = window.localStorage;
 
-window.addEventListener('load', function() {
-  // Set a timeout...
-  setTimeout(function() {
-    // Hide the address bar!
-    window.scrollTo(0, 1);
-  }, 0);
-});
+console.log(window.innerWidth);
 
-// window.scrollBy(0, -20);
+window.scrollBy(0, -20);
 
 if (storage.storageAvailable('localStorage')) {
   // localStorage.clear();
@@ -27,7 +21,7 @@ const params = {
 };
 
 const setUrl = (paramsInit, query = '', id = '') => {
-  // console.log(`${paramsInit.base}&page=${params.pageNum}&s=${query}&i=${id}`);
+  console.log(`${paramsInit.base}&page=${params.pageNum}&s=${query}&i=${id}`);
   return `${paramsInit.base}&page=${
     params.pageNum
   }&s=${query}&i=${id}&plot=full`;
@@ -77,7 +71,13 @@ const displaySearchResults = films => {
   console.log(paginationButtons);
   addElementToParent(searchResultsWrapper, paginationButtons);
   addPaginationControls();
-  window.scrollBy({ top: window.innerHeight + 80, behaviour: 'smooth' });
+  if (window.innerWidth > 1064) {
+    window.scrollBy({ top: window.innerHeight - 100, behaviour: 'smooth' });
+  } else if (window.innerWidth > 767) {
+    window.scrollBy({ top: window.innerHeight, behaviour: 'smooth' });
+  } else {
+    window.scrollBy({ top: window.innerHeight - 60, behaviour: 'smooth' });
+  }
 };
 
 const createFilmSearchListing = (id, title, year, poster) => {
@@ -162,25 +162,25 @@ const createFilmDetails = film => {
 <p class="film-details__meta">(Released ${film.Year}, dur. ${film.Runtime}, ${
     film.Rated
   })</p>
-<p class="film-details__ratings__imdb">Rating: ${film.imdbRating} out of 10</p>
+<p class="film-details__ratings__imdb"><strong>Rating:</strong> ${
+    film.imdbRating
+  } out of 10</p>
+  <h4>Starring</h4>
+<p class="film-details__actors">
+   ${film.Actors} </p>
 <h4>Plot summary</h4>
 <p class="film-details__plot">${film.Plot}</p>
-<ul class="film-details__actors">
-    <li class="film-details__actors__actor">Kate Winslet</li>
-    <li class="film-details__actors__actor">Leonardo DiCaprio</li>
-    <li class="film-details__actors__actor">Billy Zane</li>
-</ul>
-
-<ul class="film-details__genres">
-    <li class="film-details__genres_genre">Drama</li>
-    <li class="film-details__genres_genre">Romance</li>
-</ul></div>`;
+</div>`;
 };
 
 const writeFilmDetails = (parent, film) => {
   document.querySelector(parent).innerHTML = createFilmDetails(film);
   setFavButton(film);
-  window.scrollBy({ top: window.innerHeight - 70, behaviour: 'smooth' });
+  if (window.innerWidth > 1068) {
+    window.scrollBy({ top: window.innerHeight - 100, behaviour: 'smooth' });
+  } else {
+    window.scrollBy({ top: window.innerHeight - 70, behaviour: 'smooth' });
+  }
 };
 
 /* favourites list */
@@ -301,92 +301,3 @@ const addElementToParent = (parent, element) => {
 
 /* init  */
 getFavourites(myStorage);
-
-const mockResults = {
-  Search: [
-    {
-      Title: 'Titanic',
-      Year: '1997',
-      imdbID: 'tt0120338',
-      Type: 'movie',
-      Poster:
-        'https://m.media-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg'
-    },
-    {
-      Title: 'Titanic II',
-      Year: '2010',
-      imdbID: 'tt1640571',
-      Type: 'movie',
-      Poster:
-        'https://m.media-amazon.com/images/M/MV5BMTMxMjQ1MjA5Ml5BMl5BanBnXkFtZTcwNjIzNjg1Mw@@._V1_SX300.jpg'
-    },
-    {
-      Title: 'Titanic: The Legend Goes On...',
-      Year: '2000',
-      imdbID: 'tt0330994',
-      Type: 'movie',
-      Poster:
-        'https://ia.media-imdb.com/images/M/MV5BMTg5MjcxODAwMV5BMl5BanBnXkFtZTcwMTk4OTMwMg@@._V1_SX300.jpg'
-    },
-    {
-      Title: 'Titanic',
-      Year: '1953',
-      imdbID: 'tt0046435',
-      Type: 'movie',
-      Poster:
-        'https://m.media-amazon.com/images/M/MV5BMTU3NTUyMTc3Nl5BMl5BanBnXkFtZTgwOTA2MDE3MTE@._V1_SX300.jpg'
-    },
-    {
-      Title: 'Titanic',
-      Year: '1996',
-      imdbID: 'tt0115392',
-      Type: 'series',
-      Poster:
-        'https://m.media-amazon.com/images/M/MV5BMTIyNjc0NjgyMl5BMl5BanBnXkFtZTcwMDAzMTAzMQ@@._V1_SX300.jpg'
-    },
-    {
-      Title: 'Raise the Titanic',
-      Year: '1980',
-      imdbID: 'tt0081400',
-      Type: 'movie',
-      Poster:
-        'https://m.media-amazon.com/images/M/MV5BM2MyZWYzOTQtMTYzNC00OWIyLWE2NWItMzMwODA0OGQ2ZTRkXkEyXkFqcGdeQXVyMjI4MjA5MzA@._V1_SX300.jpg'
-    },
-    {
-      Title: 'The Legend of the Titanic',
-      Year: '1999',
-      imdbID: 'tt1623780',
-      Type: 'movie',
-      Poster:
-        'https://images-na.ssl-images-amazon.com/images/M/MV5BMjMxNDU5MTk1MV5BMl5BanBnXkFtZTgwMDk5NDUyMTE@._V1_SX300.jpg'
-    },
-    {
-      Title: 'Titanic',
-      Year: '2012–',
-      imdbID: 'tt1869152',
-      Type: 'series',
-      Poster:
-        'https://m.media-amazon.com/images/M/MV5BMTcxNzYxOTAwMF5BMl5BanBnXkFtZTcwNzU3Mjc2Nw@@._V1_SX300.jpg'
-    },
-    {
-      Title: 'Titanic: Blood and Steel',
-      Year: '2012–',
-      imdbID: 'tt1695366',
-      Type: 'series',
-      Poster:
-        'https://m.media-amazon.com/images/M/MV5BMjI2MzU2NzEzN15BMl5BanBnXkFtZTcwMzI5NTU3Nw@@._V1_SX300.jpg'
-    },
-    {
-      Title: 'In Search of the Titanic',
-      Year: '2004',
-      imdbID: 'tt1719665',
-      Type: 'movie',
-      Poster:
-        'https://ia.media-imdb.com/images/M/MV5BMTAzNjY0NDA2NzdeQTJeQWpwZ15BbWU4MDIwMzc1MzEx._V1_SX300.jpg'
-    }
-  ],
-  totalResults: '190',
-  Response: 'True'
-};
-
-// searchFilmBytitle(mockResults);

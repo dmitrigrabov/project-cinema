@@ -3,11 +3,6 @@
   --text-font: 'Dosis', sans-serif;
 }
 
-.film-details__actors,
-.film-details__genres {
-  display: none;
-}
-
 .hidden {
   display: none;
 }
@@ -32,6 +27,11 @@ div#app {
 body {
   /* background: yellow; */
   font-family: var(--text-font);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
 }
 /* header */
 
@@ -58,12 +58,20 @@ header {
   margin-right: 0.25rem;
 }
 /* account */
+
 #account {
   background: skyblue;
   position: fixed;
   top: 4rem;
-  left: -100vw;
+/*   right: 100vw; */
   width: 100vw;
+}
+
+#favourites__title{
+  margin-left: 0.5rem;
+}
+
+#account account--active {
 }
 
 /* search form */
@@ -119,12 +127,14 @@ header {
 .search-results__page {
   display: grid;
   grid-template-columns: repeat(5, 40vw);
-  height: 100vh;
+  grid-template-rows: min-content min-content;
+  /* height: 100vh; */
   overflow-y: scroll;
-  padding: 25vh 1rem 0 1rem;
+  padding: 1rem;
 }
 
 .film {
+  align-self: start;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -159,7 +169,6 @@ header {
 }
 
 .film-details__wrapper {
-  /*   height:100vh; */
   display: grid;
   grid-template-columns: 2fr 2fr 1fr;
   padding: 1rem;
@@ -189,28 +198,26 @@ header {
 }
 
 .film-details__poster {
-  width: 85vw;
+  display: block;
+  width: 65vw;
   grid-column: 1 / span 3;
   justify-self: center;
+  border: 5px solid white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .film-details__director {
   grid-column: 1 / span 3;
   align-self: start;
   margin-bottom: 0.25rem;
+  font-size: 1.2rem;
 }
 
 .film-details__meta {
-  font-size: 0.85rem;
+  font-size: 01rem;
   font-style: italic;
-  margin-top: 0;
+  margin-top: 0.25rem;
   grid-column: 1 / span 3;
-}
-
-.film-details__plot {
-  grid-column: 1 / span 3;
-  font-family: serif;
-  margin-top: 0;
 }
 
 .film-details__ratings__imdb {
@@ -220,5 +227,18 @@ header {
 
 .film-details__wrapper h4 {
   grid-column: 1 / span 3;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
+  align-self: bottom;
+}
+
+.film-details__actors {
+  grid-column: 1 / span 3;
+  margin-top: 0.25rem;
+}
+
+.film-details__plot,
+.film-details__actors {
+  grid-column: 1 / span 3;
+  font-family: serif;
+  margin: 0.25rem 0 0 0;
 }
