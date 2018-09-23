@@ -10,6 +10,7 @@
   padding: 0 10px;
   position: relative;
   border:0;
+  color: #495060;
 
 }
 
@@ -46,7 +47,7 @@ img{
 }
 
 .search-area-text{
-  border-bottom: 2px solid #F5EE9E;
+  border-bottom: 2px solid #FDF4A0;
   padding:5px 5px;
 
   height: 40%;
@@ -60,12 +61,39 @@ input.search-area-submit{
   background-position: 0px 0px;
   background-repeat: no-repeat;
   background-size:contain;
+
   height: 50px;
   /*width: 50px;*/
   border: 0px;
   cursor: pointer;
   outline: 0;
   grid-column: 3/4;
+}
+
+.pagination{
+  display:grid;
+
+  grid-template-columns: repeat(10,1fr);
+  align-items: center;
+  grid-gap: 0.25em;
+  margin:0;
+  padding-bottom: 1em;
+}
+
+.page-button{
+
+
+  border-radius: 100%;
+  background-color: #FDF4A0;
+}
+
+
+.more-page{
+  grid-column: 10/11;
+}
+
+.hide-button{
+  display: none;
 }
 
 .search-result-list{

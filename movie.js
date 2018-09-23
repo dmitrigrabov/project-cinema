@@ -1,13 +1,14 @@
-const search= document.querySelector(".search-area");
+const searchSubmit= document.querySelector(".search-area-submit");
 const searchText=document.querySelector(".search-area-text");
 const searchResultList=document.querySelector(".search-result-list");
-
+const pagination=document.querySelector(".pagination")
 
 //this is to insert search results using dom
 function searchResult(body){
   // console.log(body)
   // console.log(body.Search)
-  body.Search.forEach(movie =>{
+
+    body.Search.forEach(movie =>{
 
     let searchResultContainer=document.createElement("li");
     searchResultContainer.className="movie";
@@ -32,33 +33,102 @@ function searchResult(body){
     searchResultList.appendChild(searchResultContainer);
 
 
-  })
+    })
+  }
+
+
+function pages(body,page){
+  totalSearchResults=body.totalResults;
+  let totalPage=totalSearchResults/10;
+
+  pagination.innerHTML=" ";
+  for(let i=page; i<totalPage+1;i++){
+    p=i;
+    button=document.createElement("button");
+    button.className="page-button";
+    button.innerHTML=`${p}`
+    pagination.appendChild(button);
+    let pageTop=page+8;
+    console.log(page)
+    if (i>pageTop){
+      button.className="page-button hide-button"
+    }
+  }
+
+  if (totalPage>9){
+
+    const morePage=document.createElement("button");
+    morePage.innerHTML=`...`;
+    morePage.className="more-page";
+    console.log(morePage)
+    pagination.appendChild(morePage);
+  }
+
 }
 
-const eventList=["submit", "click"];
+
+
+let totalSearchResults=0;
+
+
 
 //to fetch search results from API
-for(event of eventList){
-search.addEventListener(event, function(event){
-  event.preventDefault();
+
+
+function loadAPI(page){
   const keyWord=searchText.value;
-  const url=`http://www.omdbapi.com/?s=${keyWord}&apikey=d2807699&plot=full`;
+  const url=`http://www.omdbapi.com/?s=${keyWord}&apikey=d2807699&page=${page}`;
   searchResultList.innerHTML=" "
   fetch(url)
   .then(response => response.json())
   .then(body =>{
-    searchResult(body);
-    //console.log(body);
-  })
+      if(typeof body.Search==="undefined"){
+        pagination.innerHTML=" ";
+        const errorMessage = document.createElement("p");
+        errorMessage.innerHTML=`No results available`;
+        searchResultList.appendChild(errorMessage);
+      } else {
+        searchResult(body);
+        pages(body,page);
+        console.log(body);
+      }
+    })
   .catch(error => {
     console.log(error);
-    // const errorMessage = document.createElement("p");
-    // errorMessage.innerHTML=`No results available`;
-    // searchResultList.appendChild(errorMessage);
+    });
+  }
 
-  });
+searchSubmit.addEventListener("click", function(event){
+  event.preventDefault();
+
+  let page=1;
+  loadAPI(page);
 })
-}
+
+
+
+pagination.addEventListener("click",event => {
+  page=event.target.textContent;
+console.log(page)
+  loadAPI(page);
+
+})
+
+const loadMorePage=document.querySelector(".more-page");
+loadMorePage.addEventListener("click",event =>{
+  page+=9;
+  loadAPI(page)
+})
+
+//clear all results once the search box is cleared
+searchText.addEventListener("input", event =>{
+  if (searchText.value===""){
+    searchResultList.innerHTML="";
+    pagination.innerHTML="";
+  }
+
+})
+
 
 //this is to add movie details using dom
 function movieDetails(body,id){
