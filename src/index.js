@@ -82,11 +82,8 @@ const displaySearchResults = films => {
 
 const createFilmSearchListing = (id, title, year, poster) => {
   const filmListing = createArticle('film');
-  // poster === 'N/A' ? (poster = './img/placeholder.jpg') : poster;
-  poster === 'N/A'
-    ? (poster =
-        'https://dummyimage.com/300x400/8a8a8a/ffd900.jpg&text=Sorry,+no+poster+available')
-    : poster;
+
+  poster === 'N/A' ? (poster = './src/fill-ferrell.jpg') : poster;
   filmListing.innerHTML = `
   <h2 class="film__title">${title} <span class="film__year">(${year})</span></h2><img class="film__poster" src="${poster}"></img>`;
   filmListing.setAttribute('data-ID', id);
@@ -151,6 +148,9 @@ const infiniteScroll = () => {
 /* film details */
 
 const createFilmDetails = film => {
+  film.Poster === 'N/A'
+    ? (film.Poster = './src/fill-ferrell.jpg')
+    : film.Poster;
   return `
   <div class="film-details__wrapper">
 <h3 class="film-details__title">${film.Title}</h3>
@@ -273,7 +273,7 @@ document.querySelector('#favourites').addEventListener('click', e => {
     const updatedFav = myStorage[id].replace('isFav":true', 'isFav":false');
     myStorage.setItem(id, updatedFav);
     document.querySelector('#favourites__count').textContent = myStorage.length;
-  } else if (e.target.innerText === 'Delete all') {
+  } else if (e.target.innerText === 'DELETE ALL') {
     myStorage.clear();
     getFavourites(myStorage);
   }
