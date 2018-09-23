@@ -12,25 +12,25 @@
 
 - Type in your search query and hit the button.
 
-![image](https://user-images.githubusercontent.com/42837452/45932691-2dca1800-bf78-11e8-9108-4e4a7a2e726f.png)
+![image](https://user-images.githubusercontent.com/42837452/45933010-84862080-bf7d-11e8-8881-aa7b004c2dcf.png)
 
 - Search results are loaded below and the screen scrolls up automatically.
 
 - Load more search results by paging through. You get 10 results at a time.
 
-![image](https://user-images.githubusercontent.com/42837452/45932698-52be8b00-bf78-11e8-86f7-2903cda49c84.png)
+![image](https://user-images.githubusercontent.com/42837452/45933027-9e276800-bf7d-11e8-80c0-974186b510bc.png)
 
 - Just tap on any of the films in the search results to see more information. This loads below the search results and the screen scrolls up automatically.
 
-![image](https://user-images.githubusercontent.com/42837452/45932722-a9c46000-bf78-11e8-8981-4af4e9e44281.png)
+![image](https://user-images.githubusercontent.com/42837452/45933033-b303fb80-bf7d-11e8-8ec7-90c321be83a9.png)
 
 - Save your favourite films - just click the button on the film detail view.
 
-![image](https://user-images.githubusercontent.com/42837452/45932711-7b468500-bf78-11e8-911d-d97474838226.png)
+![image](https://user-images.githubusercontent.com/42837452/45933039-c57e3500-bf7d-11e8-825b-aca38431774d.png)
 
 - You can see your list of favourites by clicking the account button in the header. You can delete films from the list individually or delete them all with a single click.
 
-![image](https://user-images.githubusercontent.com/42837452/45932728-da0bfe80-bf78-11e8-8116-76847951a93f.png)
+![image](https://user-images.githubusercontent.com/42837452/45933045-daf35f00-bf7d-11e8-9e85-395d30f62476.png)
 
 ## Technology used
 
@@ -43,9 +43,11 @@
 
 ## Surprise feature
 
-- If the film your looking for doesn't have a poster then look out for the 'F~~W~~ill Ferrell' placeholder!
+- If the film you‘re looking for doesn't have a poster then look out for the ’Fill Ferrell‘ placeholder image.
 
-![image](https://user-images.githubusercontent.com/42837452/45932761-50106580-bf79-11e8-9980-0e13e7d227e9.png)
+![image](https://user-images.githubusercontent.com/42837452/45933051-f52d3d00-bf7d-11e8-8c59-8465ca813676.png)
+
+---
 
 ## Challenges, learnings and TODOs
 
