@@ -44,6 +44,7 @@ bodyElement.addEventListener("click", event => {
     toggleNavBar();
   }
   if (event.target.matches(".add-favourite-button")){
+    event.preventDefault()
     if (myStorage.favourites){
       apiUrls.favourites = JSON.parse(myStorage.favourites)
     }
@@ -51,11 +52,14 @@ bodyElement.addEventListener("click", event => {
     myStorage.setItem("favourites", JSON.stringify(apiUrls.favourites))
     populateFavourites()
   }
+  if (event.target.matches(".logo")){
+    filmDisplayElement.innerHTML = ""
+  }
 });
 
 //look into actual toggle functionality with BEM
 function toggleNavBar() {
-  if (homeNavBar.style.display === "flex") {
+  if (window.getComputedStyle(homeNavBar).display === "flex") {
     searchBarElement.style.display = "flex";
     homeNavBar.style.display = "none";
   } else {
@@ -156,7 +160,6 @@ function searchTemplate(result) {
       <img class="result__poster" src=${result.Poster} data-id=${result.imdbID}/>
       <h4 class="result__title" data-id=${result.imdbID}>${result.Title}</h4>
       <h5 class="result__year" data-id=${result.imdbID}>(${result.Year})</h5>
-      <h5 class="result__type" data-id=${result.imdbID}>${result.Type}</h5>
     </div>
   `;
   searchResultElement.innerHTML = template;
@@ -169,13 +172,12 @@ function fullFilmTemplate(result) {
   const template = `
     <div class="film-display">
       <div class="film-display__header">
-        <h2>${result.Title} </h2>
-        <h2>(${result.Year})</h2>
-        <button class="add-favourite-button">Favourites</button>
+        <h2>${result.Title} <small>(${result.Year})</small></h2>
+        <a class="add-favourite-button" href=""><i class="far fa-star add-favourite-button"></i></a>
       </div>
       <div class="film-display__info">
         <img class="film-display__poster" src=${result.Poster}/>
-        <div class="film-display__key-facts"
+        <div class="film-display__key-facts">
           <span>${result.Genre} | ${result.Runtime} | ${result.Rated}</span>
           <span> Director: ${result.Director}</span>
           <span> Written By: ${result.Writer}</span>
@@ -226,6 +228,10 @@ function favouriteTemplate(result){
     <div class="favourite-element" data-id=${result.imdbID}>
       <h4 class="result__title" data-id=${result.imdbID}>${result.Title}</h4>
       <h5 class="result__year" data-id=${result.imdbID}>(${result.Year})</h5>
+      <div class="favourite-element__arrows">
+        <i class="arrow up"></i>
+        <i class="arrow down"></i>
+      </div>
     </div>
   `;
   favouriteElement.innerHTML = template;
