@@ -6,31 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="./src/modern-normalize.css">
     <link rel="stylesheet" href="./src/style.css">
 </head>
 
 <body>
-    <form id="search" class>
-        <label class="search__label" for="search-tf">Find a film</label>
-        <input class="search__input" id="search-tf" name="query" type="text" placeholder="Enter a film title">
-        <button class="btn search__btn">Search</button>
-    </form>
-    <section id="account">
-        <div id="favourites">
-            <h3 id="favourites__title">You’ve saved <span id="favourites__count">0</span> favourite films <button>Delete
-                    all</button></h3>
-            <ul id="favourites__list"></ul>
-        </div>
-    </section>
-    <section id="search-results">
+    <div id="app">
+        <header>
+            <h1 id="title">The Reel Thing</h1>
+            <button>Account</button>
+        </header>
+        </form>
+        <section id="account">
+            <div id="favourites">
+                <h3 id="favourites__title">You’ve saved <span id="favourites__count">0</span> favourite films <button>Delete
+                        all</button></h3>
+                <ul id="favourites__list"></ul>
+            </div>
+        </section>
+        <form id="search" class>
+            <label class="search__label" for="search-tf">What are you looking?</label>
+            <input class="search__input" id="search-tf" name="query" type="text" placeholder="Tap here and start typing...">
+            <button class="btn search__btn">Go!</button>
+        </form>
 
-    </section>
-    <nav id="page-nav">
-        <button class="prev">&larr;</button>
-        <p class="page-num">Page <span class="page-current">1</span> of <span class="page-total"></span></p>
-        <button class="next">&rarr;</button>
-    </nav>
-    <section id="film-details"></section>
+        <section id="search-results">
+
+        </section>
+        <nav id="page-nav">
+            <button class="prev">&larr;</button>
+            <p class="page-num">Page <span class="page-current">1</span> of <span class="page-total"></span></p>
+            <button class="next">&rarr;</button>
+        </nav>
+        <section id="film-details"></section>
+    </div>
     <script src="./src/index.js" type="module"></script>
 </body>
 

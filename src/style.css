@@ -10,3 +10,76 @@
 .fav--active {
   background: green;
 }
+
+div#app{
+  position: relative;
+}
+
+/* header */
+
+header{
+  background: black;
+  color:red;
+  display: flex;
+  height: 4rem;
+  justify-content: space-between;
+  padding-left: 1rem;
+}
+
+#title{
+  font-size: 1.5rem;
+}
+
+/* account */
+#account{
+  background: skyblue;
+  position: fixed;
+  top: 4rem;
+  left: -100vw;
+  width: 100vw;
+}
+
+/* search form */
+
+#search{
+  align-items: center;
+  background: orangered;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.search__label{
+  margin: 5rem 0 2rem 0;
+  font-size: 1.5rem;
+}
+
+.search__input {
+  background: orangered;
+  border-width: 0 0 1px 0;
+  height: 3rem;
+  margin-bottom: 1.5rem;
+  padding-left: 1rem;
+  width: 80vw;
+  color: whitesmoke;
+}
+
+.search__btn {
+  color: white;
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 400;
+  height: 5rem;
+  width: 5rem;
+/*   background-image: linear-gradient(to bottom, rgba(0,0, 255,0.5), rgba(0,0,255,0.7) 80%); */
+  background: skyblue;
+  border-radius: 2.5rem;
+  border: none;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+  text-shadow: 0 1px rgba(0,0,0,1);
+}
+/* search results */
+
+#search-results{
+  height: 100vh;
+}
