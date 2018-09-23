@@ -2,6 +2,8 @@ import * as storage from './localStorage.js';
 
 const myStorage = window.localStorage;
 
+window.scrollBy(0, -20);
+
 if (storage.storageAvailable('localStorage')) {
   // localStorage.clear();
   console.log(`You’re all set to save your favourite films`);
@@ -67,7 +69,7 @@ const displaySearchResults = films => {
   console.log(paginationButtons);
   addElementToParent(searchResultsWrapper, paginationButtons);
   addPaginationControls();
-  window.scrollBy({ top: window.innerHeight + 32, behaviour: 'smooth' });
+  window.scrollBy({ top: window.innerHeight + 80, behaviour: 'smooth' });
 };
 
 const createFilmSearchListing = (id, title, year, poster) => {
@@ -168,7 +170,7 @@ const createFilmDetails = film => {
 const writeFilmDetails = (parent, film) => {
   document.querySelector(parent).innerHTML = createFilmDetails(film);
   setFavButton(film);
-  window.scrollBy({ top: window.innerHeight - 80, behaviour: 'smooth' });
+  window.scrollBy({ top: window.innerHeight - 70, behaviour: 'smooth' });
 };
 
 /* favourites list */
