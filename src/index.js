@@ -102,6 +102,7 @@ function displayFilmDetails(film){
 //event listener on each film div
 outputNode.addEventListener('click', e=>{
 
+    //This bit of code does not work
     if(event.target.closest('.fav-button')){
         let favourite = event.target.closest(`.main__film`);
         console.log(favourite);
