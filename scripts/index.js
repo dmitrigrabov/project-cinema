@@ -40,11 +40,12 @@ function fetchFullArticle(event) {
     moviesButtons.forEach(item => {
     const parentSection = item.closest(".moviesfeed__full").getAttribute("id"); 
     const parentClass = item.closest(".moviesfeed__full").classList;
+    const articleClass = item.closest("article").classList;
     const moviesButton = item.closest(".moviesfeed__btn");
     
         if (filmID === parentSection) {
             
-            // FETCHING TOFIX would like to contain as functions but issue with scope
+            // FETCHING TOFIX as function calls but scope issue
             // fetchFullContent(APIQuery);
             // displayFullFilm(body)
 
@@ -59,8 +60,11 @@ function fetchFullArticle(event) {
                     movie.innerHTML = filmsLayoutFilm(body);
                     }
                 })
-            // toggle details NOTE within .then to change when details loaded
+            // toggle details 
+            // NOTE inside .then to toggle when details loaded
             parentClass.toggle('details--open');
+            articleClass.toggle('active');
+            
             parentClass.contains("details--open") ? moviesButton.textContent = "Hide details" : moviesButton.textContent = "Show details";
 
             })
@@ -81,34 +85,45 @@ function filmsLayoutSearchResult(item) {
     const title = `${item.Title}`;
     const year = `${item.Year}`;
     const id = `${item.imdbID}`;
-    // const posterurl = `${item.Poster}`
-    // <figure class="moviesfeed__poster"><img src="${posterurl}"></figure>
+    const posterurl = item.Poster !== "N/A" ? `${item.Poster}` : "";
     return `
-        <section class="moviesfeed__full" id="${id}">
-        
+        <section class="moviesfeed__full" id="${id}" style="background-image: url(${posterurl});">
             <div class="moviesfeed__content">
-                <header><h3 class="movie__title">${title} <em>${year}</em></h3></header>
-                <button class="btn moviesfeed__btn" data-id="${id}">Show details</button>
+                <header class="movie__header"><h3 class="movie__title"><span>${title} <em>${year}</em></span></h3></header>
+                <a href="#" class="btn moviesfeed__btn" data-id="${id}">Show details</a>
             </div>
-            <div class="moviesfeed__details" data-id="${id}"></div>
+            <div class="moviesfeed__details" data-id="${id}"><a class="closeBtn">X</a></div>
         </section>`;
   };  
 
 function displaySearchList(filmArticles) {
+    
     moviesParentNode.innerHTML = "";
-    filmArticles.Search.map(item => {
+    // filter out films without posters
+    let searchArray = filmArticles.Search.filter(item => {
+        return item.Poster !== "N/A"
+        });
+
+    searchArray.map(item => {
         const article = document.createElement("article");
         article.innerHTML = filmsLayoutSearchResult(item);
         return moviesParentNode.appendChild(article);
     });
+
+
 }  
 function filmsLayoutFilm(body)  {
     // fallbacks or empty if data is null TODO
-    const title = `${body.Title}`;
-    const director = `Directed by ${body.Director}`;
-    const plot = `<h3>Plot summary</h3><p>${body.Plot}</p>`;
-    const actors = `<p><strong>Starring:</strong> ${body.Actors}</p>`;
-    return `<h3>${director}</h3>${plot}${actors}`;
+    
+    const director = body.Director !== "N/A" ? `<h3>Directed by ${body.Director}</h3>` : "";
+    const plot = body.Plot !== "N/A" ? `<p>${body.Plot}</p>` : "";
+    const actors = body.Actors !== "N/A" ? `<li><strong>Starring: </strong>${body.Actors}</li>` : "";
+    const language = body.Language !== "N/A" ? `<li><strong>Language: </strong>${body.Language}</li>` : "";
+    const genre = body.Genre !== "N/A" ? `<li><strong>Genre: </strong>${body.Genre}</li>` : "";
+    const guidance = body.Rated !== "N/A" ? `<li><strong>Movie Guidance: </strong>${body.Rated}</li>` : "";
+    const rating = body.imdbRating !== "N/A" ? `<p><strong>Cool lemons? </strong>${body.imdbRating}</p>` : "";
+
+    return `<div class="moviesfeed__details--wrap">${director}${plot}<ul class="moviesfeed__details-list">${actors}${language}${genre}${guidance}</ul>${rating}</div>`;
 }
 
 

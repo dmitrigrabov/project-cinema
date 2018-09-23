@@ -9,19 +9,26 @@
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <h1 class="main-title">Cool Lemons</h1>
+    <header class="mainheader">
+        <h1 class="mainheader__title">Mouldy Lemons</h1>
+        <h3 class="mainheader__subtitle">Discover the zestiest flicks</h3>
+    </header>
     <div class="container">
-        <main>
-            <form>
-                <label class="search__label" for="search-tf">Film</label>
-                <input class="search__input"  type='text' name="search" placeholder="Enter film title" autocomplete="film">
-                <button class="btn search__btn">Go</button>
-            </form>
+        <main class="maincontent">
+            <section class="search">
+                <form class="search__form">
+                    <input class="search__input"  type='text' name="search" placeholder="Enter film title" autocomplete="film">
+                    <button class="btn search__btn">Search</button>
+                </form>
+            </section>
             <section class="movies">
                 <div class="moviesfeed"></div>
             </section> 
         </main>
     </div>  
+    <footer class="paging">
+
+    </footer>
     <script src="scripts/index.js"></script>
 </body>
 </html>
