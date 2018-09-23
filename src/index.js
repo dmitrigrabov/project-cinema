@@ -60,13 +60,19 @@ const displaySearchResults = films => {
   searchResultsWrapper.innerHTML = '';
 
   addElementToParent(searchResultsWrapper, searchResults);
-  createPagination(films);
+  const paginationButtons = createPagination(films);
+  console.log(paginationButtons);
+  addElementToParent(searchResultsWrapper, paginationButtons);
+  addPaginationControls();
 };
 
 const createFilmSearchListing = (id, title, year, poster) => {
   const filmListing = createArticle('film');
   // poster === 'N/A' ? (poster = './img/placeholder.jpg') : poster;
-  poster === 'N/A' ? (poster = 'http://placekitten.com/g/300/460') : poster;
+  poster === 'N/A'
+    ? (poster =
+        'https://dummyimage.com/300x400/8a8a8a/ffd900.jpg&text=Sorry,+no+poster+available')
+    : poster;
   filmListing.innerHTML = `
   <h2 class="film__title">${title} <span class="film__year">(${year})</span></h2><img class="film__poster" src="${poster}"></img>`;
   filmListing.setAttribute('data-ID', id);
@@ -82,31 +88,44 @@ const createArticle = (articleClass = '') => {
 };
 
 const createPagination = data => {
+  const pagination = createElement('nav');
   const numPages = Math.ceil(Number(data.totalResults) / 10);
-  document.querySelector('.page-total').textContent = numPages;
+  // document.querySelector('.page-total').textContent = numPages;
+  pagination.innerHTML = `<nav id="page-nav">
+  <button class="btn prev">&larr;</button>
+  <p class="page-num">Page <span class="page-current">${
+    params.pageNum
+  }</span> of <span class="page-total">${numPages}</span></p>
+  <button class="btn next">&rarr;</button>`;
+
+  return pagination;
 };
 
-const nextPage = document.querySelector('#page-nav .next');
-nextPage.addEventListener('click', e => {
-  const currentPageNum = document.querySelector('.page-current');
-  const totalPageNum = document.querySelector('.page-total');
-  e.preventDefault();
-  +currentPageNum.textContent < +totalPageNum.textContent // Prevent next page advancing beyond total no. of pages
-    ? params.pageNum++
-    : false;
+const addPaginationControls = () => {
+  const nextPage = document.querySelector('#page-nav .next');
+  nextPage.addEventListener('click', e => {
+    const currentPageNum = document.querySelector('.page-current');
+    const totalPageNum = document.querySelector('.page-total');
+    e.preventDefault();
+    +currentPageNum.textContent < +totalPageNum.textContent // Prevent next page advancing beyond total no. of pages
+      ? params.pageNum++
+      : false;
 
-  searchFilmBytitle(params.query);
-  currentPageNum.textContent = params.pageNum;
-});
+    searchFilmBytitle(params.query);
+    currentPageNum.textContent = params.pageNum;
+    e.stopPropagation();
+  });
 
-const prevPage = document.querySelector('#page-nav .prev');
-prevPage.addEventListener('click', e => {
-  e.preventDefault();
-  params.pageNum > 1 ? params.pageNum-- : false; // Prevent previous page returning negative page number
+  const prevPage = document.querySelector('#page-nav .prev');
+  prevPage.addEventListener('click', e => {
+    e.preventDefault();
+    params.pageNum > 1 ? params.pageNum-- : false; // Prevent previous page returning negative page number
 
-  searchFilmBytitle(params.query);
-  document.querySelector('.page-current').textContent = params.pageNum;
-});
+    searchFilmBytitle(params.query);
+    document.querySelector('.page-current').textContent = params.pageNum;
+    e.stopPropagation();
+  });
+};
 
 /* infinite scroll */
 const infiniteScroll = () => {
