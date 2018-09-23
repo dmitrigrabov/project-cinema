@@ -11,7 +11,9 @@ const pageButtons = document.querySelectorAll(".page__button");
 //Global variables
 let currentSearch = "";
 
+const firstSearch = `http://www.omdbapi.com/?s=star+wars&y=2018&page=1&type=movie&apikey=${apiKey}`
 
+fetchResults(firstSearch);
 
 
                                     // INITIAL FETCH AND PAGINATION
@@ -52,6 +54,7 @@ function resultTemplate(arr) {
         `<div class="search__result" id="${film.imdbID}">
         <h2>${film.Title}</h2> <p>(${film.Year})</p>
         <img src="${poster}">
+        <h4>More info...</h4>
         </div>
         `;
         return movieItem;
@@ -130,13 +133,20 @@ function updatePage(term, page){
 
                                         // MOVIE INFO GENERATOR
 
+
 resultsContainer.addEventListener("click", function(event) {
-    if (event.target.closest(".search__result").classList.contains(".movie__info") === false) {
-        fetchMovieInfo(event.target.closest(".search__result").id); 
-    } else if (event.target.closest(".search__result").classList.contains(".movie__info") === true){
-        console.log("Hello")
-    }
-})
+         if ((Array.from(event.target.closest(".search__result").childNodes).some(node => node.className === "movie__info") === true)) {
+            let infoToggle = document.getElementById(`info${event.target.closest(".search__result").id}`);
+            infoToggle.classList.toggle("movie__info--closed");
+        } else if ((Array.from(event.target.closest(".search__result").childNodes).some(node => node.className === "movie__info--closed") === true)) {
+            let infoToggle = document.getElementById(`info${event.target.closest(".search__result").id}`);
+            infoToggle.classList.toggle("movie__info");
+        } else if ((Array.from(event.target.closest(".search__result").childNodes).some(node => node.className === "movie__info" || node.className === "movie__info--closed") === false)) {
+            fetchMovieInfo(event.target.closest(".search__result").id);
+        }
+            
+})  
+
 
 function fetchMovieInfo(id) {
     const movieUrl = `http://www.omdbapi.com/?i=${id}&apikey=${apiKey}`;
@@ -151,7 +161,7 @@ function movieInfoTempate(movie) {
     })
     const movieInfo = 
     `
-    <div class="movie__info".
+    <div class="movie__info" id="info${movie.imdbID}">
     <p><i>${movie.Genre}</i></p>
     <h3>Director</h3>
     <p>${movie.Director}</p>
@@ -167,9 +177,11 @@ function movieInfoTempate(movie) {
     <ul>${ratings.join().replace(/,/g, " ")}</ul>
     <h3>Run Time</h3>
     <p>${movie.Runtime}</p>
+    <h5><u>Less Info...</u></h5>
     </div>
     `;
     appendMovieInfo(movieInfo, movie);
+
 }
 
 
