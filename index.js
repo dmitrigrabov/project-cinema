@@ -67,7 +67,6 @@ textboxRef.addEventListener('input', event => {
 
 function renderPreview(body) {
     searchPreviewRef.innerHTML = '';
-    console.log(body);
     body.Search.forEach(item => {
         const preview = document.createElement('div');
         preview.setAttribute('class','preview');
@@ -75,7 +74,6 @@ function renderPreview(body) {
         preview.innerHTML = item.Title;
         searchPreviewRef.appendChild(preview);
     });
-    console.log(searchPreviewRef.innerHTML);
 }
 
 function toggleDetails() {
@@ -89,23 +87,28 @@ formRef.addEventListener('submit', submitSearch);
 //Event listeners: favourite checkboxes
 document.addEventListener('change', event => {
     if (event.target.matches('.detail__checkbox')) {
-        if (event.target.checked) addToFavourites(event.target.getAttribute('data-id'));
+        if (event.target.checked) addToFavourites(event.target.getAttribute('data-id'),event.target.parentNode.parentNode.parentNode.getAttribute('data-title'));
         else removeFromFavourites(event.target.getAttribute('data-id'));
     }
 });
 
 //Event listeners: infinite scroll
 resultsRef.addEventListener('scroll', event => {
-    console.log(resultsRef.scrollX);
-    console.log(resultsRef.scrollTop);
-    console.log(resultsRef.clientWidth);
-    
-    if (navRef.scrollTop + navRef.clientHeight >= navRef.scrollHeight) {}
+    if (resultsRef.scrollLeft + 100 > resultsRef.scrollWidth - resultsRef.clientWidth) {
+        getMoreResults();
+    }
   });
+
+ function getMoreResults() {
+    page++;
+    const searchQuery = formRef.search.value;
+    const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
+    const appendToResults = true;
+    fetchResults(APIQuery, appendToResults);
+ } 
 
 function moveFavouriteUp(imdbID) {
     let currentFavs = JSON.parse(myStorage.favourites);
-    console.log(currentFavs);
     const favToMoveUp = currentFavs.filter(item => item.imdbID === imdbID)[0];
     const rank = currentFavs.indexOf(favToMoveUp);
     if (rank > 0) {
@@ -118,7 +121,6 @@ function moveFavouriteUp(imdbID) {
 
 function moveFavouriteDown(imdbID) {
     let currentFavs = JSON.parse(myStorage.favourites);
-    console.log(currentFavs);
     const favToMoveDown = currentFavs.filter(item => item.imdbID === imdbID)[0];
     const rank = currentFavs.indexOf(favToMoveDown);
     if (rank < currentFavs.length - 1) {
@@ -153,13 +155,11 @@ function generateFavourite(imdbID,title) {
 }
 
 //Functions: Add to favourites
-function addToFavourites(imdbID) {
-    const body = JSON.parse(myStorage.getItem('body'));
-    const movieData = body.Search.filter(item => item.imdbID === imdbID)[0];
+function addToFavourites(imdbID, title) {
     let currentFavs = JSON.parse(myStorage.favourites);
+    if (currentFavs === null) currentFavs = [{'imdbID':imdbID,'Title':title}];
+    else currentFavs.push({'imdbID':imdbID,'Title':title});
     console.log(currentFavs);
-    if (currentFavs === null) currentFavs = [movieData];
-    else currentFavs.push(movieData);
     myStorage.favourites = JSON.stringify(currentFavs);
     refreshFavourites();
 }
@@ -180,7 +180,8 @@ function submitSearch(event) {
     searchPreviewRef.classList.add('search__preview--hidden');
     const searchQuery = formRef.search.value;
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&type=movie`;
-    fetchResults(APIQuery);
+    const appendToResults = false;
+    fetchResults(APIQuery, appendToResults);
     detailsRef.classList.add('details--hidden');
     resultsWrapperRef.classList.remove('results__wrapper--hidden');
     resultsTitleRef.innerHTML = `Search results for ${searchQuery}:`;
@@ -192,7 +193,8 @@ function nextButtonPressed(event) {
     page++;
     const searchQuery = formRef.search.value;
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
-    fetchResults(APIQuery);
+    const appendToResults = false;
+    fetchResults(APIQuery, appendToResults);
 }
 
 //Functions: previous page
@@ -202,7 +204,8 @@ function prevButtonPressed(event) {
         page--;
         const searchQuery = formRef.search.value;
         const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
-    fetchResults(APIQuery);
+        const appendToResults = false;
+    fetchResults(APIQuery, appendToResults);
     } 
 }
 
@@ -223,8 +226,9 @@ function fetchDetails(imdbID) {
 function renderDetails(body) {
     resultsWrapperRef.classList.add('results__wrapper--hidden');
     detailsRef.classList.remove('details--hidden');
+    detailsRef.setAttribute('data-title', body.Title);
     detailsRef.innerHTML = 
-                       `<div data-id=${body.imdbID} class='detail detail__header'><h1 data-id=${body.imdbID} class='detail detail__title'>${body.Title} (${body.Year})</h1><div data-id=${body.imdbID} class='detail detail__logos'><input id='check' data-id=${body.imdbID} class='detail__checkbox' type='checkbox'><label class='fa' for='check'></label><a href='https://www.imdb.com/title/${body.imdbID}/'><i class="fab fa-imdb"></i></a></div></div>
+                       `<div data-id=${body.imdbID} class='detail detail__header'><h1 data-id=${body.imdbID} class='detail detail__title'>${body.Title} (${body.Year})</h1><div data-id=${body.imdbID} class='detail detail__logos'><input id='check' class='detail__checkbox' type='checkbox' data-id=${body.imdbID}><label class='fa' for='check'></label><a href='https://www.imdb.com/title/${body.imdbID}/'><i class="fab fa-imdb"></i></a></div></div>
                         <h2 class='detail__plot'>${body.Plot}</h2> 
                         <img data-id=${body.imdbID} class='detail detail__poster' src=${body.Poster}>
                         <p data-id=${body.imdbID} class='detail detail__info'>${body.Genre}  |  Runtime: ${body.Runtime}  |  Rated ${body.Rated}  |  IMDB Score: ${body.imdbRating}</p>
@@ -235,24 +239,23 @@ function renderDetails(body) {
 }
 
 //Functions: fetch top level movie information
-function fetchResults(APIQuery) {
+function fetchResults(APIQuery, appendToResults) {
     fetch(APIQuery)
     .then(response => {
         if (!response.ok) throw response;
         return response.json();})
-    .then(body => renderResults(body))
+    .then(body => renderResults(body, appendToResults))
     .catch(error => console.log(error));
 }
 
 //Functions: render search results
-function renderResults(body) {
-    myStorage.setItem('body',JSON.stringify(body));
-    resultsRef.innerHTML = '';
-    console.log(body);
+function renderResults(body, appendToResults) {
+    if (!appendToResults) resultsRef.innerHTML = '';
     body.Search.forEach(item => {
         const result = document.createElement('article');
         result.setAttribute('class','result');
         result.setAttribute('data-id',item.imdbID);
+        result.setAttribute('data-title',item.Title);
         result.innerHTML = `<div class='result__wrapper'>
                             <img data-id=${item.imdbID} class='result result__poster' src=${item.Poster}>
                             <h6 data-id=${item.imdbID} class='result result__title'>${item.Title} (${item.Year})</h6>
