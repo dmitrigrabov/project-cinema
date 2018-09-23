@@ -11,6 +11,7 @@ const detailsRef = document.querySelector('.details');
 const resultsTitleRef = document.querySelector('.results__title');
 const resultsWrapperRef = document.querySelector('.results__wrapper');
 const favsMenuRef = document.querySelector('.favs');
+const searchPreviewRef = document.querySelector('.search__preview');
 
 //Initialize: local storage
 const myStorage = window.localStorage;
@@ -49,8 +50,30 @@ function resetPage() {
 }
 
 textboxRef.addEventListener('input', event => {
-    if (event.target.value.length >= 3) {};
+    if (event.target.value.length >= 3) {
+        const searchQuery = formRef.search.value;
+        const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&type=movie`;
+        fetch(APIQuery)
+        .then(response => {
+            if (!response.ok) throw response;
+            return response.json();})
+        .then(body => renderPreview(body))
+        .catch(error => console.log(error));
+    };
 });
+
+function renderPreview(body) {
+    searchPreviewRef.innerHTML = '';
+    console.log(body);
+    body.Search.forEach(item => {
+        const preview = document.createElement('div');
+        preview.setAttribute('class','preview');
+        preview.setAttribute('data-id',item.imdbID);
+        preview.innerHTML = item.Title;
+        searchPreviewRef.appendChild(preview);
+    });
+    console.log(searchPreviewRef.innerHTML);
+}
 
 function toggleDetails() {
     detailsRef.classList.toggle('details--hidden');

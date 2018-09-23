@@ -81,6 +81,7 @@ body {
 .search__input:focus {
     outline-width: 0;
 }
+
 .search__form {
     display: flex;
     justify-content: center;
@@ -91,6 +92,22 @@ body {
     font-size: 1.5rem;
     color: #c2c2c2;
     margin-left: 20px;
+}
+
+.search__preview {
+    position: fixed;
+    top: 140px;
+    left: 65px;
+    display: inline-block;
+    background: #272727; 
+}
+
+.preview {
+    font-size: 0.7rem;
+    width: 190px;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
 }
 
 .results {
@@ -405,11 +422,12 @@ body {
     }
     
     .results__wrapper {
-        margin-top: 3rem;
+        margin: 3rem 2rem 0 2rem;
+
     }
     
     .result {
-        width: 18%;
+        width: 15%;
         margin: 0.3rem;
     }
     
@@ -420,6 +438,10 @@ body {
     
     .result__poster {
         width: 100%;
+    }
+
+    .details {
+        margin: 2rem;
     }
     
     .detail__title {
