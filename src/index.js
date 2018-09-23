@@ -45,6 +45,7 @@ const getFilmByID = id => {
 const displaySearchResults = films => {
   console.log(films);
   const searchResults = createElement('div');
+  searchResults.classList.add('search-results__page');
   searchResults.setAttribute('id', `page-${params.pageNum}`);
   films.Search.forEach(film => {
     const filmListing = createFilmSearchListing(
@@ -64,8 +65,10 @@ const displaySearchResults = films => {
 
 const createFilmSearchListing = (id, title, year, poster) => {
   const filmListing = createArticle('film');
+  // poster === 'N/A' ? (poster = './img/placeholder.jpg') : poster;
+  poster === 'N/A' ? (poster = 'http://placekitten.com/g/300/460') : poster;
   filmListing.innerHTML = `
-  <h2 class="film__title">${title}</h2><p class="film__year">${year}</p><img class="film__poster" src="${poster}"></img>`;
+  <h2 class="film__title">${title} <span class="film__year">(${year})</span></h2><img class="film__poster" src="${poster}"></img>`;
   filmListing.setAttribute('data-ID', id);
 
   return filmListing;
@@ -81,7 +84,6 @@ const createArticle = (articleClass = '') => {
 const createPagination = data => {
   const numPages = Math.ceil(Number(data.totalResults) / 10);
   document.querySelector('.page-total').textContent = numPages;
-  // document.querySelector('#page-nav').classList.toggle('hidden');
 };
 
 const nextPage = document.querySelector('#page-nav .next');
