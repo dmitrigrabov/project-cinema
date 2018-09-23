@@ -183,7 +183,7 @@ body {
 }
 
 .results__searchResult p{
-    padding-left: 0.5rem;
+    padding: 0 0.5rem;
     margin: 0;
     grid-gap: 0.5rem;
 }

@@ -6,65 +6,67 @@ const form = document.querySelector('#control__search'),
     prevBtn = document.querySelector('.buttons__button-prev');
 
 let params = {
-    inputValue: '',
+    inputValue: searchInput.value,
     pageNumber: 1,
     totalPages: 0,
     imdbID: '',
-    apiKey: 'f899a3c1',
-    fetchUrl: ''
+    apiKey: 'f899a3c1'
 };
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
     buttonsClass.style.display = 'grid';
     results.innerHTML = '';
-    params.pageNumber = 2;
+    params.pageNumber = 1;
     params.totalPages = 0;
     params.inputValue = searchInput.value;
-    runFetch(params.inputValue, params.pageNumber);
+    runFetch();
 });
 
 nextBtn.addEventListener('click', (e) => {
     e.preventDefault();
     results.innerHTML = '';
-    // if (params.pageNumber >= params.totalPages) {
-    // } else {
-    //     params.pageNumber++;
-    runFetch();
-    // console.log(params.pageNumber);
-    // }
+    if (params.pageNumber === params.totalPages) {
+        params.pageNumber = 1;
+    } else {
+        params.pageNumber++;
+    }
 
+    runFetch();
 });
 prevBtn.addEventListener('click', (e) => {
     e.preventDefault();
     results.innerHTML = '';
-    // if (params.pageNumber === 1) {
-    // } else {
-    //     params.pageNumber--;
+    if (params.pageNumber === 1) {
+        params.pageNumber = params.totalPages;
+    } else {
+        params.pageNumber--;
+    }
     runFetch();
-    // }
+
 });
 
-function setUrl() {
-    return params.fetchUrl = `https://www.omdbapi.com/?i=${params.imdbID}&plot=full&apikey=${params.apiKey}&s=${params.inputValue}&page=${params.pageNumber}`;
+function setUrlWithTypedSearch() {
+    return `https://www.omdbapi.com/?&plot=full&apikey=${params.apiKey}&s=${params.inputValue}&page=${params.pageNumber}`;
+}
+
+function setUrlForEachMovieWithImdbIDNumber() {
+    return `https://www.omdbapi.com/?i=${params.imdbID}&plot=full&apikey=${params.apiKey}&page=${params.pageNumber}`;
 }
 
 function runFetch() {
-    fetch(setUrl())
+    fetch(setUrlWithTypedSearch())
         .then((response) => {
             return response.json();
         })
         .then((body) => {
             console.log(body);
             params.totalPages = body.totalResults / 10; //divide by as as there is 10 results per page
-            params.totalPages = Math.round(params.totalPages); //round up as I want to have all possible number of pages
-            console.log(body.totalResults);
-            console.log(params.totalPages);
+            params.totalPages = Math.ceil(params.totalPages); //round up as I want to have all possible number of pages
 
             body.Search.forEach(e => {
                 params.imdbID = e.imdbID;
-                params.inputValue = ''; // as I have imdbID(id of movie) and we want to get full details of our searched movie I need to delete typed input and search only with imdbID
-                fetch(setUrl())
+                fetch(setUrlForEachMovieWithImdbIDNumber())
                     .then((response) => {
                         return response.json();
                     })
