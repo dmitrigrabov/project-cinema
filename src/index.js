@@ -64,12 +64,8 @@ const displaySearchResults = films => {
 
 const createFilmSearchListing = (id, title, year, poster) => {
   const filmListing = createArticle('film');
-  const filmTitle = createElement('h2', title);
-  const releaseYear = createElement('p', year);
-  const filmPoster = createImageElement(poster);
-  addElementToParent(filmListing, filmTitle);
-  addElementToParent(filmListing, releaseYear);
-  addElementToParent(filmListing, filmPoster);
+  filmListing.innerHTML = `
+  <h2 class="film__title">${title}</h2><p class="film__year">${year}</p><img class="film__poster" src="${poster}"></img>`;
   filmListing.setAttribute('data-ID', id);
 
   return filmListing;
