@@ -137,8 +137,15 @@ main{
 }
 
 
-.poster{
+.poster {
     max-width: 47vw;
+}
+
+.favourites{
+    text-align: center;
+}
+.favourites__divs > img {
+    max-width: 32vw;
 }
 
 @media(min-width: 768px) {

@@ -6,6 +6,10 @@ let previousSearchTarget = '';
 let addInfoNode = '';
 let pageCounter = 1;
 let movieName = 'Batman';
+let posterNode = document.querySelector('.favourites__divs');
+// let posterNode = document.createElement("div");
+// posterNode.className="favourites__divs";
+// console.log(posterNode);
 
 
 //fetches movies from API - search by names
@@ -42,7 +46,7 @@ function displayFilms(filmResults) {
                             <h3 class='title'>${film.Title}</h3>
                             <h4 class='year'>(${film.Year})</h4>
                             <p class='type'><b>type:</b> ${film.Type}</p>
-                            <i class="fav-button far fa-heart">`
+                            <i class="fav-button fas fa-heart">`
         outputNode.appendChild(filmNode);                    
     })
     let img = filmResults[0].Poster;
@@ -101,18 +105,25 @@ function displayFilmDetails(film){
 
 //event listener on each film div
 outputNode.addEventListener('click', e=>{
-
+ 
     //This bit of code does not work
     if(event.target.closest('.fav-button')){
+      
+       
         let favourite = event.target.closest(`.main__film`);
+        
         console.log(favourite);
-        favourite = favourite.firstChild;
-        console.log(favourite);
-        const posterNode = document.createElement("div");
+        // let secondFavourite = favourite;
+        // secondFavourite=secondFavourite.firstChild;
+        // console.log(secondFavourite);
+        let secondFavourite = favourite.cloneNode(true);
+    
+        secondFavourite = secondFavourite.firstChild;
+        posterNode.appendChild(secondFavourite);
         console.log(posterNode);
-        posterNode.innerHTML = favourite;
-        console.log(posterNode);
-        document.querySelector('.favourites').appendChild(posterNode);
+        // document.querySelector('.favourites__divs').appendChild(posterNode);
+        event.target.closest('.fav-button').style.color="red";
+        
     }
   
     else if (event.target.closest('.main__film')){
