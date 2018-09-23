@@ -1,70 +1,72 @@
 # Project Cinema
 
-## A movie search engine powered by the [Open Movie Database](http://www.omdbapi.com) API.
+> # A movie search engine powered by the [Open Movie Database](http://www.omdbapi.com) API.
+>
+> ## _”A mobile-first, responsive design that looks great at different screen widths“_
 
 ---
 
-### Getting started
+---
 
-- Search for a film.
-- Tap to reveal more details.
+## UX
 
-### UX
+- Type in your search query and hit the button.
 
-- A mobile-first responsive design responsive that looks great at different screen widths
-  <!-- - [ ] ~~Create an HTML page which should have a `form` at the top which contains a text input and a submit button. Below it should have a placeholder element for the returned results.~~
-- [ ] ~~Use JavaScript to capture the `submit` event in your search form, extract the query string from the text input and use that to make an API call to the Open Movie Database API to search for films which match the query string using `fetch`. `console.log` the results~~
-- [ ] ~~Display the data returned by the API including title, year and poster picture~~ -->
+![image](https://user-images.githubusercontent.com/42837452/45932691-2dca1800-bf78-11e8-9108-4e4a7a2e726f.png)
 
-### Movie details
-
-### Technology used
-
-- HTML
-- JavaScript
-- CSS
-
-#### Features
+- Search results are loaded below and the screen scrolls up automatically.
 
 - Load more search results by paging through. You get 10 results at a time.
 
+![image](https://user-images.githubusercontent.com/42837452/45932698-52be8b00-bf78-11e8-86f7-2903cda49c84.png)
+
+- Just tap on any of the films in the search results to see more information. This loads below the search results and the screen scrolls up automatically.
+
+![image](https://user-images.githubusercontent.com/42837452/45932722-a9c46000-bf78-11e8-8981-4af4e9e44281.png)
+
+- Save your favourite films - just click the button on the film detail view.
+
+![image](https://user-images.githubusercontent.com/42837452/45932711-7b468500-bf78-11e8-911d-d97474838226.png)
+
+- You can see your list of favourites by clicking the account button in the header. You can delete films from the list individually or delete them all with a single click.
+
+![image](https://user-images.githubusercontent.com/42837452/45932728-da0bfe80-bf78-11e8-8116-76847951a93f.png)
+
+## Technology used
+
+- **HTML & CSS** (Flexbox, Grid)
+  - BEM methodology used in markup and CSS.
+  - Individual media queries for tablet and desktop in separate files to make the styles easier to maintain.
+- **JavaScript** (Fetch, OMDB API, localStorage)
+  - Functions are pure as much as possible – concise reusable and each with with a clear purpose.
+  - Well commented throughout.
+
+## Surprise feature
+
 - If the film your looking for doesn't have a poster then look out for the 'F~~W~~ill Ferrell' placeholder!
 
-- Save your favourite films - just click the button on the film detail view. You can see your list of favourites by clicking the account button in the header. You can delete films from the list individually or delete them all with a single click.
+![image](https://user-images.githubusercontent.com/42837452/45932761-50106580-bf79-11e8-9980-0e13e7d227e9.png)
 
-#### Challenges and learnings
+## Challenges, learnings and TODOs
 
-## TODO
+- **localStorage**
 
-- [ ] **Implement any feature you would find useful or interesting**
+  - Favourites currently stored individually in localStorage.
+  - Working with a database that stores strings of information is challenging.
+  - TODO: Need to refactor to store a single object in localStorage. On page load this can be retrieved and parsed. Stored in an object the user favourites can then be manipulated and updated. On any interaction even the object can be stringified before re-setting in localStorage.
+  - [ ] TODO: Make the favourites list sortable. Add `up` and `down` buttons to your favourites which on click will move the result in relevant direction. Also sortable by date saved and film title.
+  - [ ] TODO: Implement a watch list feature to save films that you want to see as well as favourites.
 
-<!-- - [ ] **Implement pagination so that users can navigate between all movies in search results rather than just the first ten** -->
+- **Search**
+  - [ ] TODO: Create a search preview. It should listen for change events on input events and submit a search request with current query string. Display the search preview results in an absolute positioned container just below the search box. Kick of the searching after at least 3 characters have been typed.
 
-- [ ] **Include a screenshot of your app in the README.**
+**Refactoring**
 
-- [ ] **Explain functionality created, mention any outstanding issues and possible features you would include if you had more time**
-
----
-
-### stretch goal - favourites
-
-<!-- - [ ] Create a favourites list. It's up to you how you would add items to favourites. You could add a button or otherwise. Display a list of favourites somewhere on your page. -->
-
-- [ ] Make the favourites list sortable. Add `up` and `down` buttons to your favourites which on click will move the result in relevant direction.
-
-<!-- - [ ] Save favourites locally using `localStorage` so that favourites persist in browser after refresh. -->
+- [ ] TODO: Refactor code to make use of export/import to keep JS easy to navigate and maintain.
 
 ---
 
-## stretch goal - search preview
-
-- [ ] Let's create a search preview. It should listen for change events on input events and submit a search request with current query string. Display the search preview results in an absolute positioned container just below the search box.
-
-       Hint: You may want to kick of the searching after at least 3 characters have been typed.
-
----
-
-### The brief
+### The original brief
 
 - We want to see great looking webpages that work well at all screen widths
 - Your code should have consistent indentation and sensible naming
