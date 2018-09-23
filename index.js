@@ -31,8 +31,7 @@ document.addEventListener('click', event => {
     if (event.target.matches('.fa-sign-out-alt')) logout();
 });
 
-function toggleFavoritesMenu() {
-    console.log('hi');   
+function toggleFavoritesMenu() { 
     favsMenuRef.classList.toggle('favs--display');
 }
 
@@ -136,6 +135,8 @@ function addToFavourites(imdbID) {
     else currentFavs.push(movieData);
     myStorage.favourites = JSON.stringify(currentFavs);
     refreshFavourites();
+    favsMenuRef.classList.add('favs--display');
+
 }
 
 //Functions: Remove from favourites
@@ -157,7 +158,7 @@ function submitSearch(event) {
     detailsRef.classList.add('details--hidden');
     resultsWrapperRef.classList.remove('results__wrapper--hidden');
     resultsTitleRef.innerHTML = `Search results for ${searchQuery}:`;
-    formRef.reset();
+    //formRef.reset();
 }
 
 //Functions: next page
@@ -220,6 +221,7 @@ function fetchResults(APIQuery) {
 function renderResults(body) {
     myStorage.setItem('body',JSON.stringify(body));
     resultsRef.innerHTML = '';
+    console.log(body);
     body.Search.forEach(item => {
         const result = document.createElement('article');
         result.setAttribute('class','result');
