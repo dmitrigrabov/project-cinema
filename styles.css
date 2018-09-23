@@ -8,7 +8,7 @@ body {
 }
 
 nav > div {
-  height: 10vh;
+  height: 4rem;
   background-color: #FBFBFC;
   background:url(
 
@@ -143,19 +143,20 @@ main{
   margin: 0.5rem;
   height: 10vh;
   width: 95%;
-  border: 1px black solid;
+  border-bottom: 1px #F89B0A solid;
   background-color: white;
 }
 
 .result__poster{
   height: 90%;
   width: auto;
-  align-self: flex-start;
-
+  align-self: center;
 }
 
 .result__title{
-  align-self: center;
+  margin-right: 1rem;
+  margin-left: 0.5rem;
+  width: 80%;
 
 }
 
@@ -163,9 +164,7 @@ main{
    margin-right: 0.5rem;
 }
 
-.result__type{
 
-}
 
 .film-display{
   display: flex;
@@ -239,6 +238,7 @@ main{
   display: flex;
   flex-direction: column;
   align-items: space-between;
+  padding: 0.5rem;
 
 }
 
@@ -247,6 +247,7 @@ main{
   flex-direction: column;
   background-color: snow;
   margin: 0.5em;
+  border-bottom: 1px solid #E10703;
 }
 
 .favourite-element{

@@ -2,8 +2,6 @@
 
 //http://www.omdbapi.com/?apikey=210776d9&[searchparameters]
 
-//feature idea: News API to check for stories about film
-
 const bodyElement = document.querySelector("body");
 const searchTextElement = document.querySelector(".search__text");
 const searchResultsElement = document.querySelector(".results");
@@ -55,6 +53,11 @@ bodyElement.addEventListener("click", event => {
   if (event.target.matches(".logo")){
     filmDisplayElement.innerHTML = ""
   }
+  if (event.target.matches(".exit-results")){
+    modal.style.display = "none"
+    searchResultsElement.innerHTML = ""
+
+  }
 });
 
 //look into actual toggle functionality with BEM
@@ -102,16 +105,23 @@ const apiUrls = {
   },
 
   fetchResults: function(apiURL) {
+    const exitButton = document.createElement("button")
+    exitButton.className = "exit-results"
+    exitButton.textContent = "exit"
     fetch(apiURL)
       .then(response => response.json())
       .then(body => {
         if (body.hasOwnProperty("Error")) {
           //TODO: needs to be filled out
-          console.log("error");
+          const searchErrorMsg = document.createElement("h3")
+          searchErrorMsg.textContent = "Sorry, you found a bug"
+          searchResultsElement.appendChild(searchErrorMsg)
+          searchResultsElement.appendChild(exitButton)
         } else {
           body.Search.forEach(result => {
             searchResultsElement.appendChild(searchTemplate(result));
           });
+          searchResultsElement.appendChild(exitButton)
         }
       });
   },
@@ -158,7 +168,9 @@ function searchTemplate(result) {
   const template = `
     <div class="search__result" data-id=${result.imdbID}>
       <img class="result__poster" src=${result.Poster} data-id=${result.imdbID}/>
-      <h4 class="result__title" data-id=${result.imdbID}>${result.Title}</h4>
+      <div class="result__title">
+        <h4 data-id=${result.imdbID}>${result.Title}</h4>
+      </div>
       <h5 class="result__year" data-id=${result.imdbID}>(${result.Year})</h5>
     </div>
   `;
