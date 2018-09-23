@@ -100,8 +100,8 @@ function runFetch() {
                             <span class="results__searchResult__title">${movieParams.title}</span>
                             <img class="results__searchResult__poster" src="${movieParams.poster}"/>
                             <span class="results__searchResult__year hide">(${movieParams.year})</span>
-                            <span class="results__searchResult__description hide">${movieParams.description}</span>
                             <span class="results__searchResult__actors hide">Actors: ${movieParams.actors}</span>
+                            <span class="results__searchResult__description hide">${movieParams.description}</span>
                             `;
                         const posterImg = searchResult.querySelector('.results__searchResult__poster');
                         const description = searchResult.querySelector('.results__searchResult__description');
