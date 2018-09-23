@@ -154,4 +154,7 @@ body .background{
     background-blend-mode: screen;
     background-size: cover;
 }
+.favourites__divs > img {
+    max-width: 15vw;
+}
 }

@@ -9,7 +9,7 @@ let movieName = 'Batman';
 let posterNode = document.querySelector('.favourites__divs');
 // let posterNode = document.createElement("div");
 // posterNode.className="favourites__divs";
-// console.log(posterNode);
+
 
 
 //fetches movies from API - search by names
@@ -112,15 +112,15 @@ outputNode.addEventListener('click', e=>{
        
         let favourite = event.target.closest(`.main__film`);
         
-        console.log(favourite);
+       
         // let secondFavourite = favourite;
         // secondFavourite=secondFavourite.firstChild;
-        // console.log(secondFavourite);
+     
         let secondFavourite = favourite.cloneNode(true);
     
         secondFavourite = secondFavourite.firstChild;
         posterNode.appendChild(secondFavourite);
-        console.log(posterNode);
+ 
         // document.querySelector('.favourites__divs').appendChild(posterNode);
         event.target.closest('.fav-button').style.color="red";
         
