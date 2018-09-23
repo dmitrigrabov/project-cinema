@@ -1,7 +1,9 @@
 //HTML Element Targets
-const parentSearchResult = document.querySelector(".hi");
+const parentSearchResult = document.querySelector(".results");
 const searchResultNode = document.createElement("li"); 
 const extraInfo =[];
+const parentMoreInfo = document.querySelector(".more__info");
+
 
 //I could hardcode this in the html - leaving in for now.
 // Default 'Search' view
@@ -11,7 +13,6 @@ parentSearchResult.appendChild(searchResultNode);
 
 
 //Search Function
-
 const searchFunc = document.querySelector(".search__form");
 searchFunc.addEventListener("submit", function(event) {
     event.preventDefault();
@@ -21,51 +22,35 @@ searchFunc.addEventListener("submit", function(event) {
 })
 
 
-
-
 //Search result function / index of links/li's
 
-
 function IMDBData(search) {
-    console.log(search.Search[4].Poster);
+    // console.log(search.Search[4].Poster);
     
     search.Search.map((movies) => {
-    const searchResultNode = document.createElement("li"); // make fresh <li>
+    const searchResultNode = document.createElement("li"); 
     searchResultNode.innerHTML = 
-        `<div data-imdb=${movies.imdbID} value="${movies.imdbID}" class="indiv"><a class="indiv"  href="#">
+        `<div data-imdb=${movies.imdbID} value="${movies.imdbID}" value="${movies.imdbID}" class="results__wrapper">
         <h3>${movies.Title}</h3>
-        <h2>${movies.Year}</h2></a>
+        <h2>${movies.Year}</h2>
         <img src="${movies.Poster}" alt="news image"></div>`;
+        console.log(movies.imdbID);
     parentSearchResult.appendChild(searchResultNode);    
-    // here
+
+    //Event listener of individual listed movies - sends URL to fetch for more info
+
+    const filmSelector = document.querySelector(`[data-imdb=${movies.imdbID}]`);
+              filmSelector.addEventListener("click", event => {
+                console.log(movies.imdbID);
+                let movieURL = `http://www.omdbapi.com/?i=${movies.imdbID}&apikey=73071eff`;
+                fetchMoreInfo(movieURL);
+                console.log(movieURL);
+              });
+            });
+           }
 
 
-    // document.querySelector("[data-imdb")
-
-    // Event Listener to fetch more info on Movie - BROKEN
-
-const clickFilm = document.querySelector(".indiv");
-clickFilm.addEventListener("click", function(event) {
-
-// console.log(event.target['0'].value);
-console.log(event.target);
-
-let URL2 = `http://www.omdbapi.com/?s=${event.target.value}&apikey=73071eff`;
-console.log(URL2);
-});
-
-    });
-}
-
-
-
-//More Film info
-
-//insert here from below when done
-
-
-
-//NOt found movie text display
+//Not found movie text display
 
 function notFound(){
     const searchResultNodes = document.createElement("li")
@@ -73,7 +58,6 @@ function notFound(){
         `<div>help me</div>`;
     parentSearchResult.appendChild(searchResultNodes);    
 };
-
 
 
 // Initial Search Fetch
@@ -98,64 +82,46 @@ function fetchIMDB(url){
     
         }
     });
-    // .catch(function(error) {
-    //     displayErrorToUser3(`${error} ahhhh server problem`);
-    // });
+
 }
 
 //MORE INFO APPEARS UPON CLICK - FETCH
 
 function fetchMoreInfo(movieURL){ //default for now
     
-    fetch(`http://www.omdbapi.com/?i=tt0816692&apikey=73071eff`) 
+    fetch(movieURL) 
     .then(function(response) {
         
         return response.json();
     })
-    .then(function(find){
+    .then(function(finder){
      
-    //   parentSearchResult.innerHTML = "";
+        parentMoreInfo.innerHTML = "";
 
-        movieMore(find);
-        console.log(find);
+        movieMore(finder);
+        // console.log(find);
     });
     // .catch(function(error) {
     //     displayErrorToUser3(`${error} ahhhh server problem`);
     // });
 }
 
-// FETCH RESULT MORE WHAT TO DO WITH IT
-function movieMore(find){
-    const parentSearchResult = "";
-    
-    find.Map(moreMovies => {
+// 'More info - detail displayed on page
 
+function movieMore(finder){
 
+    const moreInfoNode = document.createElement("li");
+    moreInfoNode.innerHTML =
+    `<div data-imdb=${finder.imdbID} value="${finder.imdbID}" class="results__wrapper">
+    <img src="${finder.Poster}" alt="news image">
+    <h3>${finder.Title}</h3>
+    <h2>${finder.Year}</h2>
+    <h2>${finder.Actors}</h2>
+    <h2>${finder.Director}</h2>
+    <h2>${finder.Plot}</h2>
+    <h2>${finder.rating}</h2>
+    </div>`;
 
-    // extraInfo[index] = image.urls.regular;
+    parentMoreInfo.appendChild(moreInfoNode);
 
-    })
-    
-    
-
-
-   console.log(find);
-
-};
-
-
-fetchMoreInfo();
-
-// function IMDBData(search) {
-//     console.log(search.Search[4].Poster);
-    
-//     search.Search.map(movies => {
-//     const searchResultNode = document.createElement("li"); // make fresh <li>
-//     searchResultNode.innerHTML = 
-//         `<a href="#">
-//         <h3>${movies.Title}</h3>
-//         <h2>${movies.Year}</h2></a>
-//         <img src="${movies.Poster}" alt="news image">`;
-//     parentSearchResult.appendChild(searchResultNode);    
-//     });
-// }
+}
