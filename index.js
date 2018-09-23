@@ -257,7 +257,7 @@ function renderResults(body, appendToResults) {
         result.setAttribute('data-id',item.imdbID);
         result.setAttribute('data-title',item.Title);
         result.innerHTML = `<div class='result__wrapper'>
-                            <img data-id=${item.imdbID} class='result result__poster' src=${item.Poster}>
+                            <img data-id=${item.imdbID} class='result result__poster' src=${item.Poster} alt=''>
                             <h6 data-id=${item.imdbID} class='result result__title'>${item.Title} (${item.Year})</h6>
                             <div class='detail'></div></div>`;
         resultsRef.appendChild(result);
