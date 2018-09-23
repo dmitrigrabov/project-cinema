@@ -63,16 +63,46 @@ header {
   background: skyblue;
   position: fixed;
   top: 4rem;
-/*   right: 100vw; */
+  left: 100vw;
   width: 100vw;
+  z-index: 20;
+  transition: left 1s;
+}
+
+#account.account--active {
+  left: 0;
 }
 
 #favourites__title{
-  margin-left: 0.5rem;
+  margin-left: 1rem;
+  padding-right: 1rem;
 }
 
-#account account--active {
+#favourites__list {
+  list-style-type: none;
+  margin-left: 1rem;
+  padding-left: 0;
+  padding-right: 1rem;
 }
+
+.favourites__list__film{
+  padding: 0.25rem 0;
+}
+
+
+.btn__favourite__remove {
+/*   font-weight:400; */
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  padding: 0.1rem 0.25rem;
+  background: whitesmoke;
+  border-radius: 4px; 
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+  margin-left: 0.5rem;
+  float: right;
+}
+
+
 
 /* search form */
 

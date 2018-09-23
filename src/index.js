@@ -196,7 +196,7 @@ const makeFavourite = id => {
             <span class='favourites__list__film__faved'>${
               favFilm['favDate']
             }</span>
-            <button class='favourites__list__film__remove'>Delete</button>`;
+            <button class='btn btn__favourite__remove'>Delete</button>`;
   return favourite;
 };
 
@@ -237,7 +237,7 @@ const getFavourites = data => {
       parent.insertBefore(favouriteFilm, parent.firstChild);
     }
   }
-  document.querySelector('#favourites__count').textContent = myStorage.length;
+  // document.querySelector('#favourites__count').textContent = myStorage.length;
 };
 
 /* event listeners */
@@ -261,7 +261,7 @@ document.querySelector('#search-results').addEventListener('click', e => {
 /* Favourites */
 
 document.querySelector('#favourites').addEventListener('click', e => {
-  if (e.target.innerText === 'Delete') {
+  if (e.target.innerText === 'DELETE') {
     console.log(e.target);
     const id = e.target.parentNode.dataset.id;
     e.target.parentNode.classList.add('hidden');
@@ -277,6 +277,12 @@ document.querySelector('#favourites').addEventListener('click', e => {
     myStorage.clear();
     getFavourites(myStorage);
   }
+});
+
+/* Account */
+
+document.querySelector('.btn__account').addEventListener('click', e => {
+  document.querySelector('#account').classList.toggle('account--active');
 });
 
 /* utility functions */
