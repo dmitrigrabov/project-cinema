@@ -77,8 +77,9 @@ input.search-area-submit{
 .pagination{
   display:grid;
 
-  grid-template-columns: repeat(10,1fr);
+  grid-template-columns: repeat(10,8pw);
   align-items: center;
+  justify-content: center;
   grid-gap: 0.25em;
   margin:0;
   padding-bottom: 1em;
@@ -100,14 +101,13 @@ input.search-area-submit{
   display: none;
 }
 
-.search-result-list{
+.search-result-list, .favorite-list{
   display: grid;
   grid-gap: 1em;
   grid-template-columns: 99%;
   grid-template-rows: repeat(minmax(200px,1fr));
   justify-content: start;
   align-items: start;
-
 
 }
 
@@ -120,4 +120,22 @@ input.search-area-submit{
 
 p{
   padding-bottom: 0.3em;
+}
+
+@media(min-width:768px) {
+  .search-result-list,.favorite-list{
+    grid-template-columns: 50% 50%;
+  }
+}
+
+@media(min-width:960px) {
+  .search-result-list,.favorite-list{
+    grid-template-columns: 33% 33% 33%;
+  }
+}
+
+@media(min-width:1200px) {
+  .search-result-list,.favorite-list{
+    grid-template-columns: 20% 20% 20% 20% 20%;
+  }
 }

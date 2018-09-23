@@ -9,7 +9,10 @@ const body = document.querySelector("body");
 
 let localData;
 let totalSearchResults = 0;
-let n=0;
+let n= 0;
+if (JSON.parse(localStorage.getItem("favList"))!==null){
+  n=JSON.parse(localStorage.getItem("favList")).length
+}
 //this is to insert search results using dom
 function searchResult(body) {
   body.Search.forEach(movie => {

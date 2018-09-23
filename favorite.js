@@ -78,5 +78,6 @@ function shift(event,number){
   const currentIndex= event.target.parentNode.getAttribute("value");
   localData[parseInt(currentIndex)-number].index=currentIndex;
   localData[currentIndex].index=parseInt(currentIndex)-number;
+  localStorage.setItem("favList", JSON.stringify(localData));
   return localData
 }
