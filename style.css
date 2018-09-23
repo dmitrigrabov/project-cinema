@@ -18,7 +18,7 @@ body {
     align-items: center;
 }
 
-.fa-star {
+.fa-heart {
     font-size: 1.5rem;
     position: relative;
     display: inline-block;
@@ -147,9 +147,21 @@ body {
     display: none;
 }
 
-.detail__title {
-    font-size: 1rem;
+.detail__header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding-top: 1rem;
+}
+
+.detail__title {
+    font-size: 0.8rem;
+}
+
+.fa-imdb {
+    font-size: 1.5rem;
+    padding-left: 7px;
+    color: #f5de50;
 }
 
 .detail__plot {
@@ -159,7 +171,7 @@ body {
 }
 
 .detail__poster {
-    width: 60%;
+    width: 50%;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
 }
@@ -203,20 +215,20 @@ body {
 
 .detail__checkbox  + label.fa {
     color: #c2c2c2;
-    font-size: 15px;
+    font-size: 1.3rem;
 }
 
 .detail__checkbox:checked + label.fa {
-    color: rgb(243, 217, 70);
+    color: #e50914;
 }
 
 .detail__checkbox + label.fa:before {
     display: inline-block;
-    content: "\f005";
+    content: "\f004";
 }
 
 .detail__checkbox:checked + label.fa:before {
-    content: "\f005";
+    content: "\f004";
     position: relative;
 }
 
@@ -227,7 +239,7 @@ body {
         padding: 1rem;
     }
     
-    .fa-star {
+    .fa-heart {
         font-size: 2rem;
     }
     
@@ -303,6 +315,115 @@ body {
     
     .detail__title {
         font-size: 1.3rem;
+    }
+
+    .fa-imdb {
+        font-size: 1.8rem;
+        padding-left: 10px;
+    }
+    
+    .detail__plot {
+        font-size: 0.9rem;
+        line-height: 1.3rem;
+    }
+    
+    .detail__poster {
+        width: 50%;
+    }
+    
+    .detail__info {
+        font-size: 0.7rem;
+    }
+    
+    .detail__director {
+        font-size: 0.7rem;
+    }
+    
+    .detail__actors {
+        font-size: 0.7rem;
+    }
+    
+    .detail__awards {
+        font-size: 0.7rem;
+    }
+    
+    .nav a {
+        text-decoration: none;
+        color: #c2c2c2;
+    }
+    
+    .detail__checkbox  + label.fa {
+        font-size: 1.8rem;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 960px) {
+
+    .top-menu {
+        padding: 0.5rem;
+    }
+
+    .fa-star {
+        font-size: 1.5rem;
+    }
+    
+    .favs {
+        font-size: 0.9rem;
+        top: 100px;
+    }
+    
+    .fa-sign-out-alt {
+        font-size: 1.5rem;
+    }
+    
+    .logo {
+        font-size: 5rem;
+    }
+    
+    .search {
+        padding-top: 1rem;
+    }
+    
+    .search__input {
+        width: 300px;
+        height: 30px;
+        border: 2px solid #c2c2c2;
+        border-radius: 4px;
+        font-size: 11pt;
+    }
+
+    .search__icon {
+        font-size: 1.2rem;
+    }
+    
+    .results {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .results__wrapper {
+        margin-top: 3rem;
+    }
+    
+    .result {
+        width: 18%;
+        margin: 0.3rem;
+    }
+    
+    .result__title {
+        width: 100%;
+        font-size: 0.7rem;
+    }
+    
+    .result__poster {
+        width: 100%;
+    }
+    
+    .detail__title {
+        font-size: 1.3rem;
         padding-top: 1.5rem;
     }
     
@@ -339,10 +460,4 @@ body {
     .detail__checkbox  + label.fa {
         font-size: 1.5rem;
     }
-}
-
-
-/* Desktop */
-@media screen and (min-width: 960px) {
-
 }

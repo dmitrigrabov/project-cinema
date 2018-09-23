@@ -27,7 +27,7 @@ document.addEventListener('click', event => {
     if (event.target.matches('.fa-sort-down')) moveFavouriteDown(event.target.parentNode.getAttribute('data-id'));
     if (event.target.matches('.fav__title')) fetchDetails(event.target.parentNode.getAttribute('data-id'));
     if (event.target.matches('.details, .detail')) toggleDetails();
-    if (event.target.matches('.fa-star')) toggleFavoritesMenu();
+    if (event.target.matches('.fa-heart')) toggleFavoritesMenu();
     if (event.target.matches('.fa-sign-out-alt')) logout();
 });
 
@@ -40,6 +40,7 @@ function logout() {
     myStorage.favourites = '[]';
     resetPage();
     refreshFavourites();
+    formRef.reset();
 }
 
 function resetPage() {
@@ -135,8 +136,6 @@ function addToFavourites(imdbID) {
     else currentFavs.push(movieData);
     myStorage.favourites = JSON.stringify(currentFavs);
     refreshFavourites();
-    favsMenuRef.classList.add('favs--display');
-
 }
 
 //Functions: Remove from favourites
@@ -158,7 +157,6 @@ function submitSearch(event) {
     detailsRef.classList.add('details--hidden');
     resultsWrapperRef.classList.remove('results__wrapper--hidden');
     resultsTitleRef.innerHTML = `Search results for ${searchQuery}:`;
-    //formRef.reset();
 }
 
 //Functions: next page
@@ -183,6 +181,7 @@ function prevButtonPressed(event) {
 
 //Functions: fetch detailed movie information
 function fetchDetails(imdbID) {
+    favsMenuRef.classList.remove('favs--display');
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&i=${imdbID}`;
     fetch(APIQuery)
     .then(response => {
@@ -197,7 +196,7 @@ function renderDetails(body) {
     resultsWrapperRef.classList.add('results__wrapper--hidden');
     detailsRef.classList.remove('details--hidden');
     detailsRef.innerHTML = 
-                       `<h1 data-id=${body.imdbID} class='detail detail__title'>${body.Title} (${body.Year}) <input id='check' data-id=${body.imdbID} class='detail__checkbox' type='checkbox'><label class='fa' for='check'></label></h1>
+                       `<div data-id=${body.imdbID} class='detail detail__header'><h1 data-id=${body.imdbID} class='detail detail__title'>${body.Title} (${body.Year})</h1><div data-id=${body.imdbID} class='detail detail__logos'><input id='check' data-id=${body.imdbID} class='detail__checkbox' type='checkbox'><label class='fa' for='check'></label><a href='https://www.imdb.com/title/${body.imdbID}/'><i class="fab fa-imdb"></i></a></div></div>
                         <h2 class='detail__plot'>${body.Plot}</h2> 
                         <img data-id=${body.imdbID} class='detail detail__poster' src=${body.Poster}>
                         <p data-id=${body.imdbID} class='detail detail__info'>${body.Genre}  |  Runtime: ${body.Runtime}  |  Rated ${body.Rated}  |  IMDB Score: ${body.imdbRating}</p>
