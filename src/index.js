@@ -4,6 +4,9 @@ const outputNode = document.querySelector(".films");
 let searchTarget = '';
 let previousSearchTarget = '';
 let addInfoNode = '';
+let pageCounter = 1;
+let movieName = 'Batman';
+
 
 //fetches movies from API - search by names
 function getMoviesByName(movieName){
@@ -17,40 +20,54 @@ function getMoviesByName(movieName){
 }
 
 //default search for when the page loads
-getMoviesByName('batman');
+getMoviesByName(movieName);
 
 //creates a list of films by name
 function displayFilms(filmResults) {
-    let searchDiv = filmResults.map(film => {
-       return `
-       <div data-imdbid=${film.imdbID} class='main__film'>
-            <img class='poster' src='${film.Poster}'/>
-            <h3 class='title'>${film.Title}</h3>
-            <h4 class='year'>(${film.Year})</h4>
-            <p class='type'><b>type:</b> ${film.Type}</p>
-        </div>`;
-    }).join('');
-    outputNode.innerHTML = searchDiv;
+    // let searchDiv = filmResults.map(film => {
+    //    return `
+    //    <div data-imdbid=${film.imdbID} class='main__film'>
+    //         <img class='poster' src='${film.Poster}'/>
+    //         <h3 class='title'>${film.Title}</h3>
+    //         <h4 class='year'>(${film.Year})</h4>
+    //         <p class='type'><b>type:</b> ${film.Type}</p>
+    //     </div>`;
+    // }).join('');
+    // outputNode.innerHTML = searchDiv;
+    filmResults.forEach(film =>{
+        let filmNode = document.createElement('div');
+        filmNode.className = 'main__film';
+        filmNode.dataset.imdbid = `${film.imdbID}`;
+        filmNode.innerHTML = `<img class='poster' src='${film.Poster}'/>
+                            <h3 class='title'>${film.Title}</h3>
+                            <h4 class='year'>(${film.Year})</h4>
+                            <p class='type'><b>type:</b> ${film.Type}</p>`
+        outputNode.appendChild(filmNode);                    
+    })
     let img = filmResults[0].Poster;
-    console.log(img);
     setBackgroundImgForDesktop(img);
 }
 
-
+//creates background img using the poster of the first film on the search result list
 function setBackgroundImgForDesktop(img){
-    console.log(img);
     document.body.style.backgroundImage=`url("${img}")`;
-    document.querySelector('body').className = "opacityClass";
+    ;
 }
 
 //event listener on the search form and button
 document.querySelector('form').addEventListener('submit', e =>{
     e.preventDefault();
-    const movieName = document.querySelector('#search').value;
+    movieName = document.querySelector('#search').value;
+    document.querySelector('.films').innerHTML = '';
     getMoviesByName(movieName);
     document.querySelector('#search').value = '';
-})
 
+    //event listener for fetching more results for the searched term;
+    document.querySelector('.load-next-page').addEventListener('click', e=>{
+        getMoreMoviesByName(movieName);
+        setBackgroundImgForDesktop(img);
+})
+})
 
 //fetches movie infomation by ID
 function getMovieByID(movieID){
@@ -84,8 +101,9 @@ function displayFilmDetails(film){
 
 //event listener on each film div
 outputNode.addEventListener('click', e=>{
-    removeAdditionalInfo();
+  
     if (event.target.closest('.main__film')){
+        removeAdditionalInfo();
         const film = event.target.closest('.main__film').dataset.imdbid;
         searchTarget = event.target.closest('.main__film');
         getMovieByID(film);
@@ -108,4 +126,15 @@ function removeAdditionalInfo(){
 
 
 
+//Pagination - fetches the next page of movies from the API - search by names
+function getMoreMoviesByName(movieName){
+    pageCounter ++;
+    return fetch(`${urlBase}s=${movieName}&page=${pageCounter}`)
+       .then(function(response) {
+        return response.json();
+       })
+       .then(function(body) {
+           displayFilms(body.Search);
+       })
+   }
 

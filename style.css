@@ -118,5 +118,9 @@ main{
 }
 
 @media(min-width: 768px) {
-
+body .background{
+    background: midnightblue no-repeat center center fixed;
+    background-blend-mode: screen;
+    background-size: cover;
+}
 }
