@@ -17,7 +17,9 @@ const params = {
 
 const setUrl = (paramsInit, query = '', id = '') => {
   // console.log(`${paramsInit.base}&page=${params.pageNum}&s=${query}&i=${id}`);
-  return `${paramsInit.base}&page=${params.pageNum}&s=${query}&i=${id}`;
+  return `${paramsInit.base}&page=${
+    params.pageNum
+  }&s=${query}&i=${id}&plot=full`;
 };
 
 const searchFilmBytitle = title => {
@@ -135,15 +137,17 @@ const infiniteScroll = () => {
 /* film details */
 
 const createFilmDetails = film => {
-  return `<h2>Details</h2>
+  return `
+  <div class="film-details__wrapper">
 <h3 class="film-details__title">${film.Title}</h3>
-<button id="fav" class="fav" data-id="${film.imdbID}">Like</button>
-<img src="${film.Poster}" alt="poster">
-<h4 class="film-details__director">${film.Director}</h4>
-<p class="film-details__release-date">${film.Released}</p>
-<p class="film-details__rated">${film.Rated}</p>
-<p class="film-details__runtime">${film.Runtime}</p>
+<button id="fav" class="btn btn__fav" data-id="${film.imdbID}">Like</button>
+<img class="film-details__poster" src="${film.Poster}" alt="poster">
+<h4 class="film-details__director">Dir. ${film.Director}</h4>
+<p class="film-details__meta">(Released ${film.Year}, dur. ${film.Runtime}, ${
+    film.Rated
+  })</p>
 <p class="film-details__ratings__imdb">${film.imdbRating}</p>
+<h4>Plot summary</h4>
 <p class="film-details__plot">${film.Plot}</p>
 <ul class="film-details__actors">
     <li class="film-details__actors__actor">Kate Winslet</li>
@@ -154,7 +158,7 @@ const createFilmDetails = film => {
 <ul class="film-details__genres">
     <li class="film-details__genres_genre">Drama</li>
     <li class="film-details__genres_genre">Romance</li>
-</ul>`;
+</ul></div>`;
 };
 
 const writeFilmDetails = (parent, film) => {

@@ -24,6 +24,10 @@ div#app{
   color: white;
 }
 
+
+body{
+  background: yellow;
+}
 /* header */
 
 header{
@@ -127,29 +131,82 @@ header{
   order: 3;
 }
 
+/* page navigation */
+
 #page-nav{
   display: flex;
   justify-content: space-around;
-}
-
-.next{
-  border:none;
+  border-bottom: 1px solid;
 }
 
 
+.film-details__wrapper{
+/*   height:100vh; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding:1rem;
+  margin:0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  background: whitesmoke;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+}
+
+.film-details__title{
+  grid-column: 1 / span 2;
+  font-size: 2rem;
+  align-self: start;
+  margin:0 0 1rem 0;
+}
+
+.btn__fav {
+/*   border: 1px solid; */
+  align-self: start;
+  justify-self: end;
+  padding:0.25rem 0.5rem;
+  border-radius: 0.2rem;
+  display:block;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  margin-top: 0.25rem;
+ 
+}
 
 
+.film-details__poster{
+  width: 85vw;
+  grid-column: 1 / span 3;
+  justify-self: center;
+}
 
 
+.film-details__director {
+  grid-column: 1 / span 3;
+  align-self: start;
+  margin-bottom: 0.25rem;
+}
 
+.film-details__meta{
+  font-size: 0.85rem;
+font-style: italic;
+  margin-top:0;
+  grid-column: 1 / span 3;
+}
 
+.film-details__plot {
+  grid-column: 1 / span 3;
+  font-family: serif;
+  margin-top: 0;
+}
 
+.film-details__ratings__imdb {
+  grid-column: 1 /span 3;
+  margin :0;
+}
 
-
-
-
-
-
+.film-details__wrapper h4{
+  grid-column: 1 /span 3;
+  margin-bottom: 0.5rem;
+}
 
 
 
