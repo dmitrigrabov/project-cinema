@@ -2,15 +2,17 @@
 const parentSearchResult = document.querySelector(".results");
 const searchResultNode = document.createElement("li"); 
 const searchFunc = document.querySelector(".search__form");
-const parentMoreInfo = document.querySelector(".more__info");
-const moreInfoNode = document.createElement("li");
+
+const parentMoreInfoSlider = document.querySelector(".more__info__slider");
+const moreInfoNodeAside = document.createElement("li");
+const moreInfoNodeSlider = document.createElement("li");
 let trailerClip = '';
 
 
 //I could hardcode this in the html - leaving in for now.
 // Default 'Search' view
 searchResultNode.innerHTML = `<a href="#">
-<img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg" alt="news image"></a>`;
+<img class="default" src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg" alt="news image"></a>`;
 parentSearchResult.appendChild(searchResultNode);
 
 
@@ -19,7 +21,7 @@ parentSearchResult.appendChild(searchResultNode);
 searchFunc.addEventListener("submit", function(event) {
     event.preventDefault();
     console.log(event.target['0'].value);
-    let url = `http://www.omdbapi.com/?s=${event.target['0'].value}&apikey=73071eff`;
+    let url = `https://www.omdbapi.com/?s=${event.target['0'].value}&apikey=73071eff`;
     fetchIMDB(url);
 })
 
@@ -32,10 +34,9 @@ function IMDBData(search) {
     search.Search.map((movies) => {
     const searchResultNode = document.createElement("li"); 
     searchResultNode.innerHTML = 
-        `<div data-imdb=${movies.imdbID} value="${movies.imdbID}" value="${movies.imdbID}" class="results__wrapper">
-        <h3>${movies.Title}</h3>
-        <h2>${movies.Year}</h2>
-        <img src="${movies.Poster}" alt="news image"></div>`;
+        `<div data-imdb=${movies.imdbID} id="${movies.imdbID}" class="results__wrapper">
+        <span class="titles"><h2>${movies.Title}, ${movies.Year}</h2></span>
+        <img src="${movies.Poster}" alt="news image"></div><div class="more__info"></div>`;
         console.log(movies.imdbID);
     parentSearchResult.appendChild(searchResultNode);    
 
@@ -43,10 +44,14 @@ function IMDBData(search) {
 
     const filmSelector = document.querySelector(`[data-imdb=${movies.imdbID}]`);
         filmSelector.addEventListener("click", event => {
-                let movieURL = `http://www.omdbapi.com/?i=${movies.imdbID}&apikey=73071eff`;
+                let movieURL = `https://www.omdbapi.com/?i=${movies.imdbID}&apikey=73071eff`;
                 fetchMoreInfo(movieURL);
                 let trailerURL = `https://api.themoviedb.org/3/movie/${movies.imdbID}/videos?api_key=8aed3c92a5c6ef5e792ffaf51ac22616&language=en-US`
                 fetchTrailer(trailerURL);  
+                let imdbID = movies.imdbID;
+                // defunct function to push more info next to relevant film
+                // imdbInfo(imdbID)
+                // console.log(imdbID);
             });
             });
            }
@@ -139,7 +144,7 @@ function fetchMoreInfo(movieURL){ //default for now
     })
     .then(function(finder){
      
-        parentMoreInfo.innerHTML = "";
+        // parentMoreInfo.innerHTML = "";
 
         movieMore(finder);
         // console.log(find);
@@ -153,18 +158,47 @@ function fetchMoreInfo(movieURL){ //default for now
 
 function movieMore(finder){
 
+//defunct attempt at inserting more info to right of relevant film div
+
+    // function imdbInfo(data){
+    //     console.log(data);
+    // const parentMoreInfo = document.querySelector(`#${data}`);
     
-    moreInfoNode.innerHTML =
-    `<div data-imdb=${finder.imdbID} value="${finder.imdbID}" class="results__wrapper">
-    <img src="${finder.Poster}" alt="news image">
-    <h3>${finder.Title}</h3>
-    <h2>${finder.Year}</h2>
-    <h2>${finder.Actors}</h2>
-    <h2>${finder.Director}</h2>
-    <h2>${finder.Plot}</h2>
-    <h2>${trailerClip}</h2>
+    // moreInfoNodeAside.innerHTML =
+    // `<div data-imdb=${finder.imdbID} class="more__info__aside">
+    // <img src="${finder.Poster}" alt="news image">
+    // <h3>${finder.Title}</h3>
+    // <h2>${finder.Year}</h2>
+    // <h2>${finder.Actors}</h2>
+    // <h2>${finder.Director}</h2>
+    // <h2>${finder.Plot}</h2>
+    // <h2>${trailerClip}</h2>
+    // </div>`;
+
+    // parentMoreInfo.appendChild(moreInfoNodeAside);
+
+    // }
+
+    moreInfoNodeSlider.innerHTML =
+    `<div data-imdb=${finder.imdbID} class="more__info__slider__data">
+    <div class="mini__header">
+        <img src="${finder.Poster}" alt="news image">
+        <ul class="more__info__list">
+            <li>${finder.Title}</li>
+            <li>${finder.Year}</li>
+            <li>${finder.imdbRating}</li>
+            <li>${finder.Director}</li>
+        </ul>
+        <div class="close">X</div>
+    </div>
+    <div class="plot">${finder.Plot}</div>
+    <div class="trailer">${trailerClip}</div>
     </div>`;
 
-    parentMoreInfo.appendChild(moreInfoNode);
+    parentMoreInfoSlider.appendChild(moreInfoNodeSlider);
 
 }
+
+
+
+
