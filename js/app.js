@@ -18,7 +18,7 @@ form.addEventListener('submit', (e) => {
     e.preventDefault();
     buttonsClass.style.display = 'grid';
     results.innerHTML = '';
-    params.pageNumber = 1;
+    params.pageNumber = 2;
     params.totalPages = 0;
     params.inputValue = searchInput.value;
     runFetch(params.inputValue, params.pageNumber);
@@ -31,6 +31,7 @@ nextBtn.addEventListener('click', (e) => {
     // } else {
     //     params.pageNumber++;
     runFetch();
+    // console.log(params.pageNumber);
     // }
 
 });
@@ -45,7 +46,7 @@ prevBtn.addEventListener('click', (e) => {
 });
 
 function setUrl() {
-    return params.fetchUrl = `https://www.omdbapi.com/?apikey=${params.apiKey}&s=${params.inputValue}&page=${params.pageNumber}&i=tt1504019&plot=full&i=${params.imdbID}`;
+    return params.fetchUrl = `https://www.omdbapi.com/?i=${params.imdbID}&plot=full&apikey=${params.apiKey}&s=${params.inputValue}&page=${params.pageNumber}`;
 }
 
 function runFetch() {
@@ -54,31 +55,49 @@ function runFetch() {
             return response.json();
         })
         .then((body) => {
-            // console.log(body);
-            // params.totalPages = body.totalResults / 10; //divide by as as there is 10 results per page
-            // params.totalPages = Math.floor(params.totalPages); //round down as we don't want to have anything after dot
+            console.log(body);
+            params.totalPages = body.totalResults / 10; //divide by as as there is 10 results per page
+            params.totalPages = Math.round(params.totalPages); //round up as I want to have all possible number of pages
+            console.log(body.totalResults);
+            console.log(params.totalPages);
 
             body.Search.forEach(e => {
                 params.imdbID = e.imdbID;
+                params.inputValue = ''; // as I have imdbID(id of movie) and we want to get full details of our searched movie I need to delete typed input and search only with imdbID
                 fetch(setUrl())
                     .then((response) => {
                         return response.json();
                     })
                     .then((body) => {
                         console.log(body);
+                        let movieParams = {
+                            description: body.Plot,
+                            poster: body.Poster,
+                            title: body.Title,
+                            year: body.Year
+                        };
+
                         let searchResult = document.createElement('div');
                         searchResult.className = 'results__searchResult';
 
-                        let currentPoster = e.Poster;
-                        if (currentPoster === 'N/A') {
-                            currentPoster = 'images/noPoster.jpg';
+                        if (movieParams.poster === 'N/A') { //if there is no poster then I use default image
+                            movieParams.poster = 'images/noPoster.jpg';
                         }
+                        if (movieParams.description === 'N/A') { //if there is no description I set
+                            movieParams.description = '';
+                        }
+                        if (movieParams.description.length > 290) { //if our description is longer than 290 characters I delete rest description and in that place insert 3 dots
+                            movieParams.description = `${movieParams.description.slice(0, 290)}...`;
+                        }
+
                         searchResult.innerHTML = `
-                    <p class="results__searchResult__title">${e.Title}</p>
-                    <p class="results__searchResult__year">${e.Year}</p>
-                    <p></p>
-                    <img class="results__searchResult__poster" src="${currentPoster}"/>
-                    `;
+                            <img class="results__searchResult__poster" src="${movieParams.poster}"/>
+                            <p class="results__searchResult__title">${movieParams.title}</p>
+                            <p class="results__searchResult__year">${movieParams.year}</p>
+                            <p class="results__searchResult__description">${movieParams.description}</p>
+                            <p class="emptyBox"></p>                            
+                            `;
+
                         results.append(searchResult);
                     })
 

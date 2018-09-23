@@ -174,7 +174,7 @@ body {
 
 .results__searchResult {
     display: grid;
-    grid-template-rows: auto auto 1fr auto;
+    grid-template-rows: auto auto auto auto 1fr;
     grid-gap: 0.5rem;
 }
 
@@ -188,7 +188,7 @@ body {
     grid-gap: 0.5rem;
 }
 
-.results__searchResult p:nth-child(3) {
+.emptyBox {
     margin: 0;
     padding: 0;
 }
