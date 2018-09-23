@@ -1,3 +1,8 @@
+:root {
+  --display-font: 'Bungee Inline', cursive;
+  --text-font: 'Dosis', sans-serif;
+}
+
 .film-details__actors,
 .film-details__genres {
   display: none;
@@ -7,11 +12,7 @@
   display: none;
 }
 
-.fav--active {
-  background: green;
-}
-
-div#app{
+div#app {
   position: relative;
 }
 
@@ -20,19 +21,23 @@ div#app{
   border: none;
 }
 
-.btn__account{
+.btn__account {
   color: white;
 }
 
+.fav--active {
+  color: red;
+}
 
-body{
-  background: yellow;
+body {
+  /* background: yellow; */
+  font-family: var(--text-font);
 }
 /* header */
 
-header{
+header {
   background: black;
-  color:red;
+  color: red;
   display: flex;
   height: 4rem;
   justify-content: space-between;
@@ -41,12 +46,17 @@ header{
   width: 100vw;
 }
 
-#title{
+#title {
   font-size: 1.5rem;
+  font-family: var(--display-font);
 }
 
+.btn__account {
+  font-size: 2rem;
+  margin-right: 0.5rem;
+}
 /* account */
-#account{
+#account {
   background: skyblue;
   position: fixed;
   top: 4rem;
@@ -56,7 +66,7 @@ header{
 
 /* search form */
 
-#search{
+#search {
   align-items: center;
   background: orangered;
   display: flex;
@@ -64,7 +74,7 @@ header{
   height: 100vh;
 }
 
-.search__label{
+.search__label {
   margin: 50vw 0 2rem 0;
   font-size: 1.5rem;
 }
@@ -86,35 +96,36 @@ header{
   font-weight: 400;
   height: 5rem;
   width: 5rem;
-/*   background-image: linear-gradient(to bottom, rgba(0,0, 255,0.5), rgba(0,0,255,0.7) 80%); */
+  /*   background-image: linear-gradient(to bottom, rgba(0,0, 255,0.5), rgba(0,0,255,0.7) 80%); */
   background: skyblue;
   border-radius: 2.5rem;
   border: none;
-  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
-  text-shadow: 0 3px rgba(0,0,0,0.3);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  text-shadow: 0 3px rgba(0, 0, 0, 0.3);
 }
 /* search results */
 
-#search-results{
-/*   height: 100vh; */
+#search-results {
+  /*   height: 100vh; */
 }
 
 .search-results__page {
   display: flex;
   height: 100vh;
   overflow-y: scroll;
-  padding-top:25vh;
+  padding: 33vh 1rem 0 1rem;
 }
 
 .film {
   display: flex;
   flex-direction: column;
+  flex: 1;
   margin-right: 1rem;
-  padding: 1rem;
+  /*   padding: 1rem; */
   width: 70vw;
 }
 
-.film__title{
+.film__title {
   font-size: 1rem;
   order: 2;
 }
@@ -123,7 +134,7 @@ header{
   order: 1;
   object-fit: cover;
   width: 60vw;
-  height: 80vw;
+  height: 96vw;
 }
 
 .film__year {
@@ -133,51 +144,47 @@ header{
 
 /* page navigation */
 
-#page-nav{
+#page-nav {
   display: flex;
   justify-content: space-around;
-  border-bottom: 1px solid;
+  font-size: 0.9rem;
 }
 
-
-.film-details__wrapper{
-/*   height:100vh; */
+.film-details__wrapper {
+  /*   height:100vh; */
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding:1rem;
-  margin:0.5rem;
+  grid-template-columns: 2fr 2fr 1fr;
+  padding: 1rem;
+  margin: 1rem 0.5rem 0 0.5rem;
   border: 1px solid lightgray;
   border-radius: 8px;
   background: whitesmoke;
-  box-shadow: 0 1px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
 }
 
-.film-details__title{
+.film-details__title {
   grid-column: 1 / span 2;
-  font-size: 2rem;
+  font-size: 1.5rem;
   align-self: start;
-  margin:0 0 1rem 0;
+  margin: 0 0 1rem 0;
 }
 
 .btn__fav {
-/*   border: 1px solid; */
   align-self: start;
   justify-self: end;
-  padding:0.25rem 0.5rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 0.2rem;
-  display:block;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  display: block;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   margin-top: 0.25rem;
- 
+  font-size: 0.9rem;
 }
 
-
-.film-details__poster{
+.film-details__poster {
   width: 85vw;
   grid-column: 1 / span 3;
   justify-self: center;
 }
-
 
 .film-details__director {
   grid-column: 1 / span 3;
@@ -185,10 +192,10 @@ header{
   margin-bottom: 0.25rem;
 }
 
-.film-details__meta{
+.film-details__meta {
   font-size: 0.85rem;
-font-style: italic;
-  margin-top:0;
+  font-style: italic;
+  margin-top: 0;
   grid-column: 1 / span 3;
 }
 
@@ -199,48 +206,11 @@ font-style: italic;
 }
 
 .film-details__ratings__imdb {
-  grid-column: 1 /span 3;
-  margin :0;
+  grid-column: 1 / span 3;
+  margin: 0;
 }
 
-.film-details__wrapper h4{
-  grid-column: 1 /span 3;
+.film-details__wrapper h4 {
+  grid-column: 1 / span 3;
   margin-bottom: 0.5rem;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

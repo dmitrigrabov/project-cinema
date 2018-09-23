@@ -6,6 +6,7 @@ if (storage.storageAvailable('localStorage')) {
   // localStorage.clear();
   console.log(`You’re all set to save your favourite films`);
   console.log(myStorage);
+  console.log(window.innerHeight);
 } else {
   console.log('Please enable local storage to save your favourites.');
 }
@@ -66,6 +67,7 @@ const displaySearchResults = films => {
   console.log(paginationButtons);
   addElementToParent(searchResultsWrapper, paginationButtons);
   addPaginationControls();
+  window.scrollBy({ top: window.innerHeight + 32, behaviour: 'smooth' });
 };
 
 const createFilmSearchListing = (id, title, year, poster) => {
@@ -140,7 +142,9 @@ const createFilmDetails = film => {
   return `
   <div class="film-details__wrapper">
 <h3 class="film-details__title">${film.Title}</h3>
-<button id="fav" class="btn btn__fav" data-id="${film.imdbID}">Like</button>
+<button id="fav" class="btn btn__fav" data-id="${
+    film.imdbID
+  }"><i class="fas fa-heart"></i></button>
 <img class="film-details__poster" src="${film.Poster}" alt="poster">
 <h4 class="film-details__director">Dir. ${film.Director}</h4>
 <p class="film-details__meta">(Released ${film.Year}, dur. ${film.Runtime}, ${
@@ -164,6 +168,7 @@ const createFilmDetails = film => {
 const writeFilmDetails = (parent, film) => {
   document.querySelector(parent).innerHTML = createFilmDetails(film);
   setFavButton(film);
+  window.scrollBy({ top: window.innerHeight - 80, behaviour: 'smooth' });
 };
 
 /* favourites list */
@@ -186,7 +191,7 @@ const makeFavourite = id => {
 const setFavButton = film => {
   document.querySelector('#fav').addEventListener('click', e => {
     // TODO: highlight favourited film when display details
-    // e.target.classList.toggle('fav--active');
+    e.currentTarget.classList.add('fav--active');
     const date = new Date(Date.now())
       .toDateString()
       .slice(4)
