@@ -5,7 +5,7 @@
 //initialize values
 let searchText = "";
 let form = document.querySelector("form");
-const initialFetch = `http://www.omdbapi.com/?s=Jaws&apikey=eabbbb71`
+const initialFetch = `http://www.omdbapi.com/?s=Lemons&apikey=eabbbb71`
 
 //querySelectors
 const searchBox = document.querySelector(".search__input");
@@ -22,7 +22,7 @@ form.addEventListener("submit", event => {
     fetchContent(APIQuery)
 });
 
-//Load Full Content
+//Event Listeners
 document.addEventListener("click", event => {
     if (event.target.matches(".moviesfeed__btn")) {
         fetchFullArticle(event);
@@ -35,13 +35,16 @@ function fetchFullArticle(event) {
     let filmID = event.target.dataset.id;
     const APIQuery = `http://www.omdbapi.com/?i=${filmID}&apikey=eabbbb71`;
     const moviesButtons = document.querySelectorAll('.moviesfeed__btn');
-    const movieDetails = document.querySelectorAll(".moviesdetails");
+    const movieDetails = document.querySelectorAll(".moviesfeed__details");
     
     moviesButtons.forEach(item => {
-    let parentSection = item.closest(".moviesfeed__full").getAttribute("id"); 
-    let buttonClasses = item.classList;
+    const parentSection = item.closest(".moviesfeed__full").getAttribute("id"); 
+    const parentClass = item.closest(".moviesfeed__full").classList;
+    const moviesButton = item.closest(".moviesfeed__btn");
+    
         if (filmID === parentSection) {
-            // TOFIX scope of these functions - not sure how to approach
+            
+            // FETCHING TOFIX would like to contain as functions but issue with scope
             // fetchFullContent(APIQuery);
             // displayFullFilm(body)
 
@@ -51,27 +54,20 @@ function fetchFullArticle(event) {
             })
             .then(function(body) {
                 movieDetails.forEach(movie => {
-                console.log(buttonClasses); 
-                console.log(movie.classList);  
-                movie.classList.add('active');
-
-                let movieID = movie.dataset.id;
+                 let movieID = movie.dataset.id;
                     if (movieID === parentSection) {
                     movie.innerHTML = filmsLayoutFilm(body);
                     }
                 })
+            // toggle details NOTE within .then to change when details loaded
+            parentClass.toggle('details--open');
+            parentClass.contains("details--open") ? moviesButton.textContent = "Hide details" : moviesButton.textContent = "Show details";
+
             })
             .catch(function(error) {
             displayErrorToUser("Server failed to return data");
             });
         }
-
-        // let activeElement =  document.querySelector(".active")
-        // if (activeElement !== null) {
-        //     activeElement.classList.toggle("active")
-        //     }
-        //    item.classList.toggle("active")
-
     });
 }
 
@@ -89,35 +85,35 @@ function filmsLayoutSearchResult(item) {
     // <figure class="moviesfeed__poster"><img src="${posterurl}"></figure>
     return `
         <section class="moviesfeed__full" id="${id}">
+        
             <div class="moviesfeed__content">
-                <header><h2 class="movie__title">${title}</h2><p>${year}</p></header>
-                <button class="btn moviesfeed__btn" data-id="${id}">More details</button>
+                <header><h3 class="movie__title">${title} <em>${year}</em></h3></header>
+                <button class="btn moviesfeed__btn" data-id="${id}">Show details</button>
             </div>
-            <div class="moviesdetails" data-id="${id}"></div>
+            <div class="moviesfeed__details" data-id="${id}"></div>
         </section>`;
   };  
 
 function displaySearchList(filmArticles) {
     moviesParentNode.innerHTML = "";
-    filmArticles.Search.map(function(item) {
+    filmArticles.Search.map(item => {
         const article = document.createElement("article");
         article.innerHTML = filmsLayoutSearchResult(item);
         return moviesParentNode.appendChild(article);
     });
 }  
-
 function filmsLayoutFilm(body)  {
     // fallbacks or empty if data is null TODO
     const title = `${body.Title}`;
-    const director = `Director: ${body.Director}`;
+    const director = `Directed by ${body.Director}`;
     const plot = `<h3>Plot summary</h3><p>${body.Plot}</p>`;
-    const actors = `<p><strong>Actors:</strong> ${body.Actors}</p>`;
-    return `<h3>${title} : ${director}</h3>${plot}${actors}`;
+    const actors = `<p><strong>Starring:</strong> ${body.Actors}</p>`;
+    return `<h3>${director}</h3>${plot}${actors}`;
 }
 
 
 // function displayFullFilm(body) {
-//     const movieDetails = document.querySelectorAll(".moviesdetails");
+//     const movieDetails = document.querySelectorAll(".moviesfeed__details");
 //     movieDetails.forEach(movie => {
         
 //         let movieID = movie.dataset.id;

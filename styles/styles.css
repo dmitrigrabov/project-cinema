@@ -55,6 +55,13 @@
        margin: 0;
    }
 
+   .moviesfeed__full .moviesfeed__details  {
+    display: none;
+ }
+   .moviesfeed__full.details--open .moviesfeed__details {
+       display: block;
+    }
+
 /* LINKS AND TYPOGRAPHY
    ========================================================================== */
 
