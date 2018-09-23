@@ -1,11 +1,13 @@
-const parentResult = document.querySelector(".hi");
+//HTML Element Targets
+const parentSearchResult = document.querySelector(".hi");
+const searchResultNode = document.createElement("li"); 
 const extraInfo =[];
 
 //I could hardcode this in the html - leaving in for now.
-const resultNode = document.createElement("li"); 
-resultNode.innerHTML = `<a href="#">
+// Default 'Search' view
+searchResultNode.innerHTML = `<a href="#">
 <img src="https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg" alt="news image"></a>`;
-parentResult.appendChild(resultNode);
+parentSearchResult.appendChild(searchResultNode);
 
 
 //Search Function
@@ -28,25 +30,27 @@ function IMDBData(search) {
     console.log(search.Search[4].Poster);
     
     search.Search.map((movies) => {
-    const resultNode = document.createElement("li"); // make fresh <li>
-    resultNode.innerHTML = 
-        `<div data-imdb=${movies.imdbID}><a class="indiv" id="${movies.imdbID}" href="#">
+    const searchResultNode = document.createElement("li"); // make fresh <li>
+    searchResultNode.innerHTML = 
+        `<div data-imdb=${movies.imdbID} value="${movies.imdbID}" class="indiv"><a class="indiv"  href="#">
         <h3>${movies.Title}</h3>
         <h2>${movies.Year}</h2></a>
         <img src="${movies.Poster}" alt="news image"></div>`;
-    parentResult.appendChild(resultNode);    
+    parentSearchResult.appendChild(searchResultNode);    
     // here
 
 
-    document.querySelector("[data-imdb")
+    // document.querySelector("[data-imdb")
 
+    // Event Listener to fetch more info on Movie - BROKEN
 
 const clickFilm = document.querySelector(".indiv");
 clickFilm.addEventListener("click", function(event) {
 
-// console.log({event})
+// console.log(event.target['0'].value);
+console.log(event.target);
 
-let URL2 = `http://www.omdbapi.com/?s=${event.target.id}&apikey=73071eff`;
+let URL2 = `http://www.omdbapi.com/?s=${event.target.value}&apikey=73071eff`;
 console.log(URL2);
 });
 
@@ -64,10 +68,10 @@ console.log(URL2);
 //NOt found movie text display
 
 function notFound(){
-    const resultNodes = document.createElement("li")
-    resultNodes.innerHTML = 
+    const searchResultNodes = document.createElement("li")
+    searchResultNodes.innerHTML = 
         `<div>help me</div>`;
-    parentResult.appendChild(resultNodes);    
+    parentSearchResult.appendChild(searchResultNodes);    
 };
 
 
@@ -84,12 +88,12 @@ function fetchIMDB(url){
      
         // If unknown result
         if (search.Response === 'False') {
-            parentResult.innerHTML = "";
+            parentSearchResult.innerHTML = "";
             console.log(search)
             notFound(); 
         }
         else
-        {   parentResult.innerHTML = "";
+        {   parentSearchResult.innerHTML = "";
             IMDBData(search);
     
         }
@@ -110,7 +114,7 @@ function fetchMoreInfo(movieURL){ //default for now
     })
     .then(function(find){
      
-    //   parentResult.innerHTML = "";
+    //   parentSearchResult.innerHTML = "";
 
         movieMore(find);
         console.log(find);
@@ -122,7 +126,7 @@ function fetchMoreInfo(movieURL){ //default for now
 
 // FETCH RESULT MORE WHAT TO DO WITH IT
 function movieMore(find){
-    const parentResult = "";
+    const parentSearchResult = "";
     
     find.Map(moreMovies => {
 
@@ -146,12 +150,12 @@ fetchMoreInfo();
 //     console.log(search.Search[4].Poster);
     
 //     search.Search.map(movies => {
-//     const resultNode = document.createElement("li"); // make fresh <li>
-//     resultNode.innerHTML = 
+//     const searchResultNode = document.createElement("li"); // make fresh <li>
+//     searchResultNode.innerHTML = 
 //         `<a href="#">
 //         <h3>${movies.Title}</h3>
 //         <h2>${movies.Year}</h2></a>
 //         <img src="${movies.Poster}" alt="news image">`;
-//     parentResult.appendChild(resultNode);    
+//     parentSearchResult.appendChild(searchResultNode);    
 //     });
 // }
