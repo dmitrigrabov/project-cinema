@@ -2,22 +2,21 @@ const searchSubmit= document.querySelector(".search-area-submit");
 const searchText=document.querySelector(".search-area-text");
 const searchResultList=document.querySelector(".search-result-list");
 const pagination=document.querySelector(".pagination")
-
+const localStorage=window.localStorage;
+const favMovieObj={};
+const myFavorite=document.createElement("button");
+const body=document.querySelector("body");
+const mySearchResults=document.createElement("button");
+let localData;
 //this is to insert search results using dom
 function searchResult(body){
-  // console.log(body)
-  // console.log(body.Search)
-
     body.Search.forEach(movie =>{
-
     let searchResultContainer=document.createElement("li");
     searchResultContainer.className="movie";
     searchResultContainer.id=movie.imdbID;
     let searchResultTitle=document.createElement("h2");
     let searchResultYear=document.createElement("h3");
     let posterImage=document.createElement("img");
-    let favorite=document.createElement("form");
-    let favoriteAdd=document.createElement("input");
 
     searchResultTitle.innerHTML=`${movie.Title}`;
     searchResultTitle.className="movie-title";
@@ -33,24 +32,70 @@ function searchResult(body){
     searchResultContainer.appendChild(posterImage);
 
 
-    favorite.className="favorite"
-    favorite.action="/favorite"
-    favorite.method="get"
-    favoriteAdd.type="submit"
-    favoriteAdd.value="Add to favorites"
-    favoriteAdd.class="favorite-add"
-    favorite.appendChild(favoriteAdd)
+    let favorite=document.createElement("button");
+    favorite.innerHTML="Add to favorites"
+    favorite.addEventListener("click", function(event){
+        const favoriteMovie=event.target.parentNode.childNodes;
+        const movieId=event.target.parentNode.getAttribute("id")
+
+        console.log(favoriteMovie)
+
+        const movieObj ={
+          id:movieId,
+          title:favoriteMovie[0].textContent,
+          year:favoriteMovie[1].textContent,
+          image:favoriteMovie[2].getAttribute("src")
+          // details:favoriteMovie[4].textContent
+        }
+
+        favMovieObj[movieId]=movieObj;
+
+        localStorage.setItem("favList",JSON.stringify(favMovieObj))
+        console.log(localStorage)
+
+
+
+        //localStorage.setItem("favorite-movies",[])
+        // window.location.href='favorite.html'
+        })
 
 
     searchResultContainer.appendChild(favorite);
-
     searchResultList.appendChild(searchResultContainer);
-
-
-
 
     })
   }
+
+  function loadFavList(){
+    localData=JSON.parse(localStorage.getItem("favList"));
+
+    console.log(localData)
+    Object.keys(localData).forEach(movie =>{
+      let movieContainer=document.createElement("li");
+      movieContainer.className="movie";
+      movieContainer.id=movie.id;
+      let movieTitle=document.createElement("h2");
+      let movieYear=document.createElement("h3");
+      let posterImage=document.createElement("img");
+
+      movieTitle.innerHTML=`${movie.title}`;
+      movieTitle.className="movie-title";
+      movieContainer.appendChild(movieTitle);
+
+      movieYear.innerHTML=`${movie.year}`;
+      movieYear.className="movie-year";
+      movieContainer.appendChild(movieYear);
+
+      posterImage.src=movie.image;
+      posterImage.className="movie-image";
+      posterImage.alt="Movie poster";
+      movieContainer.appendChild(posterImage);
+
+      favoriteList.appendChild(movieContainer);
+    })
+  }
+
+const favoriteList=document.querySelector(".favorite-list");
 
 
 function pages(body,page){
@@ -195,39 +240,62 @@ function movieDetails(body,id){
 }
 
 //to fetch more details about the clicked movie from the API
-searchResultList.addEventListener("click",function(event){
+if (searchResultList!==null){
+
+  searchResultList.addEventListener("click",function(event){
+    event.preventDefault();
+
+    //remove other movie details (loaded from previous click)
+    const otherDetails=document.querySelector(".search-result-details")
+    if(otherDetails!==null){
+      otherDetails.parentNode.removeChild(otherDetails);
+    }
+
+    const id=event.target.parentNode.getAttribute("id");
+    const url=`http://www.omdbapi.com/?i=${id}&plot=full&apikey=d2807699`;
+
+    if(event.target.parentNode.lastChild.matches("button")){
+      fetch(url)
+      .then(response => response.json())
+      .then(body =>{
+        movieDetails(body,id);
+
+      })
+      .catch(error => console.log(error));
+
+    }
+
+  })
+}
+
+// const myFavMovie=document.querySelector(".my-favorite-movies");
+// console.log(myFavMovie)
+// if(myFavMovie!==null){
+//
+//   myFavMovie.addEventListener("click",event => {
+//     console.log(loadFavList());
+//   })
+// }
+
+
+myFavorite.innerHTML="Favorites";
+mySearchResults.innerHTML="Search Results"
+
+body.insertBefore(myFavorite,pagination);
+body.insertBefore(mySearchResults,pagination);
+
+myFavorite.addEventListener("click", function(event){
   event.preventDefault();
+  window.location.href='favorite.html'
 
-  //remove other movie details (loaded from previous click)
-  const otherDetails=document.querySelector(".search-result-details")
-  if(otherDetails!==null){
-    otherDetails.parentNode.removeChild(otherDetails);
-  }
-
-  const id=event.target.parentNode.getAttribute("id");
-  const url=`http://www.omdbapi.com/?i=${id}&plot=full&apikey=d2807699`;
-
-  if(event.target.parentNode.lastChild.matches("form")){
-    fetch(url)
-    .then(response => response.json())
-    .then(body =>{
-      movieDetails(body,id);
+  return loadFavList()
 
     })
-    .catch(error => console.log(error));
 
-  }
 
-  
+mySearchResults.addEventListener("click", function(event){
+  event.preventDefault();
+  window.location.href='movie.html'
 
-})
+    })
 //
-// const favoritesList=document.querySelectorAll(".favorite")
-//
-// searchResultList.addEventListener("click",event => {
-//   event.preventDefault();
-//   if(event.target){
-//       console.log(event.target.parentNode)
-//   }
-//
-// })
