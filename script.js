@@ -62,7 +62,9 @@ function IMDBData(search) {
 function notFound(){
     const searchResultNodes = document.createElement("li")
     searchResultNodes.innerHTML = 
-        `<div>help me</div>`;
+        `<div class="oops">Oh dear we cant find that film
+        <img class="crying" src="oops.gif">
+        </div>`;
     parentSearchResult.appendChild(searchResultNodes);    
 };
 
