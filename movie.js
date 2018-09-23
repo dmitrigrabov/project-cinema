@@ -42,26 +42,29 @@ function pages(body,page){
   let totalPage=totalSearchResults/10;
 
   pagination.innerHTML=" ";
-  for(let i=page; i<totalPage+1;i++){
-    p=i;
+  for(i=page; i<totalPage+1;i++){
+
     button=document.createElement("button");
-    button.className="page-button";
-    button.innerHTML=`${p}`
+    button.innerHTML=`${i}`
     pagination.appendChild(button);
-    let pageTop=page+8;
-    console.log(page)
-    if (i>pageTop){
+
+    console.log(typeof page)
+    if (i> parseInt(page)+ 8 ){
       button.className="page-button hide-button"
+
+    } else{
+
+      button.className="page-button";
     }
   }
 
   if (totalPage>9){
-
     const morePage=document.createElement("button");
     morePage.innerHTML=`...`;
     morePage.className="more-page";
     console.log(morePage)
     pagination.appendChild(morePage);
+
   }
 
 }
@@ -108,6 +111,7 @@ searchSubmit.addEventListener("click", function(event){
 
 
 pagination.addEventListener("click",event => {
+  event.preventDefault();
   page=event.target.textContent;
 console.log(page)
   loadAPI(page);
@@ -115,13 +119,21 @@ console.log(page)
 })
 
 const loadMorePage=document.querySelector(".more-page");
-loadMorePage.addEventListener("click",event =>{
-  page+=9;
-  loadAPI(page)
-})
+if(loadMorePage!==null){
+
+  loadMorePage.addEventListener("click",event =>{
+    
+    page=event.target.previousSibling.textContent;
+    console.log(page)
+    startPage=parseInt(page)+1
+
+    loadAPI(startPage);
+  })
+}
 
 //clear all results once the search box is cleared
 searchText.addEventListener("input", event =>{
+  event.preventDefault();
   if (searchText.value===""){
     searchResultList.innerHTML="";
     pagination.innerHTML="";
@@ -168,6 +180,7 @@ function movieDetails(body,id){
 //to fetch more details about the clicked movie from the API
 searchResultList.addEventListener("click",function(event){
   event.preventDefault();
+  console.log("hello")
   //remove other movie details (loaded from previous click)
   const otherDetails=document.querySelector(".search-result-details")
   if(otherDetails!==null){
