@@ -66,36 +66,7 @@ function searchResult(body){
     })
   }
 
-  function loadFavList(){
-    localData=JSON.parse(localStorage.getItem("favList"));
 
-    console.log(localData)
-    Object.keys(localData).forEach(movieId =>{
-      let movieContainer=document.createElement("li");
-      movieContainer.className="movie";
-      movieContainer.id=movieId;
-      let movieTitle=document.createElement("h2");
-      let movieYear=document.createElement("h3");
-      let posterImage=document.createElement("img");
-
-      movieTitle.innerHTML=`${localData[movieId].title}`;
-      movieTitle.className="movie-title";
-      movieContainer.appendChild(movieTitle);
-
-      movieYear.innerHTML=`${localData[movieId].year}`;
-      movieYear.className="movie-year";
-      movieContainer.appendChild(movieYear);
-
-      posterImage.src=`${localData[movieId].image}`;
-      posterImage.className="movie-image";
-      posterImage.alt="Movie poster";
-      movieContainer.appendChild(posterImage);
-
-      favoriteList.appendChild(movieContainer);
-    })
-  }
-
-const favoriteList=document.querySelector(".favorite-list");
 
 
 function pages(body,page){
@@ -287,8 +258,6 @@ body.insertBefore(mySearchResults,pagination);
 myFavorite.addEventListener("click", function(event){
   event.preventDefault();
   window.location.href='favorite.html'
-
-  return loadFavList()
 
     })
 
