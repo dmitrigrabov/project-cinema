@@ -11,7 +11,6 @@
 
 ### UX
 
-- [ ] **Work using mobile first, that is create the mobile version first and add tablet and desktop versions after.**
 - A mobile-first responsive design responsive that looks great at different screen widths
   <!-- - [ ] ~~Create an HTML page which should have a `form` at the top which contains a text input and a submit button. Below it should have a placeholder element for the returned results.~~
 - [ ] ~~Use JavaScript to capture the `submit` event in your search form, extract the query string from the text input and use that to make an API call to the Open Movie Database API to search for films which match the query string using `fetch`. `console.log` the results~~
@@ -25,11 +24,17 @@
 - JavaScript
 - CSS
 
+#### Features
+
+- Load more search results by paging through. You get 10 results at a time.
+
+- If the film your looking for doesn't have a poster then look out for the 'F~~W~~ill Ferrell' placeholder!
+
+- Save your favourite films - just click the button on the film detail view. You can see your list of favourites by clicking the account button in the header. You can delete films from the list individually or delete them all with a single click.
+
 #### Challenges and learnings
 
 ## TODO
-
-<!-- - [ ] **Filter fetch results to show only movies** -->
 
 - [ ] **Implement any feature you would find useful or interesting**
 
