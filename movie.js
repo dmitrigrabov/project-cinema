@@ -58,7 +58,7 @@ function pages(body,page){
     }
   }
 
-  if (totalPage>9){
+  if (totalPage>9 && parseInt(page)<totalPage - 8){
     const morePage=document.createElement("button");
     morePage.innerHTML=`...`;
     morePage.className="more-page";
@@ -118,18 +118,19 @@ console.log(page)
 
 })
 
-const loadMorePage=document.querySelector(".more-page");
-if(loadMorePage!==null){
-
-  loadMorePage.addEventListener("click",event =>{
-    
-    page=event.target.previousSibling.textContent;
-    console.log(page)
-    startPage=parseInt(page)+1
-
-    loadAPI(startPage);
-  })
-}
+// const loadMorePage=document.querySelector(".more-page");
+// console.log(loadMorePage)
+// if(loadMorePage!==null){
+//
+//     loadMorePage.addEventListener("click",event =>{
+//     event.preventDefault();
+//     page=event.target.previousSibling.textContent;
+//     console.log("page")
+//     startPage=parseInt(page)+1
+//
+//     loadAPI(startPage);
+//   })
+// }
 
 //clear all results once the search box is cleared
 searchText.addEventListener("input", event =>{
