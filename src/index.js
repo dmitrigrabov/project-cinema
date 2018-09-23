@@ -1,5 +1,5 @@
 
-const urlBase =`http://www.omdbapi.com/?apikey=b749b385&`
+const urlBase =`https://www.omdbapi.com/?apikey=b749b385&`
 const outputNode = document.querySelector(".films");
 let searchTarget = '';
 let previousSearchTarget = '';
