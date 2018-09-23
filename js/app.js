@@ -58,10 +58,6 @@ function setUrlForEachMovieWithImdbIDNumber() { //I need imdbID to get full deta
     return `https://www.omdbapi.com/?i=${params.imdbID}&plot=full&apikey=${params.apiKey}&page=${params.pageNumber}`;
 }
 
-function fullDetails() {
-
-}
-
 function runFetch() {
     fetch(setUrlWithTypedSearch())
         .then((response) => {
@@ -80,7 +76,7 @@ function runFetch() {
                         return response.json();
                     })
                     .then((body) => {
-                        console.log(body);
+                        // console.log(body);
                         buttonsClass.style.display = 'block';
                         let movieParams = {
                             description: body.Plot,
@@ -103,25 +99,24 @@ function runFetch() {
                         searchResult.innerHTML = `
                             <span class="results__searchResult__title">${movieParams.title}</span>
                             <img class="results__searchResult__poster" src="${movieParams.poster}"/>
-                            <span class="results__searchResult__year hide">${movieParams.year}</span>
-                            <span class="results__searchResult__description hide">${movieParams.description}</span>
-                            <span class="results__searchResult__actors hide">${movieParams.actors}</span>
+                            <span class="results__searchResult__year hide">Year: ${movieParams.year}</span>
+                            <span class="results__searchResult__description hide">Description: ${movieParams.description}</span>
+                            <span class="results__searchResult__actors hide">Actors: ${movieParams.actors}</span>
                             `;
                         const posterImg = searchResult.querySelector('.results__searchResult__poster');
                         const description = searchResult.querySelector('.results__searchResult__description');
                         const year = searchResult.querySelector('.results__searchResult__year');
+                        const actors = searchResult.querySelector('.results__searchResult__actors');
                         searchResult.addEventListener('click', () => {
-                            console.log(posterImg);
+                            // console.log(posterImg);
                             description.classList.toggle('hide');
                             year.classList.toggle('hide');
                             posterImg.classList.toggle('hide');
+                            actors.classList.toggle('hide');
                         });
-                        //using class emptyBox to push up all elements to the top box - without this emptyBox not all searchResult div will looks the same - sometimes I don't have description so it will be empty
                         results.append(searchResult);
                     })
-
             });
-
         })
         .catch((error) => {
             console.log('Server failed to return data: ' + error);
