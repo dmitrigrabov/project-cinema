@@ -1,75 +1,73 @@
-body{
-    margin: 0px;
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    background: midnightblue no-repeat center center fixed;
-    background-blend-mode: screen;
-    background-size: cover;
-   
+body {
+  margin: 0px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  background: midnightblue no-repeat center center fixed;
+  background-blend-mode: screen;
+  background-size: cover;
 }
 
-.app{
-    display: flex;
-    flex-direction: column;
-    align-content:  center;
-    align-items: center;
-    align-self: center;
-    margin: .3em;
-    max-width: 800px;
-    background-color: white;
-    
+.app {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  margin: 0.3em;
+  max-width: 800px;
+  background-color: white;
 }
 
 html {
-    box-sizing: border-box;
-    font-family: "Ubuntu", Helvetica, Arial, sans-serif;
-    color: midnightblue;
-  }
-
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
-  }
-
-  header{
-      display: flex;
-      flex-direction: row;
-      align-content: center;
-      align-items: baseline;
-      flex-wrap: wrap;
-  }
-
-.logo{
-    margin-right: 1em;
+  box-sizing: border-box;
+  font-family: "Ubuntu", Helvetica, Arial, sans-serif;
+  color: midnightblue;
 }
 
-h1{
-    font-family: 'Ultra', serif;
-    font-weight: 200;
-    margin: 0px;
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
 
-.web-name{
-    margin-right: 1em;
-}
-input{
-    border: .1em solid midnightblue;
-}
-
-.submit-search{
-    background-color: midnightblue;
-    border-radius: 8px;
-}
-.search-button{
-    background-color: midnightblue;
-    color: white;
+header {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  align-items: baseline;
+  flex-wrap: wrap;
 }
 
-main{
-    display: flex;
-    flex-direction: column;
+.logo {
+  margin-right: 1em;
+}
+
+h1 {
+  font-family: "Ultra", serif;
+  font-weight: 200;
+  margin: 0px;
+}
+
+.web-name {
+  margin-right: 1em;
+}
+input {
+  border: 0.1em solid midnightblue;
+}
+
+.submit-search {
+  background-color: midnightblue;
+  border-radius: 8px;
+}
+.search-button {
+  background-color: midnightblue;
+  color: white;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
 }
 
 /* .films{
@@ -79,82 +77,81 @@ main{
     max-width: 800px;
 } */
 
-.poster{
-    grid-area: poster;
-    justify-self: end;
-    
+.poster {
+  grid-area: poster;
+  justify-self: end;
 }
 
-.title{
-    grid-area: title;
-    margin-top: .1em;
-    margin-bottom: .3em;
+.title {
+  grid-area: title;
+  margin-top: 0.1em;
+  margin-bottom: 0.3em;
 }
 
-.year{
-    grid-area: year;
-    margin: .0px;
+.year {
+  grid-area: year;
+  margin: 0px;
 }
 
-.type{
-    grid-area: type;
-    margin: 0px;
+.type {
+  grid-area: type;
+  margin: 0px;
 }
 
-.fav-button{
-    grid-area: favourite;
-    color: midnightblue;
-    border: none;
+.fav-button {
+  grid-area: favourite;
+  color: midnightblue;
+  border: none;
 }
 
-.add-info{
-    grid-area: add-info;
-    margin: 0px;
+.add-info {
+  grid-area: add-info;
+  margin: 0px;
 }
 
-.load-next-page{
-    font-size: .8em;
-    color:white;
-    background-color: midnightblue;
-    border-radius: 8px;
-    align-self: right;
+.load-next-page,
+.clear-favourites {
+  font-size: 0.8em;
+  color: white;
+  background-color: midnightblue;
+  border-radius: 8px;
+  align-self: right;
 }
 
-.main__film{
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr ;
-    grid-template-rows: auto;
-    grid-template-areas: 
-        'poster title title'
-        'poster year favourite'
-        'poster type type'
-        'poster add-info add-info ';
-    align-items: start;
-    align-content: center;
-    margin-top: 1em;
-    grid-column-gap: 1em;
-    max-width: 800px;
+.main__film {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "poster title title"
+    "poster year favourite"
+    "poster type type"
+    "poster add-info add-info ";
+  align-items: start;
+  align-content: center;
+  margin-top: 1em;
+  grid-column-gap: 1em;
+  max-width: 800px;
 }
-
 
 .poster {
-    max-width: 47vw;
+  max-width: 47vw;
 }
 
-.favourites{
-    text-align: center;
+.favourites {
+  text-align: center;
 }
 .favourites__divs > img {
-    max-width: 32vw;
+  max-width: 32vw;
 }
 
-@media(min-width: 768px) {
-body .background{
+@media (min-width: 768px) {
+  body .background {
     background: midnightblue no-repeat center center fixed;
     background-blend-mode: screen;
     background-size: cover;
-}
-.favourites__divs > img {
+  }
+  .favourites__divs > img {
     max-width: 15vw;
-}
+  }
 }
