@@ -218,6 +218,15 @@ body {
     height: 0;
 }
 
+.results__searchResult__title {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.results__searchResult__description:first-line{
+    font-weight: bold;
+}
+
 @media (min-width: 500px) {
     .control {
         display: grid;
