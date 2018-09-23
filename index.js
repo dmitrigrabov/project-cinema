@@ -1,3 +1,8 @@
+
+
+//###########################   INITIALIZE   ###########################
+
+
 //Initialize: global variables
 let page = 1;
 
@@ -19,6 +24,10 @@ const myStorage = window.localStorage;
 //Initialize: populate favourites
 refreshFavourites();
 
+
+//###########################   EVENT LISTENERS   ###########################
+
+
 //Event listeners: click on document
 document.addEventListener('click', event => {
     if (event.target.matches('.result')) fetchDetails(event.target.getAttribute('data-id'));
@@ -33,23 +42,7 @@ document.addEventListener('click', event => {
     if (event.target.matches('.fa-sign-out-alt')) logout();
 });
 
-function toggleFavoritesMenu() { 
-    favsMenuRef.classList.toggle('favs--display');
-}
-
-function logout() {
-    myStorage.clear();
-    myStorage.favourites = '[]';
-    resetPage();
-    refreshFavourites();
-    formRef.reset();
-}
-
-function resetPage() {
-    detailsRef.classList.add('details--hidden');
-    resultsWrapperRef.classList.add('results__wrapper--hidden');
-}
-
+//Event listeners: search input for preview
 textboxRef.addEventListener('input', event => {
     if (event.target.value.length >= 3) {
         searchPreviewRef.classList.remove('search__preview--hidden');
@@ -65,22 +58,6 @@ textboxRef.addEventListener('input', event => {
     else searchPreviewRef.classList.add('search__preview--hidden');
 });
 
-function renderPreview(body) {
-    searchPreviewRef.innerHTML = '';
-    body.Search.forEach(item => {
-        const preview = document.createElement('div');
-        preview.setAttribute('class','preview');
-        preview.setAttribute('data-id',item.imdbID);
-        preview.innerHTML = item.Title;
-        searchPreviewRef.appendChild(preview);
-    });
-}
-
-function toggleDetails() {
-    detailsRef.classList.toggle('details--hidden');
-    resultsWrapperRef.classList.toggle('results__wrapper--hidden');
-}
-
 //Event listeners: submit on form
 formRef.addEventListener('submit', submitSearch);
 
@@ -92,14 +69,57 @@ document.addEventListener('change', event => {
     }
 });
 
-//Event listeners: infinite scroll
+//Event listeners: approaching end of page for infinite scroll
 resultsRef.addEventListener('scroll', event => {
     if (resultsRef.scrollLeft + 100 > resultsRef.scrollWidth - resultsRef.clientWidth) {
         getMoreResults();
     }
   });
 
- function getMoreResults() {
+
+//###########################   FUNCTIONS   ########################### 
+
+
+//Functions: toggle visibility on favourites list
+function toggleFavoritesMenu() { 
+    favsMenuRef.classList.toggle('favs--display');
+}
+
+//Functions: Clean up on logout
+function logout() {
+    myStorage.clear();
+    myStorage.favourites = '[]';
+    resetPage();
+    refreshFavourites();
+    formRef.reset();
+}
+
+//Functions: reset page on logout
+function resetPage() {
+    detailsRef.classList.add('details--hidden');
+    resultsWrapperRef.classList.add('results__wrapper--hidden');
+}
+
+//Functions: Add film titles into search preview
+function renderPreview(body) {
+    searchPreviewRef.innerHTML = '';
+    body.Search.forEach(item => {
+        const preview = document.createElement('div');
+        preview.setAttribute('class','preview');
+        preview.setAttribute('data-id',item.imdbID);
+        preview.innerHTML = item.Title;
+        searchPreviewRef.appendChild(preview);
+    });
+}
+
+//Functions: toggle search results & details divs
+function toggleDetails() {
+    detailsRef.classList.toggle('details--hidden');
+    resultsWrapperRef.classList.toggle('results__wrapper--hidden');
+}
+
+//Functions: Fetch more results for infinite scrolling
+function getMoreResults() {
     page++;
     const searchQuery = formRef.search.value;
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
@@ -107,6 +127,7 @@ resultsRef.addEventListener('scroll', event => {
     fetchResults(APIQuery, appendToResults);
  } 
 
+ //Functions: Move favourite up in the list
 function moveFavouriteUp(imdbID) {
     let currentFavs = JSON.parse(myStorage.favourites);
     const favToMoveUp = currentFavs.filter(item => item.imdbID === imdbID)[0];
@@ -119,6 +140,7 @@ function moveFavouriteUp(imdbID) {
     }
 }
 
+//Functions: Move favourite down in the list
 function moveFavouriteDown(imdbID) {
     let currentFavs = JSON.parse(myStorage.favourites);
     const favToMoveDown = currentFavs.filter(item => item.imdbID === imdbID)[0];
