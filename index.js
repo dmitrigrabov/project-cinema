@@ -27,6 +27,7 @@ document.addEventListener('click', event => {
     if (event.target.matches('.fa-sort-up')) moveFavouriteUp(event.target.parentNode.getAttribute('data-id'));
     if (event.target.matches('.fa-sort-down')) moveFavouriteDown(event.target.parentNode.getAttribute('data-id'));
     if (event.target.matches('.fav__title')) fetchDetails(event.target.parentNode.getAttribute('data-id'));
+    if (event.target.matches('.preview')) fetchDetails(event.target.getAttribute('data-id'));
     if (event.target.matches('.details, .detail')) toggleDetails();
     if (event.target.matches('.fa-heart')) toggleFavoritesMenu();
     if (event.target.matches('.fa-sign-out-alt')) logout();
@@ -51,6 +52,7 @@ function resetPage() {
 
 textboxRef.addEventListener('input', event => {
     if (event.target.value.length >= 3) {
+        searchPreviewRef.classList.remove('search__preview--hidden');
         const searchQuery = formRef.search.value;
         const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&type=movie`;
         fetch(APIQuery)
@@ -59,7 +61,8 @@ textboxRef.addEventListener('input', event => {
             return response.json();})
         .then(body => renderPreview(body))
         .catch(error => console.log(error));
-    };
+    }
+    else searchPreviewRef.classList.add('search__preview--hidden');
 });
 
 function renderPreview(body) {
@@ -174,6 +177,7 @@ function removeFromFavourites(imdbID) {
 //Functions: search submit
 function submitSearch(event) {
     event.preventDefault();
+    searchPreviewRef.classList.add('search__preview--hidden');
     const searchQuery = formRef.search.value;
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&type=movie`;
     fetchResults(APIQuery);
@@ -204,6 +208,7 @@ function prevButtonPressed(event) {
 
 //Functions: fetch detailed movie information
 function fetchDetails(imdbID) {
+    searchPreviewRef.classList.add('search__preview--hidden');
     favsMenuRef.classList.remove('favs--display');
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&i=${imdbID}`;
     fetch(APIQuery)
