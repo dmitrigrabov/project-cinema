@@ -152,7 +152,7 @@ const createFilmDetails = film => {
 <p class="film-details__meta">(Released ${film.Year}, dur. ${film.Runtime}, ${
     film.Rated
   })</p>
-<p class="film-details__ratings__imdb">${film.imdbRating}</p>
+<p class="film-details__ratings__imdb">Rating: ${film.imdbRating} out of 10</p>
 <h4>Plot summary</h4>
 <p class="film-details__plot">${film.Plot}</p>
 <ul class="film-details__actors">
