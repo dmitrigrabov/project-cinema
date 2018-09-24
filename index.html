@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Project Cinema</title>
+  <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+  <div class="app">
+    <header class="app__header">
+      <form class="search" id="search-form">
+        <label class="search__label" for="search-field">Search</label>
+        <input class="search__field" id="search-field" placeholder="Film name or keyword" autocomplete="off" autofocus>
+        <div id="suggestions" class="suggestions"></div>
+        <div class="search__controls">
+          <button class="closebtn search__controls__resetbtn" type="reset">
+            <span class="visuallyhidden">reset</span>
+          </button>
+          <button class="search__controls__submitbtn" type="submit">
+            <span class="visuallyhidden">search</span>
+          </button>
+        </div>
+      </form>
+    </header>
+
+    <div class="app__content" id="content"></div>
+
+    <div class="app__footer">
+      <div id="pagination" class="pagination">&nbsp;</div>
+    </div>
+  </div>
+
+  <div id="details" class="details"></div>
+
+  <script src="./utils.js"></script>
+  <script src="./index.js"></script>
+</body>
+
+</html>
