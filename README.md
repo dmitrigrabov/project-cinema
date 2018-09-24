@@ -6,4 +6,4 @@ The results are generated via API, which when fetched is converted to JSON, afte
 
 If i had more time I would have liked to have finished adding a favourites list and have completed the search preview.
 
-![screenshot of app](http://ScreenShot2018-09-24 at 08.50.02.png)
+![screenshot of app](http://ScreenShot2018-09-24at08.50.02.png)
