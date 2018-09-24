@@ -7,7 +7,7 @@ const textInput = form.addEventListener( "submit", event => {
   //a chance to code anything to this event.
     event.preventDefault()
   // creating a js object to reference the html text iunput element
-    const inputField= document.querySelector('.input')
+    const inputField= document.querySelector('.form__input')
     // using inputField as the argument for the searchMoviesfunction
     searchMovies(inputField.value);
 })
@@ -40,28 +40,32 @@ function searchMovies(movie) {
 
 
 
-  let filmItem
+  let filmItem;
+  let selectedFilmTitle;
+
       function displayMovies(searchResults) {
         //selecting the html element ul as my parent node
-        const parentNode = document.querySelector(".results-list"); //ul
+        const parentNode = document.querySelector(".results__list"); //ul
         //map returns a new array, so requires a new variable to
         //refence it (movieString)
         const movieString = searchResults.map( item => {
           //for every item in the searchResults, add a list element
           //and insert the following html
-          return `<li data-imdbid=${item.imdbID}>
+          // selectedFilmTitle = item.Title;
+          return `<li class="list_results" data-imdbid=${item.imdbID}>
                       <img src=${item.Poster}>
                       <h2> ${item.Title} </h2>
                       <h4> ${item.Year} </h4>
                   </li>`
-        }).join(''); // .join() is required to remove the trailing ,
 
+
+        }).join(''); // .join() is required to remove the trailing ,
         //Sets the html of the ul to the movieString that was
         //created above
         parentNode.innerHTML = movieString;
         //Below code is for clicking on things
         //filmItem is now set to the li's within the ul.
-        filmItem = document.querySelectorAll('.results-list > li')
+        filmItem = document.querySelectorAll('.results__list > li')
         //spread operator changes the copy into an array
         //ask for clarification on this one??
         //Is it because we want to make through the contents?
@@ -73,9 +77,13 @@ function searchMovies(movie) {
             //fetchMoreDeatilsWithId  gets data on
             // the film using its id
             fetchMoreDeatilsWithId(event.path[1].dataset.imdbid)
+            fetchAGiphy(event.path[1].dataset.Title)
+            // fetchAGiphy(event.searchResults.Title)
           })
         })
       }
+      // console.log(selectedFilmTitle);
+
 
 
       //fetchMoreDeatilsWithId  gets data on
@@ -96,7 +104,31 @@ function searchMovies(movie) {
       });
     }
 
+    // const giphUrl = "https://api.giphy.com/v1/gifs/search?";
+    // const giphApiKey = "api_key=ggvo0rd0F3430o7HlYXGh2ZwXzPMx0f9";
+    // const gifquery = "&q=${VARIABLE}&limit=2&offset=0&rating=G&lang=en";
 
+    // function fetchAGiphy(movieTitle) {
+    //   fetch(`https://api.giphy.com/v1/gifs/search?api_key=ggvo0rd0F3430o7HlYXGh2ZwXzPMx0f9&q=${movieTitle}&limit=2&offset=0&rating=G&lang=en`)
+    //       .then(function(response) {
+    //         return response.json();
+    //       })
+    //
+    //       .then(function(body) {
+    //         console.log(body)
+    //        // addGiphy(movieTitle)
+    //       });
+    //
+    //       .catch(function(error) {
+    //         console.log('Server failed to return data',error);
+    //       });
+    //   }
+
+
+    // function addGiphy(movieTitle) {
+    //   const parentNode = document.querySelector(".results__gifphy")
+    //   parentNode.innerHTML = ``
+    // }
 
 
     function addDisplayPlot(imdbIDToSearchWith, movieData) {
