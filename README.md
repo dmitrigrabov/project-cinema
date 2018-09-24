@@ -1,54 +1,26 @@
----
-path: "/project-cinema"
-date: "2018-05-28"
-title: "Project cinema"
----
+Background:
+1. Reel Find is a film search app created for week 3 Constructor Labs weekend project.
+2. The app uses www.omdbapi.com to get film data and display on the main page. 
 
-# Project Cinema
+How it works:
+1. The app loads with a preset search parameter - Batman.
+2. The user can search for desired title by entering the name in the search field. The event listener on the search form will trigger a fetch from the API and return the results on the main page.
+3. Event listener has been added to the main page and the user will get further information on each film by clicking anywhere on the div containing that films poster, title and year. The event listener uses a second fetch (utilising the movie's IMDb ID number to get additional information for this specific film). 
+When user clicks on a different film, the previous film's additional information is removed and the new film's information is displayed.
+4. The app utilises API pagination  - the user can get additional search results by clicking 'load more...' button at the bottom of the main page.
+5. For larger screens the user will see the first movies poster used as a page background.
+6. The user can add favourite films to the 'favouites' section at the bottom of the page by clicking a blue heart next to each film. The heart turns red when a film is favourited. The function uses local storage so the favourites will be saved if the page is reloaded. In order to clear favourites, the user needs to press 'clear my favourites' button which has an event listener which clears local storage.
 
-We want to create a movie search engine. To power it we will use the [Open Movie Database](http://www.omdbapi.com) API.
+Notes to self:
+1. Used flex grid for the first time (to arrange the div containing each film) - very useful.
+2. Need to spend time thoroghly planning the final layout and functionality of the application before starting work on it. This week I jumped straight into fetching data and as a result could not use BEM as the whole HTML is disorganised with me adding new sections/divs as I went along. 
+3. In relation to point 2 above, planning should also help with making the code cleaner by utilising more functions and not mutating the variables as much.
 
-To start using the OMDB API you will first need to sign up with them to receive and API key. The key issued to you will allow you 1000 requests per day and you will need to include this key as part of every request.
-
-To get started, fork and clone this repo. Please submit a pull request after your first commit and push commits regularly.
-
-You should complete as many of the following tasks as you can.
-
-- [ ] Work using mobile first, that is create the mobile version first and add tablet and desktop versions after.
-- [ ] Create an HTML page which should have a `form` at the top which contains a text input and a submit button. Below it should have a placeholder element for the returned results.
-- [ ] Use JavaScript to capture the `submit` event in your search form, extract the query string from the text input and use that to make an API call to the Open Movie Database API to search for films which match the query string using `fetch`. `console.log` the results
-- [ ] Display the data returned by the API including title, year and poster picture
-
-**Movie details**
-
-- [ ] Adjust your layout to create room for a detailed view of movie information
-- [ ] Capture clicks on your movie results items and use that information to make another request to the API for detailed movie information. Using event delegation will help you here. `console.log` the returned result
-- [ ] Display the detailed movie result in the in the details view you created earlier
-- [ ] Make your design responsive and ensure it looks great at different screen widths
-
-**Your own feature**
-
-- [ ] Implement any feature you would find useful or interesting
-
-**Stretch goals**
-
-- [ ] Implement pagination so that users can navigate between all movies in search results rather than just the first ten
-- [ ] Create a favourites list. It's up to you how you would add items to favourites. You could add a button or otherwise. Display a list of favourites somewhere on your page.
-- [ ] Make the favourites list sortable. Add `up` and `down` buttons to your favourites which on click will move the result in relevant direction
-- [ ] Save favourites locally using `localStorage` so that favourites persist in browser after refresh
-- [ ] Let's create a search preview. It should listen for change events on input events and submit a search request with current query string. Display the search preview results in an absolute positioned container just below the search box.  
-Hint: You may want to kick of the searching after at least 3 characters have been typed.
-
-## Objectives
-
-* We want to see great looking webpages that work well at all screen widths
-* Your code should have consistent indentation and sensible naming
-* Use lots of concise, reusable functions with a clear purpose
-* Add code comments where it is not immediately obvious what your code does
-* Your code should not throw errors and handle edge cases gracefully. For example not break if server fails to return expected results
-* Use BEM methodology to style your page
-* Try to use pure functions as much as possible, but keep in mind it will not be possible to make all functions pure.
-
-## README.md
-
-When finished, include a README.md in your repo. Someone who is not familiar with the project should be able to look at it and understand what it is and what to do with it. Explain functionality created, mention any outstanding issues and possible features you would include if you had more time. List technologies used to create the app. Include a screenshot of your app in the README.
+If I had more time:
+1. Add 'go to top button' to help navigation;
+2. Provide more informaiton for each film in favourites.
+3. Have the favourites bar display on the side in full-screen mode.
+4. Handle error messages and absent posters.
+5. Add checkboxes to refine search for movies or series only.
+6. Ability to rank favourites.
+7. Ability to remove a single favourite.

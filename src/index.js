@@ -6,8 +6,7 @@ let addInfoNode = "";
 let pageCounter = 1;
 let movieName = "Batman";
 let posterNode = document.querySelector(".favourites__divs");
-// let posterNode = document.createElement("div");
-// posterNode.className="favourites__divs";
+
 
 //fetches movies from API - search by names
 function getMoviesByName(movieName) {
@@ -25,16 +24,7 @@ getMoviesByName(movieName);
 
 //creates a list of films by name
 function displayFilms(filmResults) {
-  // let searchDiv = filmResults.map(film => {
-  //    return `
-  //    <div data-imdbid=${film.imdbID} class='main__film'>
-  //         <img class='poster' src='${film.Poster}'/>
-  //         <h3 class='title'>${film.Title}</h3>
-  //         <h4 class='year'>(${film.Year})</h4>
-  //         <p class='type'><b>type:</b> ${film.Type}</p>
-  //     </div>`;
-  // }).join('');
-  // outputNode.innerHTML = searchDiv;
+
   filmResults.forEach(film => {
     let filmNode = document.createElement("div");
     filmNode.className = "main__film";
@@ -99,19 +89,11 @@ function displayFilmDetails(film) {
 
 //event listener on each film div
 outputNode.addEventListener("click", e => {
-  //This bit of code does not work
   if (event.target.closest(".fav-button")) {
     let favourite = event.target.closest(`.main__film`);
-
-    // let secondFavourite = favourite;
-    // secondFavourite=secondFavourite.firstChild;
-
     let secondFavourite = favourite.cloneNode(true);
-
     secondFavourite = secondFavourite.firstChild;
     posterNode.appendChild(secondFavourite);
-
-    // document.querySelector('.favourites__divs').appendChild(posterNode);
     event.target.closest(".fav-button").style.color = "red";
 
     saveDiv();
@@ -157,7 +139,6 @@ function saveDiv(){
 function recallDiv(){
     if(localStorage.getItem("favourites") != null){
         let recalledDiv = JSON.parse(localStorage.getItem("favourites"));
-        // console.log(recalledDiv);
         document.querySelector('.favourites__divs').innerHTML = recalledDiv;
     }
 }
