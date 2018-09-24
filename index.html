@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lemony Cinema</title>
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <header class="mainheader">
+        <h1 class="mainheader__title">Mouldy Lemons</h1>
+        <h3 class="mainheader__subtitle">Discover the zestiest flicks</h3>
+    </header>
+    <div class="container">
+        <main class="maincontent">
+            <section class="search">
+                <form class="search__form">
+                    <input class="search__input"  type='text' name="search" placeholder="Enter film title" autocomplete="film">
+                    <button class="btn search__btn">Search</button>
+                </form>
+            </section>
+            <section class="movies">
+                <div class="moviesfeed"></div>
+            </section>
+            
+            <nav class="paging">
+                <a class="paging__previous">&larr;</a>
+                <a class="paging__next">&rarr;</a>
+            </nav>
+        </main>
+    </div>  
+    <footer class="footer">
+        <p class="container">Powered by Lemons (and IMDB)</p>
+    </footer>
+    <script src="scripts/index.js"></script>
+</body>
+</html>
