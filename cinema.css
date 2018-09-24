@@ -1,0 +1,72 @@
+.container {
+  margin:auto;
+  font-family: serif;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(70,130,180);
+  display: flex;
+  flex-direction: column;
+  flex:1;
+  /* align-content: center; */
+}
+
+.header__container{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  background: gray;
+  flex:1;
+}
+
+.header__text {
+  font-size: 70px;
+  text-decoration: underline;
+  display: flex;
+  flex:1;
+}
+
+.form__container{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 50px;
+  flex:1;
+}
+
+#form {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 20px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.results__container {
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  /* margin-left: 40px; */
+  background-color: yellow;
+  margin-right: 30px;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+ul > li{
+  /* maybe come back to this and try to add cool emoji's */
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  background-color: yellow;
+  margin: 70px 40px 10px 0;
+}
+
+.list_results{
+  display:flex;
+  flex-direction: column;
+  flex:1;
+}
