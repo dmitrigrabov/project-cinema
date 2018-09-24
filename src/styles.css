@@ -32,7 +32,6 @@ input {
     height: 3rem; 
     font-size: 1rem;
     padding: 0.3rem 0.3rem 0.3rem 1rem;
-
     border: none;
     box-sizing: border-box;
     background-color: white;
@@ -174,9 +173,10 @@ a.page-number-link:hover {
     display: block;
     background-color: white;
     padding: 0.5rem 1rem 0.5rem 1rem;
-    line-height: 1rem;
+    line-height: 1.5rem;
     color: black;
     text-decoration: none;
+    border-bottom: 1px solid rgb(213, 213, 213);
 }
 
 .result-link a:hover {
@@ -359,12 +359,9 @@ a.page-number-link:hover {
 }
 
 .article__image__src {
-    /* ADDED by Mel display: block - to make the a element behave as a block element and properly 'contain' the image. It's naturally an inline element.*/
-    /* padding: 60%; */
     display: block;
     width: 100%;
     object-fit: cover;
-    /* object-fit: contain d; */
 }
 
 .article__text {
@@ -407,7 +404,11 @@ a.page-number-link:hover {
     border: 0;
 }
 
-.article__text li a  {
+.article__text ul li  {
+    line-height: 2rem;
+}
+
+.article__text ul li a, a.article__text ul, a.article__text li  {
     list-style: none;
 }
 
@@ -417,12 +418,15 @@ a.page-number-link:hover {
 }
 
 .results-list, input {
-    width: 100%;
-    /* max-width: 450px;
-    min-width: 100px; */
-    max-width: 488px;
+    /* width: 100%;
     min-width: 100px;
+    max-width: 488px; */
+    width: 100%;
+    min-width: 100px;
+    max-width:450px;
+
 }
+
 
 .show-for-mobile {
     display: initial;
@@ -446,9 +450,12 @@ a.page-number-link:hover {
  
 
     .results-list, input {
+        /* width: 100%;
+        min-width:450px;
+        max-width:600px; */
         width: 100%;
         min-width:450px;
-        max-width:600px;
+        max-width:450px;
     }
 
     .results-pages {
@@ -464,6 +471,8 @@ a.page-number-link:hover {
     .content {
         display: flex;
         flex: 1;
+        padding-right: 0;
+        margin-right: 0;
     }
 
     .info-bubble {
@@ -474,19 +483,17 @@ a.page-number-link:hover {
     }
 
     .article__image__src {
-        display: block;
-        width: 100%;
+        display: initial;
         object-fit: cover;
         min-width: 150px;
-        max-width: 300px;
+        max-width: 400px;
+        width: 400px;
     }
 
     .show-for-mobile {
         display: none;
         margin-left: 2.5rem;
         margin-top: 1rem;
-        /* border: 3px solid rgb(255, 0, 225); */
-
     }
 
     .hide-for-mobile {
@@ -514,6 +521,7 @@ a.page-number-link:hover {
     li.article__photo__keypoint {
         padding-left: 0;
         margin-left: 0;
+        line-height: 2rem;
     }
 
     h3 {
@@ -533,4 +541,8 @@ a.page-number-link:hover {
         width: 100%;
     }
 
+    .article__text li  {
+        line-height: 2rem;
+    }
+    
 }

@@ -194,11 +194,18 @@ window.addEventListener('resize', event => {
 
 function convertMovieObject (film) {
     const keys = Object.keys(film);
-    const excludedArray = ["Website","Poster","Title","Plot","Response"]
-    const listOfDetails = keys.filterOut(excludedArray).map(item => {
+    const excludedArray = ["Website","Poster","Title","Plot","Response","Ratings"]
+    const listOfDetailsArray = keys.filterOut(excludedArray).map(item => {
         return (film[item] !== "N/A") ? `<li><strong>${item}:</strong> ${film[item]}</li>` : ``;
-    }).join('');
+    });
     const website = film.Website ? `<li><a href="${film.Website}" target="_blank">Visit website</a></li>` : ``;
+    const firstPartOfList = listOfDetailsArray.filter((item, index) => {
+        return index < Math.floor(listOfDetailsArray.length / 2);
+    }) 
+    const secondPartOfList = listOfDetailsArray.filter((item, index) => {
+        return index >= listOfDetailsArray.length - Math.floor(listOfDetailsArray.length / 2);
+    }) 
+
     let htmlString = '';
     if (viewport === 'mobile') {
         htmlString = 
@@ -208,7 +215,7 @@ function convertMovieObject (film) {
             </div>
             <div>
                 <span class="article__header">
-                    <div><strong>${film.Title}</strong> ${film.Year}</div>
+                    <div><strong>${film.Title}</strong></div>
                 </span>
             </div>
             </div>
@@ -217,7 +224,7 @@ function convertMovieObject (film) {
                 <div><a href="https://www.imdb.com/title/${film.imdbID}" target="_blank">More details on IMDB</a></div>
                 <div>
                     <ul>
-                        ${listOfDetails}
+                        ${listOfDetailsArray.join('')}
                         ${website}
                     </ul>
                 </div>   
@@ -228,40 +235,27 @@ function convertMovieObject (film) {
         `<div class="article__main">
             <div>
                 <span class="article__header">
-                    <div><strong>Mad Love</strong> 2015</div>
+                    <div><strong>${film.Title}</strong></div>
                 </span>
             </div>
             <div class="article__photo__wrapper">
                 <div class="article__image">
-                    <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjM0MTQwMzk0Ml5BMl5BanBnXkFtZTgwMzMzNjU0NjE@._V1_SX300.jpg" class="article__image__src">
+                    <img src="${film.Poster}" class="article__image__src">
                 </div>
                 <div class="article__photo__keypoint">
                     <ul>
-                        <li><strong>Year:</strong> 2015</li>
-                        <li><strong>Released:</strong> 16 Sep 2015</li>
-                        <li><strong>Runtime:</strong> 107 min</li>
-                        <li><strong>Genre:</strong> Drama, Romance</li>
-                        <li><strong>Director:</strong> Philippe Ramos</li>
-                        <li><strong>Writer:</strong> Philippe Ramos (dialogue), Philippe Ramos (screenplay)</li>
-                        <li><strong>Actors:</strong> Melvil Poupaud, Dominique Blanc, Diane Rouxel, Lise Lamétrie</li>
+                        ${firstPartOfList.join('')}
                     </ul>
                 </div>
             </div>
         </div>
         <div class="article__text">
-            <h3>Plot</h3>1959. Guilty of a double-murder, a man is beheaded. At the bottom of the basket that just welcomed it, the head of the dead man tells his story: everything was going so well. Admired priest...
-            <div><a href="https://www.imdb.com/title/tt4019142" target="_blank">More details on IMDB</a></div>
+            <h3>Plot</h3>${film.Plot}
+            <div><a href="https://www.imdb.com/title/${film.imdbID}" target="_blank">More details on IMDB</a></div>
             <div>
                 <ul>
-                    <li><strong>Language:</strong> French</li>
-                    <li><strong>Country:</strong> France</li>
-                    <li><strong>Awards:</strong> 1 win.</li>
-                    <li><strong>Ratings:</strong> [object Object]</li>
-                    <li><strong>imdbRating:</strong> 7.1</li>
-                    <li><strong>imdbVotes:</strong> 142</li>
-                    <li><strong>imdbID:</strong> tt4019142</li>
-                    <li><strong>Type:</strong> movie</li>
-                    <li><a href="N/A" target="_blank">Visit website</a></li>
+                    ${secondPartOfList.join('')}
+                    ${website}
                 </ul>
             </div>   
         </div>`
