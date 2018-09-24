@@ -5,7 +5,7 @@
 //Initialize values
 let page = 1;
 let searchText = "";
-const initialFetch = `http://www.omdbapi.com/?s=Lemons&apikey=eabbbb71`
+const initialFetch = `http://www.omdbapi.com/?s=Lemonade&apikey=eabbbb71`
 
 //querySelectors
 const searchBox = document.querySelector(".search__input");
