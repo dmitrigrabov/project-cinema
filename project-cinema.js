@@ -1,3 +1,4 @@
+// shortcut functions
 function createNode(element) {
   return document.createElement(element);
 }
@@ -19,6 +20,7 @@ const next = document.querySelector(".next");
 const previous = document.querySelector(".previous");
 const moreDiv = document.querySelector(".more");
 
+//Main fetch function. Gets data, creates Movie tags and adds event listeners.
 function searchMovie(searchWord, page) {
   fetch(
     `http://www.omdbapi.com/?s=${searchWord}&apikey=dd68f9f&page=${page}&plot=short`
@@ -66,31 +68,39 @@ function searchMovie(searchWord, page) {
 
         more.addEventListener("click", function(event) {
           event.preventDefault();
-          fetch(`http://www.omdbapi.com/?i=${movieID}&apikey=dd68f9f&plot=full`)
-            .then(function(response) {
-              return response.json();
-            })
-            .then(function(data) {
-              console.log(data);
-              movieActors.textContent = `Cast: ${data.Actors}`;
-              if (movie.Director !== "N/A") {
-                movieDirector.textContent = `Directed by: ${data.Director}`;
-              }
-              movieRating.textContent = `${data.Ratings[0].Source}: ${
-                data.Ratings[0].Value
-              }
+          if (movieDetails.className == "movie-details--off") {
+            fetch(
+              `http://www.omdbapi.com/?i=${movieID}&apikey=dd68f9f&plot=full`
+            )
+              .then(function(response) {
+                return response.json();
+              })
+              .then(function(data) {
+                console.log(data);
+                movieActors.textContent = `Cast: ${data.Actors}`;
+                if (movie.Director !== "N/A") {
+                  movieDirector.textContent = `Directed by: ${data.Director}`;
+                }
+                movieRating.textContent = `${data.Ratings[0].Source}: ${
+                  data.Ratings[0].Value
+                }
               ${data.Ratings[1].Source}: ${data.Ratings[1].Value}
               ${data.Ratings[2].Source}: ${data.Ratings[2].Value}`;
 
-              movieDetails.className = "movie-plot";
-              movieDetails.textContent = `Plot: ${data.Plot}`;
-            });
-          movieDetails.classList.toggle("movie-details--on");
+                movieDetails.className = "movie-plot";
+                movieDetails.textContent = `Plot: ${data.Plot}`;
+              });
+
+            movieDetails.classList.toggle("movie-details--on");
+          } else if (movieDetails.className == "movie-details--on") {
+            movieDetails.classList.toggle("movie-details--off");
+          }
         });
       });
     });
 }
 
+//Runs specific search.
 form.addEventListener("submit", function(event) {
   event.preventDefault();
   if (searchValue.value !== "") {
@@ -109,6 +119,7 @@ form.addEventListener("submit", function(event) {
   }
 });
 
+//pagination
 next.addEventListener("click", function(event) {
   event.preventDefault();
   page++;
