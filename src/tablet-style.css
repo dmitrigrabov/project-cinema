@@ -12,21 +12,21 @@
     font-size: 2.5rem;
     margin-right: 1rem;
   }
-  
+
   #account {
-  background: skyblue;
-  position: fixed;
-  top: -50rem;
-  left: 50vw;
-  width: 50vw;
-  z-index: 5;
-  transition: top 1s;
-  box-shadow: 0px 3px 3px rgba(0,0,0,0.5);
-}
+    background: skyblue;
+    position: fixed;
+    top: -50rem;
+    left: 50vw;
+    width: 50vw;
+    z-index: 5;
+    transition: top 1s;
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.5);
+  }
   #account.account--active {
-  top: 6rem;
-}
-  
+    top: 6rem;
+  }
+
   .search__label {
     display: block;
     margin: 37vh 0 0 0;
@@ -112,7 +112,7 @@
   }
   .film-details__wrapper h4 {
     grid-column: 2 / span 2;
-    margin:0 0 0.5rem 0;
+    margin: 0 0 0.5rem 0;
     align-self: start;
     line-height: 1;
   }
@@ -131,17 +131,39 @@
     line-height: 0.5;
   }
 
-  .film-details__plot,.film-details__actors {
+  .film-details__plot,
+  .film-details__actors {
     grid-column: 2 / span 2;
     font-family: serif;
     margin-top: 0;
   }
 
+  .film-details__rating {
+    grid-column: 2 / span 2;
+    justify-self: start;
+    display: flex;
+    /* margin: auto; */
+    align-items: center;
+  }
+
   .film-details__ratings__imdb {
+    flex: 1;
+  }
+  .film-details__rating__bar {
+    width: 30vw;
+    height: 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .film-details__rating__score {
+    /* flex: 1; */
+  }
+
+  /* .film-details__ratings__imdb {
     grid-column: 2 / span 2;
     margin: 0;
     line-height: 0.5;
-  }
+  } */
 
   .film-details__wrapper h4 {
     grid-column: 2 / span 2;

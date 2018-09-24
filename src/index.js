@@ -151,6 +151,7 @@ const createFilmDetails = film => {
   film.Poster === 'N/A'
     ? (film.Poster = './src/fill-ferrell.jpg')
     : film.Poster;
+  const rating = film.imdbRating * 10;
   return `
   <div class="film-details__wrapper">
 <h3 class="film-details__title">${film.Title}</h3>
@@ -162,9 +163,11 @@ const createFilmDetails = film => {
 <p class="film-details__meta">(Released ${film.Year}, dur. ${film.Runtime}, ${
     film.Rated
   })</p>
-<p class="film-details__ratings__imdb"><strong>Rating:</strong> ${
-    film.imdbRating
-  } out of 10</p>
+  <div class="film-details__rating">
+    <p class="film-details__ratings__imdb"><strong>Rating:</strong></p>
+    <div class="film-details__rating__bar" style="background: lightgray; background-image: linear-gradient(to right, orangered, orangered ${rating}%, rgba(0,0,0,0) ${rating}%);"></div>
+    <p class="film-details__rating__score">${film.imdbRating} out of 10</p>
+  </div>
   <h4>Starring</h4>
 <p class="film-details__actors">
    ${film.Actors} </p>
@@ -175,6 +178,7 @@ const createFilmDetails = film => {
 
 const writeFilmDetails = (parent, film) => {
   document.querySelector(parent).innerHTML = createFilmDetails(film);
+
   setFavButton(film);
   if (window.innerWidth > 1068) {
     window.scrollBy({ top: window.innerHeight - 100, behaviour: 'smooth' });
