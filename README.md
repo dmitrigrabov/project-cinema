@@ -1,4 +1,7 @@
 ## Cinema App
+This is a simple paginated website, presenting information from two APIs: omdbapi, and themoviedb. 
+Search for a movie or show and receive results based on that query. Selecting results will bring up more detailed
+information, including a sample review. 
 
 ## Getting Started
 
@@ -13,8 +16,5 @@ HTML
 ## Contributing
 Feel free to send me pull requests with new features or code improvements.
 
-## Description
 
-This is a simple paginated website, presenting information from two APIs: omdbapi, and themoviedb. 
-Search for a movie or show and receive results based on that query. Selecting results will bring up more detailed
-information, including a sample review. 
+
