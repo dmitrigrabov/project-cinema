@@ -441,6 +441,14 @@ a.page-number-link:hover {
     /* border: 3px solid rgb(154, 0, 115); */
 }
 
+.film-frame {
+    background: black;
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 /*
 ////////////////////////////////////////////
 ////////////////////////////////////////////
