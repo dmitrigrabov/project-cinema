@@ -13,13 +13,15 @@ const submit = document.querySelector(".submit-button");
 const searchValue = document.querySelector(".search-input");
 let searchString = "";
 const form = document.querySelector(".search-form");
+const pageSelectForm = document.querySelector(".pagination-form");
+const pageSelect = document.querySelector(".page-select");
 const next = document.querySelector(".next");
 const previous = document.querySelector(".previous");
 const moreDiv = document.querySelector(".more");
 
 function searchMovie(searchWord, page) {
   fetch(
-    `http://www.omdbapi.com/?s=${searchWord}&apikey=dd68f9f&page=${page}&plot=full`
+    `http://www.omdbapi.com/?s=${searchWord}&apikey=dd68f9f&page=${page}&plot=short`
   )
     .then(function(response) {
       return response.json();
@@ -30,7 +32,6 @@ function searchMovie(searchWord, page) {
       return searchResults.map(function(movie) {
         let movieDiv = createNode("div");
         let movieTitle = createNode("h1");
-        let movieYear = createNode("h3");
         let moviePoster = createNode("img");
         let more = createNode("div");
         let movieDetails = createNode("p");
@@ -39,9 +40,10 @@ function searchMovie(searchWord, page) {
         let movieDirector = createNode("p");
         let movieRating = createNode("p");
 
-        movieTitle.textContent = `${movie.Title}`;
+        movieDiv.className = "movie-div";
 
-        movieYear.textContent = movie.Year;
+        movieTitle.textContent = `${movie.Title} (${movie.Year})`;
+        movieTitle.className = "movie-title";
 
         moviePoster.src = movie.Poster;
         moviePoster.className = "movie-images";
@@ -53,7 +55,6 @@ function searchMovie(searchWord, page) {
 
         append(results, movieDiv);
         append(movieDiv, movieTitle);
-        append(movieDiv, movieYear);
         append(movieDiv, moviePoster);
         append(movieDiv, more);
         append(more, movieActors);
@@ -72,12 +73,16 @@ function searchMovie(searchWord, page) {
             .then(function(data) {
               console.log(data);
               movieActors.textContent = `Cast: ${data.Actors}`;
-              movieDirector.textContent = `Directed by: ${data.Director}`;
+              if (movie.Director !== "N/A") {
+                movieDirector.textContent = `Directed by: ${data.Director}`;
+              }
               movieRating.textContent = `${data.Ratings[0].Source}: ${
                 data.Ratings[0].Value
               }
               ${data.Ratings[1].Source}: ${data.Ratings[1].Value}
               ${data.Ratings[2].Source}: ${data.Ratings[2].Value}`;
+
+              movieDetails.className = "movie-plot";
               movieDetails.textContent = `Plot: ${data.Plot}`;
             });
           movieDetails.classList.toggle("movie-details--on");
@@ -91,8 +96,8 @@ form.addEventListener("submit", function(event) {
   if (searchValue.value !== "") {
     console.log(searchValue.value);
 
-    results.innerHTML = "";
-
+    results.textContent = "";
+    results.textContent = `Results for ${searchValue.value}:`;
     let showSearch = createNode("h2");
     showSearch.textContent = `Showing results for ${searchValue.value}`;
     append(results, showSearch);
@@ -101,7 +106,6 @@ form.addEventListener("submit", function(event) {
     searchString = searchValue.value;
     console.log(searchString);
     searchValue.value = "";
-    console.log(searchString);
   }
 });
 
@@ -110,3 +114,15 @@ next.addEventListener("click", function(event) {
   page++;
   searchMovie(searchString, page);
 });
+
+previous.addEventListener("click", function(event) {
+  event.preventDefault();
+  page--;
+  searchMovie(searchString, page);
+});
+
+// pageSelectForm.addEventListener("submit", function(event) {
+//   event.preventDefault();
+//   page = page + pageSelect.value;
+//   searchMovie(searchString, page);
+// });
