@@ -1,54 +1,29 @@
 ---
 path: "/project-cinema"
-date: "2018-05-28"
+date: "2018-09-24"
 title: "Project cinema"
 ---
 
-# Project Cinema
+# Movie Quest
 
-We want to create a movie search engine. To power it we will use the [Open Movie Database](http://www.omdbapi.com) API.
+The aim of this project, titled "Movie Quest", is to create a search application for users to be able to find films that they like or are interested in viewing, and to show them relevent information about said film. Movie Quest has been designed to fit the mobile phone screen primarily, but has also been designed to react responsively to the size of the user's device, making it also appropriate for tablet or desktop.
 
-To start using the OMDB API you will first need to sign up with them to receive and API key. The key issued to you will allow you 1000 requests per day and you will need to include this key as part of every request.
+The project utilizes the [Open Movie Database](http://www.omdbapi.com) to fetch relvent data on a search term that the user inputs into the search function. On page load, the application retrieves information about films from the Star Wars franchise that were released in 2018. From there, the user can use the search feature to look for films.
 
-To get started, fork and clone this repo. Please submit a pull request after your first commit and push commits regularly.
+If the user wants to find out more information about a film they see, they can click on the "More info" button. This button makes a seperate call to the API to retrieve more detailed information about each film, using the film's IMDB id that is displayed in the ID attribute of each search result. If the API recieves a fetch request that specifies a film by ID, it returns specific information about that film only.
 
-You should complete as many of the following tasks as you can.
+Once the user searches for a film, the application will display page numbers at the bottom so that the user can look through multiple pages of enteries. The function that creates these pages will look at how many results have been returned by the API, divide that number by how many entries there are by page, and dynamically generate page buttons accordingly.
 
-- [ ] Work using mobile first, that is create the mobile version first and add tablet and desktop versions after.
-- [ ] Create an HTML page which should have a `form` at the top which contains a text input and a submit button. Below it should have a placeholder element for the returned results.
-- [ ] Use JavaScript to capture the `submit` event in your search form, extract the query string from the text input and use that to make an API call to the Open Movie Database API to search for films which match the query string using `fetch`. `console.log` the results
-- [ ] Display the data returned by the API including title, year and poster picture
+If a user finds a film that they like or would want to see, they can then add that film to their favourites list. The application adds a button to each search result which, when clicked, will take the name of the film that the button belongs to and store it in a seperate area on the page.
 
-**Movie details**
+In order to make continual improvements to Movie Quest, I would like to impliment these changes in the future: 
 
-- [ ] Adjust your layout to create room for a detailed view of movie information
-- [ ] Capture clicks on your movie results items and use that information to make another request to the API for detailed movie information. Using event delegation will help you here. `console.log` the returned result
-- [ ] Display the detailed movie result in the in the details view you created earlier
-- [ ] Make your design responsive and ensure it looks great at different screen widths
+- Limit the viewable amount of page buttons for each search in order to clean up the bottom of the application. 
 
-**Your own feature**
+- Have favourite be savable so that they remain after a page refresh. 
 
-- [ ] Implement any feature you would find useful or interesting
+- Have favourites be rankable so that the user can be placed in preference order.
 
-**Stretch goals**
+- Impliment functionality so that movie information can be displayed or hidden at the user's request, without having to make seperate API calls for each entry. 
 
-- [ ] Implement pagination so that users can navigate between all movies in search results rather than just the first ten
-- [ ] Create a favourites list. It's up to you how you would add items to favourites. You could add a button or otherwise. Display a list of favourites somewhere on your page.
-- [ ] Make the favourites list sortable. Add `up` and `down` buttons to your favourites which on click will move the result in relevant direction
-- [ ] Save favourites locally using `localStorage` so that favourites persist in browser after refresh
-- [ ] Let's create a search preview. It should listen for change events on input events and submit a search request with current query string. Display the search preview results in an absolute positioned container just below the search box.  
-Hint: You may want to kick of the searching after at least 3 characters have been typed.
-
-## Objectives
-
-* We want to see great looking webpages that work well at all screen widths
-* Your code should have consistent indentation and sensible naming
-* Use lots of concise, reusable functions with a clear purpose
-* Add code comments where it is not immediately obvious what your code does
-* Your code should not throw errors and handle edge cases gracefully. For example not break if server fails to return expected results
-* Use BEM methodology to style your page
-* Try to use pure functions as much as possible, but keep in mind it will not be possible to make all functions pure.
-
-## README.md
-
-When finished, include a README.md in your repo. Someone who is not familiar with the project should be able to look at it and understand what it is and what to do with it. Explain functionality created, mention any outstanding issues and possible features you would include if you had more time. List technologies used to create the app. Include a screenshot of your app in the README.
+- Add a "Popular Films" feature that will provide search results for predetermened search terms based on popular films or film series.

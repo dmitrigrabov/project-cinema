@@ -52,9 +52,11 @@ function resultTemplate(arr) {
         let poster = (film.Poster === "N/A") ? "images/noimage.png" : film.Poster;
         let movieItem = 
         `<div class="search__result" id="${film.imdbID}">
-        <h2>${film.Title}</h2> <p>(${film.Year})</p>
+        <h2>${film.Title}</h2> 
+        <button class="fav__button">+</button>
+        <p class="movie_date">(${film.Year})</p>
         <img src="${poster}">
-        <h4>More info...</h4>
+        <button class="more__info__button">More details</button>
         </div>
         `;
         return movieItem;
@@ -65,6 +67,8 @@ function resultTemplate(arr) {
 //Populates results container
 function populateResults(arr) {
     resultsContainer.innerHTML = arr.join().replace(/,/g, " ");
+    addFavouriteListener();
+    addInfoListener();
 };
 
 
@@ -134,20 +138,28 @@ function updatePage(term, page){
                                         // MOVIE INFO GENERATOR
 
 
-resultsContainer.addEventListener("click", function(event) {
-         if ((Array.from(event.target.closest(".search__result").childNodes).some(node => node.className === "movie__info") === true)) {
-            let infoToggle = document.getElementById(`info${event.target.closest(".search__result").id}`);
-            infoToggle.classList.toggle("movie__info--closed");
-        } else if ((Array.from(event.target.closest(".search__result").childNodes).some(node => node.className === "movie__info--closed") === true)) {
-            let infoToggle = document.getElementById(`info${event.target.closest(".search__result").id}`);
-            infoToggle.classList.toggle("movie__info");
-        } else if ((Array.from(event.target.closest(".search__result").childNodes).some(node => node.className === "movie__info" || node.className === "movie__info--closed") === false)) {
-            fetchMovieInfo(event.target.closest(".search__result").id);
-        }
-            
-})  
 
+//Listener for clicks on movie coontainers to either fetch information or trigger class toggles to hide previously displayed information from view (Only working in part, works the first time and then generates another lot of information, before then triggering toggle again)
+function addInfoListener() {
+    const moreInfo = document.querySelectorAll(".more__info__button");
+    moreInfo.forEach(button => {
+        button.addEventListener("click", function(event) {
+            if ((Array.from(event.target.parentNode.childNodes).some(node => node.className === "movie__info--closed") === false)) {
+                fetchMovieInfo(event.target.parentNode.id);
+            } else if ((Array.from(event.target.parentNode.childNodes).some(node => node.className === "movie__info") === false)) {
+                fetchMovieInfo(event.target.parentNode.id);
+            } else if ((Array.from(event.target.parentNode.childNodes).some(node => node.className === "movie__info--closed") === true)) {
+                let infoToggle = document.getElementById(`info${event.target.parentNode.id}`);
+                infoToggle.classList.toggle("movie__info");
+            } else if ((Array.from(event.target.parentNode.childNodes).some(node => node.className === "movie__info--closed") === true)) {
+                let infoToggle = document.getElementById(`info${event.target.parentNode.id}`);
+                infoToggle.classList.toggle("movie__info");
+            }
+        })
+    })
+}
 
+//Fetches movie information when even is triggered
 function fetchMovieInfo(id) {
     const movieUrl = `http://www.omdbapi.com/?i=${id}&apikey=${apiKey}`;
     fetch(movieUrl)
@@ -155,6 +167,7 @@ function fetchMovieInfo(id) {
     .then(body => movieInfoTempate(body));
 }
 
+//Creates template for additional infomormation
 function movieInfoTempate(movie) {
     const ratings =  movie.Ratings.map(rating => {
         return `<li>${rating.Source}: ${rating.Value}</li>`
@@ -177,16 +190,41 @@ function movieInfoTempate(movie) {
     <ul>${ratings.join().replace(/,/g, " ")}</ul>
     <h3>Run Time</h3>
     <p>${movie.Runtime}</p>
-    <h5><u>Less Info...</u></h5>
     </div>
     `;
     appendMovieInfo(movieInfo, movie);
 
 }
 
-
+//Adds movie information to html of target movie's container
 function appendMovieInfo(info, movie) {
     const targetMovie = document.getElementById(movie.imdbID);
     targetMovie.innerHTML = targetMovie.innerHTML + info;
 }
 
+
+
+
+                                    // FAVOURITE FEATURE
+
+
+
+//Event listener for favourite buttons 
+function addFavouriteListener() {
+    const favButton = document.querySelectorAll(".fav__button");
+    favButton.forEach(button => {
+        button.addEventListener("click", function(event) {
+            const favourite = document.createElement("li");
+            favourite.className = "favourite__item"
+            favourite.textContent = Array.from(event.target.parentNode.childNodes)[1].textContent;
+            appendFavouriteItem(favourite);
+        })
+    })
+}
+
+
+//Add's favourite item to list
+function appendFavouriteItem(item) {
+    const favouriteContainer = document.querySelector(".favourites__list");
+    favouriteContainer.appendChild(item);
+}
