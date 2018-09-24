@@ -194,8 +194,8 @@ function movieMore(finder){
         <div class="close">X</div>
     </div>
     <div class="plot">${finder.Plot}</div>
-    <div class="trailer">${trailerClip}</div>
-    </div>`;
+
+    <iframe width="560" height="315" class="trailer" src=${trailerClip} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
 
     parentMoreInfoSlider.appendChild(moreInfoNodeSlider);
 

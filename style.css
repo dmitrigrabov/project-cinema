@@ -153,6 +153,7 @@ box-shadow: 10px 10px 46px -1px rgba(0,0,0,0.5);
     transition:bottom 2.5s;
     margin-right:0px;
     opacity: 0.9;
+    z-index: 2;
   
   }
 
@@ -210,6 +211,39 @@ box-shadow: 10px 10px 46px -1px rgba(0,0,0,0.5);
 
   /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
+
+
+  .trailer {
+    display: block
+  }
+  .more__info__slider {
+    display:flex;
+    padding-top: 5%;
+   
+    /* display:none; */
+      position: fixed;
+      bottom: -200px;
+      left: 100px;
+      width: 100vw;
+      height:  100vh;
+      background-color: white;
+      transition:bottom 2.5s;
+      margin-right:0px;
+      opacity: 0.9;
+    
+    }
+
+    .results{
+      display:flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      
+    }
+
+    results li {
+
+    }
+
 
 }
 
