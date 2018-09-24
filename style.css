@@ -140,17 +140,22 @@ div h4 {
     display: none;
 }
 
+.favourites {
+    display: grid;
+    justify-self: start; 
+}
+
 .favourites__list {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: auto;
-    justify-self: center;
+    justify-self: start;
 
 }
 
 .favourite__item {
     display: grid;
-    justify-self: center;
+    justify-self: start;
     list-style: none;
     padding-left: 2px;
     border: 1px solid #DAA520;
