@@ -6,7 +6,7 @@ const localStorage = window.localStorage;
 const favMovieObj = JSON.parse(localStorage.getItem("favList")) || [];
 const myFavorite = document.createElement("button");
 const body = document.querySelector("body");
-
+const preview=document.querySelector(".preview");
 let localData;
 let totalSearchResults = 0;
 let n= 0;
@@ -118,6 +118,8 @@ searchSubmit.addEventListener("click", function(event) {
   loadAPI(page);
 });
 
+
+
 pagination.addEventListener("click", event => {
   event.preventDefault();
   page = event.target.textContent;
@@ -128,8 +130,33 @@ pagination.addEventListener("click", event => {
 searchText.addEventListener("input", event => {
   event.preventDefault();
   if (searchText.value === "") {
-    searchResultList.innerHTML = "";
+    preview.innerHTML = "";
     pagination.innerHTML = "";
+  }
+  if (searchText.value.length>=3){
+    //console.log(searchText.value)
+    const keyWord = searchText.value;
+    const url = `http://www.omdbapi.com/?s=${keyWord}&apikey=d2807699`;
+    preview.innerHTML=" ";
+    fetch(url)
+      .then(response => response.json())
+      .then(body => {
+        if (typeof body.Search !== "undefined") {
+          let arr=body.Search;
+          let prev0=document.createElement("li");
+          let prev1=document.createElement("li");
+          let prev2=document.createElement("li");
+          prev0.innerHTML=`${arr[0].Title} ${arr[0].Year}`
+          prev1.innerHTML=`${arr[1].Title} ${arr[1].Year}`
+          prev2.innerHTML=`${arr[2].Title} ${arr[2].Year}`
+          preview.appendChild(prev0);
+          preview.appendChild(prev1);
+          preview.appendChild(prev2);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 });
 
