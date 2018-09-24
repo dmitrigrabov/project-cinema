@@ -2,13 +2,14 @@
 // apikey=eabbbb71
 // http://www.omdbapi.com/?s=Jaws&apikey=eabbbb71
 
-//initialize values
+//Initialize values
+let page = 1;
 let searchText = "";
-let form = document.querySelector("form");
 const initialFetch = `http://www.omdbapi.com/?s=Lemons&apikey=eabbbb71`
 
 //querySelectors
 const searchBox = document.querySelector(".search__input");
+let form = document.querySelector("form");
 const moviesParentNode = document.querySelector(".moviesfeed");
 
 //Initial Fetch
@@ -17,7 +18,7 @@ fetchContent(initialFetch);
 //Submit Search
 form.addEventListener("submit", event => {
     event.preventDefault();
-    searchText = searchBox.value;
+    searchText = form.search.value;
     const APIQuery = `http://www.omdbapi.com/?s=${searchText}&apikey=eabbbb71`;
     fetchContent(APIQuery)
 });
@@ -26,6 +27,12 @@ form.addEventListener("submit", event => {
 document.addEventListener("click", event => {
     if (event.target.matches(".moviesfeed__btn")) {
         fetchFullArticle(event);
+    }
+    if (event.target.matches('.paging__previous')) {
+        clickPrevious(event);
+    }
+    if (event.target.matches('.paging__next')) {
+        clickNext(event);
     }
 });
 
@@ -44,11 +51,7 @@ function fetchFullArticle(event) {
     const moviesButton = item.closest(".moviesfeed__btn");
     
         if (filmID === parentSection) {
-            
-            // FETCHING TOFIX as function calls but scope issue
-            // fetchFullContent(APIQuery);
-            // displayFullFilm(body)
-
+        // FETCHING TOFIX as function calls (below) - address scope issue
             fetch(APIQuery)
             .then(function(response) {
             return response.json();
@@ -61,7 +64,6 @@ function fetchFullArticle(event) {
                     }
                 })
             // toggle details 
-            // NOTE inside .then to toggle when details loaded
             parentClass.toggle('details--open');
             articleClass.toggle('active');
             
@@ -121,9 +123,9 @@ function filmsLayoutFilm(body)  {
     const language = body.Language !== "N/A" ? `<li><strong>Language: </strong>${body.Language}</li>` : "";
     const genre = body.Genre !== "N/A" ? `<li><strong>Genre: </strong>${body.Genre}</li>` : "";
     const guidance = body.Rated !== "N/A" ? `<li><strong>Movie Guidance: </strong>${body.Rated}</li>` : "";
-    const rating = body.imdbRating !== "N/A" ? `<p><strong>Cool lemons? </strong>${body.imdbRating}</p>` : "";
+    const rating = body.imdbRating !== "N/A" ? `<p><strong>Moudy lemons score: </strong>${body.imdbRating}</p>` : "";
 
-    return `<div class="moviesfeed__details--wrap">${director}${plot}<ul class="moviesfeed__details-list">${actors}${language}${genre}${guidance}</ul>${rating}</div>`;
+    return `<div class="moviesfeed__details--wrap">${director}${plot}<ul class="moviesfeed__details-list menu--settings">${actors}${language}${genre}${guidance}</ul>${rating}</div>`;
 }
 
 
@@ -138,6 +140,34 @@ function filmsLayoutFilm(body)  {
 //     })
 // }  
 
+
+/* 
+------
+PAGING
+------
+*/
+
+//Functions: next page
+function clickNext(event) {
+    event.preventDefault();
+    page++;
+    const searchText = form.search.value;
+    console.log(form.search.value);
+    // const searchQuery = formRef.search.value;
+    const APIQuery = `http://www.omdbapi.com/?s=${searchText}&page=${page}&apikey=eabbbb71`;
+    fetchContent(APIQuery);
+}
+
+//Functions: previous page
+function clickPrevious(event) {
+    event.preventDefault();
+    if (page > 1) {
+        page--;
+        const searchText = form.search.value;
+        const APIQuery = `http://www.omdbapi.com/?s=${searchText}&page=${page}&apikey=eabbbb71`;
+    fetchContent(APIQuery);
+    } 
+}
 
 /* 
 --------------
