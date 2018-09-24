@@ -31,6 +31,7 @@ bodyElement.addEventListener("click", event => {
     searchResultsElement.innerHTML = "";
     filmDisplayElement.innerHTML = "";
     toggleNavBar();
+    console.log(event.target)
     apiUrls.updateMovieURL("i", event.target.dataset.id);
     apiUrls.fetchMovie(apiUrls.getMovieURL());
   }
@@ -127,6 +128,7 @@ const apiUrls = {
   },
 
   fetchMovie: function(apiURL) {
+    console.log(apiURL)
     fetch(apiURL)
       .then(response => response.json())
       .then(body => {
@@ -140,7 +142,6 @@ const apiUrls = {
     fetch(apiURL)
       .then(response => response.json())
       .then(body => {
-        console.log("fetched")
         favouritesContainer.appendChild(favouriteTemplate(body))
       })
   },
@@ -168,8 +169,8 @@ function searchTemplate(result) {
   const template = `
     <div class="search__result" data-id=${result.imdbID}>
       <img class="result__poster" src=${result.Poster} data-id=${result.imdbID}/>
-      <div class="result__title">
-        <h4 data-id=${result.imdbID}>${result.Title}</h4>
+      <div class="result__title" data-id=${result.imdbID}>
+        <p data-id=${result.imdbID}>${result.Title}</p>
       </div>
       <h5 class="result__year" data-id=${result.imdbID}>(${result.Year})</h5>
     </div>
@@ -207,7 +208,7 @@ function fullFilmTemplate(result) {
       <h5>Miscellaneous</h5>
       <span>Released: ${result.Released}, Box Office: ${result.BoxOffice}. DVD: ${result.DVD}</span>
       <span>${result.Country} | ${result.Language} | ${result.Production} </span>
-      <span> ${result.Website}</span>
+      <span><a href="${result.Website}">Website</a></span>
       </div>
     </div>
   `;
