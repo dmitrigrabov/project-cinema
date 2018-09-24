@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FLIXPLORER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>@import url('https://fonts.googleapis.com/css?family=Libre+Baskerville:400,400i,700|Open+Sans:400,400i,600,700');</style>
+    <link href="src/styles.css" rel="stylesheet" type="text/css" media="screen"/>
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1 class="title shadow">
+                <li class="title-light">FLIX</li>
+                <li class="title-dark shadow">PLORER</li>
+            </h1>
+        </header>
+        <div class="content-wrapper">
+            <main class="content">
+                <form class="form">
+                    <input type="text" class="search shadow" name="search" placeholder="&#128269; Search" autocomplete="off">
+                </form>
+                <div class="results-list"></div>
+                <div class="results-message-wrapper">
+                    <div class="results-header"></div>
+                    <div class="results-showing"></div>
+                </div>
+                <div class="results-pages"></div>
+                <div class="info-bubble hide-for-mobile shadow">
+                    <h2 style="line-height:1.3em;"><span style="font-weight:400">About </span><br><span class="underline" style="font-weight:700">FLIX</span><span class="underline" style="font-weight:400">PLORER</span></h2>
+                    Flixplorer has been leading the way for digital content since September 2018.
+                    It is the world's leading internet entertainment service with 130 million memberships in over 190 countries enjoying TV series, documentaries and feature films across a wide variety of genres and languages. 
+                    Members can watch as much as they want, anytime, anywhere, on any internet-connected screen. 
+                    Members can play, pause and resume watching, all without commercials or commitments.
+                </div>
+            </main>
+            <!-- <div id="film-frame-ipad" class="hide-for-mobile"></div> -->
+            <div id="film-frame" class="show-for-mobile"></div>
+            <article class="film-content">
+                LOADING...
+            </article>
+            <article class="film-content-ipad">
+                LOADING...
+            </article>
+            <div class="info-bubble show-for-mobile shadow">
+                <h2 style="line-height:1.3em;"><span style="font-weight:400">About </span><br><span class="underline" style="font-weight:700">FLIX</span><span class="underline" style="font-weight:400">PLORER</span></h2>
+                Flixplorer has been leading the way for digital content since September 2018.
+                It is the world's leading internet entertainment service with 130 million memberships in over 190 countries enjoying TV series, documentaries and feature films across a wide variety of genres and languages. 
+                Members can watch as much as they want, anytime, anywhere, on any internet-connected screen. 
+                Members can play, pause and resume watching, all without commercials or commitments.
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="footer__contact pad-top">CALL US ON 07901 972 811 or <a href="mailto:roland@growmediauk.com">EMAIL US</a></div>
+            <div class="footer__contact pad-bottom">Find us on <a href="www.linkedin.com/in/roland-levy-4645b9163">LINKEDIN</a> and <a href="#">TWITTER</a></div>
+        </footer>
+    </div>
+    <script src="src/index.js">
+</body>
+</html>
