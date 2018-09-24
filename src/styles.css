@@ -486,8 +486,8 @@ a.page-number-link:hover {
         display: initial;
         object-fit: cover;
         min-width: 150px;
-        max-width: 400px;
-        width: 400px;
+        max-width: 350px;
+        width: 350px;
     }
 
     .show-for-mobile {
