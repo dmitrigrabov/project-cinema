@@ -2,7 +2,6 @@
 
 //###########################   INITIALIZE   ###########################
 
-
 //Initialize: global variables
 let page = 1;
 
@@ -24,11 +23,9 @@ const myStorage = window.localStorage;
 //Initialize: populate favourites
 refreshFavourites();
 
-
 //###########################   EVENT LISTENERS   ###########################
 
-
-//Event listeners: click on document
+//CLICK
 document.addEventListener('click', event => {
     if (event.target.matches('.result, .preview')) { fetchDetails(event.target.getAttribute('data-id')); }
     if (event.target.matches('.nav__prev')) { prevButtonPressed(event); }
@@ -41,60 +38,46 @@ document.addEventListener('click', event => {
     if (event.target.matches('.fa-sign-out-alt')) { logout(); }
 });
 
-//Event listeners: search input for preview
+//CHECKBOXES
+document.addEventListener('change', event => favouriteChecked(event));
+
+//SEARCH INPUT
 textboxRef.addEventListener('input', event => initiatePreview(event));
 
-//Event listeners: submit on form
+//FORM SUBMIT
 formRef.addEventListener('submit', submitSearch);
 
-//Event listeners: approaching end of page for infinite scroll
+//INFINITE SCROLL
 resultsRef.addEventListener('scroll', event => {
     if (resultsRef.scrollLeft + 100 > resultsRef.scrollWidth - resultsRef.clientWidth) {
         getMoreResults();
     }
 });
 
-//Event listeners: favourite checkboxes
-document.addEventListener('change', event => {
-    if (event.target.matches('.detail__checkbox')) {
-        const imdbID = event.target.getAttribute('data-id');
-        const title = event.target.parentNode.parentNode.parentNode.getAttribute('data-title');
-        if (event.target.checked) { addToFavourites(imdbID, title); }
-        else { removeFromFavourites(imdbID); }
-    }
-});
-
-
 //###########################   FUNCTIONS   ########################### 
 
+//API Call
+function fetchData(APIQuery, func, isInfiniteScroll) {
+    fetch(APIQuery)
+        .then(response => {
+            if (!response.ok) { throw response; }
+            return response.json();})
+        .then(body => func(body, isInfiniteScroll))
+        .catch(error => console.log(error));
+}
 
-//Functions: initiate search preview
+//Initiate search preview
 function initiatePreview(event) {
     if (event.target.value.length >= 3) {
         searchPreviewRef.classList.remove('search__preview--hidden');
         const searchQuery = formRef.search.value;
         const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&type=movie`;
-        fetch(APIQuery)
-        .then(response => {
-            if (!response.ok) { throw response; }
-            return response.json();})
-        .then(body => renderPreview(body))
-        .catch(error => console.log(error));
+        fetchData(APIQuery, renderPreview, false);
     }
-    else searchPreviewRef.classList.add('search__preview--hidden');
+    else { searchPreviewRef.classList.add('search__preview--hidden'); }
 }
 
-//Functions: Clean up on logout
-function logout() {
-    myStorage.clear();
-    myStorage.favourites = '[]';
-    refreshFavourites();
-    formRef.reset();
-    detailsRef.classList.add('details--hidden');
-    resultsWrapperRef.classList.add('results__wrapper--hidden');
-}
-
-//Functions: Add film titles into search preview
+//Render search preview
 function renderPreview(body) {
     searchPreviewRef.innerHTML = '';
     body.Search.forEach(item => {
@@ -106,138 +89,51 @@ function renderPreview(body) {
     });
 }
 
-//Functions: toggle search results & details divs
-function toggleDetails() {
-    detailsRef.classList.toggle('details--hidden');
-    resultsWrapperRef.classList.toggle('results__wrapper--hidden');
-}
-
-//Functions: Fetch more results for infinite scrolling
-function getMoreResults() {
-    page++;
-    const searchQuery = formRef.search.value;
-    const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
-    const appendToResults = true;
-    fetchResults(APIQuery, appendToResults);
- } 
-
- //Functions: Move favourite up in the list
-function moveFavouriteUp(imdbID) {
-    let currentFavs = JSON.parse(myStorage.favourites);
-    const favToMoveUp = currentFavs.filter(item => item.imdbID === imdbID)[0];
-    const rank = currentFavs.indexOf(favToMoveUp);
-    if (rank > 0) {
-        currentFavs[rank] = currentFavs[rank-1];
-        currentFavs[rank-1] = favToMoveUp;
-        myStorage.favourites = JSON.stringify(currentFavs);
-        refreshFavourites();
-    }
-}
-
-//Functions: Move favourite down in the list
-function moveFavouriteDown(imdbID) {
-    let currentFavs = JSON.parse(myStorage.favourites);
-    const favToMoveDown = currentFavs.filter(item => item.imdbID === imdbID)[0];
-    const rank = currentFavs.indexOf(favToMoveDown);
-    if (rank < currentFavs.length - 1) {
-        currentFavs[rank] = currentFavs[rank+1];
-        currentFavs[rank+1] = favToMoveDown;
-        myStorage.favourites = JSON.stringify(currentFavs);
-        refreshFavourites();
-    }
-}
-
-//Functions: reload favourites HTML elements from local storage
-function refreshFavourites() {
-    if (JSON.parse(myStorage.favourites) !== null) {
-        favouritesRef.innerHTML = '';
-        JSON.parse(myStorage.favourites).forEach(fav => {
-            favouritesRef.appendChild(generateFavourite(fav.imdbID, fav.Title));
-            const checkbox = document.querySelector(`[data-id=${fav.imdbID}] .detail__checkbox`);
-            if (checkbox !== null ) { checkbox.checked = true; }
-        });
-    }
-}
-
-//Functions: generate HTML element for favourite
-function generateFavourite(imdbID,title) {
-    const favourite = document.createElement('div');
-    favourite.setAttribute('class','fav');
-    favourite.setAttribute('data-id',imdbID);
-    favourite.innerHTML =  `<i class="fas fa-sort-up"></i>
-                            <i class="fas fa-sort-down"></i>
-                            <a class='fav__title'>${title}</a>`;
-    return favourite;
-}
-
-//Functions: Add to favourites
-function addToFavourites(imdbID, title) {
-    let currentFavs = JSON.parse(myStorage.favourites);
-    if (currentFavs === null) { currentFavs = [{'imdbID':imdbID,'Title':title}]; }
-    else { currentFavs.push({'imdbID':imdbID,'Title':title}); }
-    myStorage.favourites = JSON.stringify(currentFavs);
-    refreshFavourites();
-}
-
-//Functions: Remove from favourites
-function removeFromFavourites(imdbID) {
-    let currentFavs = JSON.parse(myStorage.favourites);
-    currentFavs = currentFavs.filter(item => (item.imdbID !== imdbID));
-    myStorage.favourites = JSON.stringify(currentFavs);
-    const favToUncheck = document.querySelector(`[data-id=${imdbID}] .detail__checkbox`);
-    if (favToUncheck !== null) { favToUncheck.checked = false; }
-    refreshFavourites();
-}
-
-//Functions: search submit
+//Search submit
 function submitSearch(event) {
     event.preventDefault();
     searchPreviewRef.classList.add('search__preview--hidden');
     const searchQuery = formRef.search.value;
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&type=movie`;
-    const appendToResults = false;
-    fetchResults(APIQuery, appendToResults);
+    fetchData(APIQuery, renderResults, false);
     detailsRef.classList.add('details--hidden');
     resultsWrapperRef.classList.remove('results__wrapper--hidden');
     resultsTitleRef.innerHTML = `Search results for ${searchQuery}:`;
 }
 
-//Functions: next page
-function nextButtonPressed(event) {
-    event.preventDefault();
+//Render search results
+function renderResults(body, isInfiniteScroll) {
+    if (!isInfiniteScroll) { resultsRef.innerHTML = ''; }
+    body.Search.forEach(item => {
+        const result = document.createElement('article');
+        result.setAttribute('class','result');
+        result.setAttribute('data-id',item.imdbID);
+        result.setAttribute('data-title',item.Title);
+        result.innerHTML = `<div class='result__wrapper'>
+                            <img data-id=${item.imdbID} class='result result__poster' src=${item.Poster} alt=''>
+                            <h6 data-id=${item.imdbID} class='result result__title'>${item.Title} (${item.Year})</h6>
+                            <div class='detail'></div></div>`;
+        resultsRef.appendChild(result);
+    });
+}
+
+//Fetch more results for infinite scrolling
+function getMoreResults() {
     page++;
     const searchQuery = formRef.search.value;
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
-    const appendToResults = false;
-    fetchResults(APIQuery, appendToResults);
-}
+    fetchData(APIQuery, renderResults, true);
+ } 
 
-//Functions: previous page
-function prevButtonPressed(event) {
-    event.preventDefault();
-    if (page > 1) {
-        page--;
-        const searchQuery = formRef.search.value;
-        const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
-        const appendToResults = false;
-    fetchResults(APIQuery, appendToResults);
-    } 
-}
-
-//Functions: fetch detailed movie information
+//Fetch detailed movie information
 function fetchDetails(imdbID) {
     searchPreviewRef.classList.add('search__preview--hidden');
     favsMenuRef.classList.remove('favs--display');
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&i=${imdbID}`;
-    fetch(APIQuery)
-    .then(response => {
-        if (!response.ok) { throw response; }
-        return response.json();})
-    .then(body => renderDetails(body))
-    .catch(error => console.log(error));
+    fetchData(APIQuery,renderDetails);
 }
 
-//Functions: render detailed movie information
+//Render detailed movie information
 function renderDetails(body) {
     resultsWrapperRef.classList.add('results__wrapper--hidden');
     detailsRef.classList.remove('details--hidden');
@@ -253,28 +149,116 @@ function renderDetails(body) {
     refreshFavourites();
 }
 
-//Functions: fetch top level movie information
-function fetchResults(APIQuery, appendToResults) {
-    fetch(APIQuery)
-    .then(response => {
-        if (!response.ok) { throw response; }
-        return response.json();})
-    .then(body => renderResults(body, appendToResults))
-    .catch(error => console.log(error));
+//Toggle search results & details divs
+function toggleDetails() {
+    detailsRef.classList.toggle('details--hidden');
+    resultsWrapperRef.classList.toggle('results__wrapper--hidden');
 }
 
-//Functions: render search results
-function renderResults(body, appendToResults) {
-    if (!appendToResults) { resultsRef.innerHTML = ''; }
-    body.Search.forEach(item => {
-        const result = document.createElement('article');
-        result.setAttribute('class','result');
-        result.setAttribute('data-id',item.imdbID);
-        result.setAttribute('data-title',item.Title);
-        result.innerHTML = `<div class='result__wrapper'>
-                            <img data-id=${item.imdbID} class='result result__poster' src=${item.Poster} alt=''>
-                            <h6 data-id=${item.imdbID} class='result result__title'>${item.Title} (${item.Year})</h6>
-                            <div class='detail'></div></div>`;
-        resultsRef.appendChild(result);
-    });
+//Favourite checkbox checked
+function favouriteChecked(event) {
+    if (event.target.matches('.detail__checkbox')) {
+        const imdbID = event.target.getAttribute('data-id');
+        const title = event.target.parentNode.parentNode.parentNode.getAttribute('data-title');
+        if (event.target.checked) { addToFavourites(imdbID, title); }
+        else { removeFromFavourites(imdbID); }
+    }
+}
+
+//Add to favourites
+function addToFavourites(imdbID, title) {
+    let currentFavs = JSON.parse(myStorage.favourites);
+    if (currentFavs === null) { currentFavs = [{'imdbID':imdbID,'Title':title}]; }
+    else { currentFavs.push({'imdbID':imdbID,'Title':title}); }
+    myStorage.favourites = JSON.stringify(currentFavs);
+    refreshFavourites();
+}
+
+//Remove from favourites
+function removeFromFavourites(imdbID) {
+    let currentFavs = JSON.parse(myStorage.favourites);
+    currentFavs = currentFavs.filter(item => (item.imdbID !== imdbID));
+    myStorage.favourites = JSON.stringify(currentFavs);
+    const favToUncheck = document.querySelector(`[data-id=${imdbID}] .detail__checkbox`);
+    if (favToUncheck !== null) { favToUncheck.checked = false; }
+    refreshFavourites();
+}
+
+//Generate HTML element for favourite
+function generateFavourite(imdbID,title) {
+    const favourite = document.createElement('div');
+    favourite.setAttribute('class','fav');
+    favourite.setAttribute('data-id',imdbID);
+    favourite.innerHTML =  `<i class="fas fa-sort-up"></i>
+                            <i class="fas fa-sort-down"></i>
+                            <a class='fav__title'>${title}</a>`;
+    return favourite;
+}
+
+ //Move favourite up in the list
+ function moveFavouriteUp(imdbID) {
+    let currentFavs = JSON.parse(myStorage.favourites);
+    const favToMoveUp = currentFavs.filter(item => item.imdbID === imdbID)[0];
+    const rank = currentFavs.indexOf(favToMoveUp);
+    if (rank > 0) {
+        currentFavs[rank] = currentFavs[rank-1];
+        currentFavs[rank-1] = favToMoveUp;
+        myStorage.favourites = JSON.stringify(currentFavs);
+        refreshFavourites();
+    }
+}
+
+//Move favourite down in the list
+function moveFavouriteDown(imdbID) {
+    let currentFavs = JSON.parse(myStorage.favourites);
+    const favToMoveDown = currentFavs.filter(item => item.imdbID === imdbID)[0];
+    const rank = currentFavs.indexOf(favToMoveDown);
+    if (rank < currentFavs.length - 1) {
+        currentFavs[rank] = currentFavs[rank+1];
+        currentFavs[rank+1] = favToMoveDown;
+        myStorage.favourites = JSON.stringify(currentFavs);
+        refreshFavourites();
+    }
+}
+
+//Reload favourites HTML elements from local storage
+function refreshFavourites() {
+    if (JSON.parse(myStorage.favourites) !== null) {
+        favouritesRef.innerHTML = '';
+        JSON.parse(myStorage.favourites).forEach(fav => {
+            favouritesRef.appendChild(generateFavourite(fav.imdbID, fav.Title));
+            const checkbox = document.querySelector(`[data-id=${fav.imdbID}] .detail__checkbox`);
+            if (checkbox !== null ) { checkbox.checked = true; }
+        });
+    }
+}
+
+//Next page
+function nextButtonPressed(event) {
+    event.preventDefault();
+    page++;
+    const searchQuery = formRef.search.value;
+    const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
+    fetchData(APIQuery, renderResults, false);
+}
+
+//Previous page
+function prevButtonPressed(event) {
+    event.preventDefault();
+    if (page > 1) {
+        page--;
+        const searchQuery = formRef.search.value;
+        const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&page=${page}&type=movie`;
+    fetchData(APIQuery, renderResults, false);
+    } 
+}
+
+//Clean up on logout
+function logout() {
+    myStorage.clear();
+    myStorage.favourites = '[]';
+    refreshFavourites();
+    formRef.reset();
+    detailsRef.classList.add('details--hidden');
+    resultsWrapperRef.classList.add('results__wrapper--hidden');
 }
