@@ -57,13 +57,14 @@ body {
     padding-right: 5px;
 }
 
-.logo {
+h1.logo {
     font-family: 'Pathway Gothic One', sans-serif;
     color: #e50914;
     text-align: center;
     font-size: 4rem;
     text-decoration: none;
     text-shadow: 2px 2px #c2c2c2;
+    margin: 0;
 }
 
 .search {
@@ -94,6 +95,11 @@ body {
     font-size: 1.5rem;
     color: #c2c2c2;
     margin-left: 20px;
+}
+
+.search__button {
+    border: none;
+    background: transparent;
 }
 
 .search_container {
@@ -236,7 +242,7 @@ body {
     margin: 0;
 }
 
-.nav a {
+.nav button {
     text-decoration: none;
     color: #c2c2c2;
 }
@@ -300,7 +306,7 @@ body {
         padding-right: 7px;
     }
     
-    .logo {
+    h1.logo {
         font-size: 6rem;
     }
     
@@ -383,7 +389,7 @@ body {
         font-size: 0.7rem;
     }
     
-    .nav a {
+    .nav button {
         text-decoration: none;
         color: #c2c2c2;
     }
@@ -397,7 +403,7 @@ body {
         justify-content: center;
     }
     
-    .nav a {
+    .nav button {
         background: transparent;
         border: 1px solid #666666;
         border-radius: 5px;
@@ -414,7 +420,7 @@ body {
         text-transform: uppercase; 
     }
     
-    .nav a:hover {
+    .nav button:hover {
         background-color: #666666;
         color: #f1f1f1;
     }
@@ -440,7 +446,7 @@ body {
         font-size: 1.5rem;
     }
     
-    .logo {
+    h1.logo {
         font-size: 5rem;
     }
     

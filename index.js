@@ -30,15 +30,15 @@ refreshFavourites();
 
 //Event listeners: click on document
 document.addEventListener('click', event => {
-    if (event.target.matches('.result, .preview')) fetchDetails(event.target.getAttribute('data-id'));
-    if (event.target.matches('.nav__prev')) prevButtonPressed(event);
-    if (event.target.matches('.nav__next')) nextButtonPressed(event);
-    if (event.target.matches('.fa-sort-up')) moveFavouriteUp(event.target.parentNode.getAttribute('data-id'));
-    if (event.target.matches('.fa-sort-down')) moveFavouriteDown(event.target.parentNode.getAttribute('data-id'));
-    if (event.target.matches('.fav__title')) fetchDetails(event.target.parentNode.getAttribute('data-id'));
-    if (event.target.matches('.details, .detail')) toggleDetails();
-    if (event.target.matches('.fa-heart')) favsMenuRef.classList.toggle('favs--display');
-    if (event.target.matches('.fa-sign-out-alt')) logout();
+    if (event.target.matches('.result, .preview')) { fetchDetails(event.target.getAttribute('data-id')); }
+    if (event.target.matches('.nav__prev')) { prevButtonPressed(event); }
+    if (event.target.matches('.nav__next')) { nextButtonPressed(event); }
+    if (event.target.matches('.fa-sort-up')) { moveFavouriteUp(event.target.parentNode.getAttribute('data-id')); }
+    if (event.target.matches('.fa-sort-down')) { moveFavouriteDown(event.target.parentNode.getAttribute('data-id')); }
+    if (event.target.matches('.fav__title')) { fetchDetails(event.target.parentNode.getAttribute('data-id')); }
+    if (event.target.matches('.details, .detail')) { toggleDetails(); }
+    if (event.target.matches('.fa-heart')) { favsMenuRef.classList.toggle('favs--display'); }
+    if (event.target.matches('.fa-sign-out-alt')) { logout(); }
 });
 
 //Event listeners: search input for preview
@@ -59,8 +59,8 @@ document.addEventListener('change', event => {
     if (event.target.matches('.detail__checkbox')) {
         const imdbID = event.target.getAttribute('data-id');
         const title = event.target.parentNode.parentNode.parentNode.getAttribute('data-title');
-        if (event.target.checked) addToFavourites(imdbID, title);
-        else removeFromFavourites(imdbID);
+        if (event.target.checked) { addToFavourites(imdbID, title); }
+        else { removeFromFavourites(imdbID); }
     }
 });
 
@@ -76,7 +76,7 @@ function initiatePreview(event) {
         const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&s=${searchQuery}&type=movie`;
         fetch(APIQuery)
         .then(response => {
-            if (!response.ok) throw response;
+            if (!response.ok) { throw response; }
             return response.json();})
         .then(body => renderPreview(body))
         .catch(error => console.log(error));
@@ -154,7 +154,7 @@ function refreshFavourites() {
         JSON.parse(myStorage.favourites).forEach(fav => {
             favouritesRef.appendChild(generateFavourite(fav.imdbID, fav.Title));
             const checkbox = document.querySelector(`[data-id=${fav.imdbID}] .detail__checkbox`);
-            if (checkbox !== null ) checkbox.checked = true;
+            if (checkbox !== null ) { checkbox.checked = true; }
         });
     }
 }
@@ -173,9 +173,8 @@ function generateFavourite(imdbID,title) {
 //Functions: Add to favourites
 function addToFavourites(imdbID, title) {
     let currentFavs = JSON.parse(myStorage.favourites);
-    if (currentFavs === null) currentFavs = [{'imdbID':imdbID,'Title':title}];
-    else currentFavs.push({'imdbID':imdbID,'Title':title});
-    console.log(currentFavs);
+    if (currentFavs === null) { currentFavs = [{'imdbID':imdbID,'Title':title}]; }
+    else { currentFavs.push({'imdbID':imdbID,'Title':title}); }
     myStorage.favourites = JSON.stringify(currentFavs);
     refreshFavourites();
 }
@@ -186,7 +185,7 @@ function removeFromFavourites(imdbID) {
     currentFavs = currentFavs.filter(item => (item.imdbID !== imdbID));
     myStorage.favourites = JSON.stringify(currentFavs);
     const favToUncheck = document.querySelector(`[data-id=${imdbID}] .detail__checkbox`);
-    if (favToUncheck !== null) favToUncheck.checked = false;
+    if (favToUncheck !== null) { favToUncheck.checked = false; }
     refreshFavourites();
 }
 
@@ -232,7 +231,7 @@ function fetchDetails(imdbID) {
     const APIQuery = `http://www.omdbapi.com/?apikey=eee5954b&i=${imdbID}`;
     fetch(APIQuery)
     .then(response => {
-        if (!response.ok) throw response;
+        if (!response.ok) { throw response; }
         return response.json();})
     .then(body => renderDetails(body))
     .catch(error => console.log(error));
@@ -258,7 +257,7 @@ function renderDetails(body) {
 function fetchResults(APIQuery, appendToResults) {
     fetch(APIQuery)
     .then(response => {
-        if (!response.ok) throw response;
+        if (!response.ok) { throw response; }
         return response.json();})
     .then(body => renderResults(body, appendToResults))
     .catch(error => console.log(error));
@@ -266,7 +265,7 @@ function fetchResults(APIQuery, appendToResults) {
 
 //Functions: render search results
 function renderResults(body, appendToResults) {
-    if (!appendToResults) resultsRef.innerHTML = '';
+    if (!appendToResults) { resultsRef.innerHTML = ''; }
     body.Search.forEach(item => {
         const result = document.createElement('article');
         result.setAttribute('class','result');
