@@ -1,0 +1,191 @@
+body{
+  background-color: white;;
+	color:#555;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:16px;
+	line-height:1.6em;
+	margin:0;
+}
+
+header {
+  background-color: coral;
+  text-align: center;
+  color: white;
+	margin:auto;
+	overflow:hidden;
+  font-family: 'Notable', sans-serif;
+}
+
+.modal{
+  display:none;
+  position: fixed;
+  z-index:1;
+  left: 0;
+  top:0;
+  height: 100%;
+  width:100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content{
+  background-color:#f4f4f4;
+  margin: 20% auto;
+  width:70%;
+  box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2),0 7px 20px 0 rgba(0,0,0,0.17);
+  animation-name:modalopen;
+  animation-duration:1s;
+}
+
+.modal-header h2, .modal-footer h3{
+  margin:0;
+}
+
+.modal-header{
+  background:coral;
+  padding:15px;
+  color:#fff;
+}
+
+.modal-body{
+  padding:10px 20px;
+}
+
+.video{
+  display: flex;
+  margin-top: 10px;
+  /* min-width: 100%;
+  min-height: 100%;
+  align-items: flex-start; */
+  height:100vh;
+}
+
+.text-input{
+  padding-top: 15px;
+  align-content: center;
+  display: flex;
+  justify-content: center;
+}
+
+
+.textarea{
+  size: 50;
+}
+
+.main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  /* flex-grow:  */
+  /* overflow: auto; */
+}
+
+.movieItem {
+  box-shadow: 10px 10px grey;
+  margin:30px;
+  background-color: #f4f4f4;
+  border: 1px solid;
+  text-align: center;
+  overflow-wrap: normal;
+  max-width: 325px;
+  /* -webkit-transition: All 1s ease-in-out;
+*/
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  text
+}
+
+.movieItem:hover {
+  background-color: #C0C0C0;
+}
+
+.movieItem:hover {
+  z-index: 1.5;
+  /* width: 300px;
+  height:300px; */
+}
+
+#posterImage {
+  min-width: 300px;
+  min-height: 460px;
+  max-width: 325px;
+}
+
+footer {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  bottom: 0;
+  background-color: coral;
+  margin-top: 1000px;
+}
+
+
+.button{
+  background-color: coral;
+  padding: 1em 2em;
+  color: #fff;
+  border:0;
+}
+
+.button:hover{
+  background:#333;
+}
+
+
+
+
+
+.closeBtn{
+  color:#ccc;
+  float: right;
+  font-size: 30px;
+}
+
+.closeBtn:hover,.closeBtn:focus{
+  color: #000;
+  text-decoration: none;
+  cursor:pointer;
+}
+
+@keyframes modalopen{
+  from{opacity: 0}
+  to{opacity: 1}
+}
+
+
+
+/* //flip box */
+/* .flip3D{ width:240px; height:200px; margin:10px; float:left; }
+.flip3D > .front{
+	position:absolute;
+	-webkit-transform: perspective( 600px ) rotateY( 0deg );
+	transform: perspective( 600px ) rotateY( 0deg );
+	background:#FC0; width:240px; height:200px; border-radius: 7px;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	transition: -webkit-transform .5s linear 0s;
+	transition: transform .5s linear 0s;
+}
+.flip3D > .back{
+	position:absolute;
+	-webkit-transform: perspective( 600px ) rotateY( 180deg );
+	transform: perspective( 600px ) rotateY( 180deg );
+	background: #80BFFF; width:240px; height:200px; border-radius: 7px;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	transition: -webkit-transform .5s linear 0s;
+	transition: transform .5s linear 0s;
+}
+.flip3D:hover > .front{
+	-webkit-transform: perspective( 600px ) rotateY( -180deg );
+	transform: perspective( 600px ) rotateY( -180deg );
+}
+.flip3D:hover > .back{
+	-webkit-transform: perspective( 600px ) rotateY( 0deg );
+	transform: perspective( 600px ) rotateY( 0deg );
+} */

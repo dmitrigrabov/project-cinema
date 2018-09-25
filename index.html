@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Project Cinema</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Notable" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Serif+JP:900" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+</head>
+
+<body>
+  <header>
+    <h1>Screen Search</h1>
+  </header>
+
+  <form class = "form">
+        <div class = "text-input">
+          <input type="text" class ="textarea" rows="1" cols="50" placeholder="Enter search terms here"></input<br>
+          <!-- <textarea class = "textarea" rows="1" cols="50" placeholder="Enter search terms here"></textarea><br> -->
+          <input class="submit-button" type="submit" value="Search"><input class="next" type="button" value="Next 20 Results"><input class="favourites" type="button" value="View Favourites">
+        </div>
+      </form>
+
+<!-- <button id="modalBtn" class="button"><Click Here</button> -->
+<div id="simpleModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+          <span class="closeBtn">&times;</span>
+          <h2>Details</h2>
+      </div>
+      <div class="modal-body">
+        </div>
+    </div>
+  </div>
+
+
+<!-- <div id="simpleModal" class="modal">
+  <div class="modal-content">
+    <span class="closeBtn">&times;</span>
+    <p class=inside>Hello...I'm Zuber's modal</p>
+  </div>
+</div> -->
+<!--
+<div class="flip3D">
+  <div class="back">Box 1 - Back</div>
+  <div class="front">Box 1 - Front</div>
+</div> -->
+
+  <div class="main">
+    <video class="video" src="007.mp4" autoplay loop muted></video>
+  </div>
+</body>
+  <!-- <script src="moment.js"></script> -->
+  <script src="index.js"></script>
+  </html>
