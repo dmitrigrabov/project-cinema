@@ -1,0 +1,25 @@
+:root {
+  --bg-color: #000;
+  --text-color: #fff;
+  --highlight-color: grey;
+  --link-color: blue;
+}
+
+body,
+html {
+  color: var(--text-color);
+  background-color: var(--bg-color);
+
+  /*Declare your font*/
+  font-family: "Source Serif Pro", serif;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app {
+}
+main {
+  display: flex;
+  flex-direction: row;
+}
