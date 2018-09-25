@@ -30,20 +30,46 @@ refreshFavourites();
 
 //Event listeners: click on document
 document.addEventListener('click', event => {
-    if (event.target.matches('.result')) fetchDetails(event.target.getAttribute('data-id'));
+    if (event.target.matches('.result, .preview')) fetchDetails(event.target.getAttribute('data-id'));
     if (event.target.matches('.nav__prev')) prevButtonPressed(event);
     if (event.target.matches('.nav__next')) nextButtonPressed(event);
     if (event.target.matches('.fa-sort-up')) moveFavouriteUp(event.target.parentNode.getAttribute('data-id'));
     if (event.target.matches('.fa-sort-down')) moveFavouriteDown(event.target.parentNode.getAttribute('data-id'));
     if (event.target.matches('.fav__title')) fetchDetails(event.target.parentNode.getAttribute('data-id'));
-    if (event.target.matches('.preview')) fetchDetails(event.target.getAttribute('data-id'));
     if (event.target.matches('.details, .detail')) toggleDetails();
-    if (event.target.matches('.fa-heart')) toggleFavoritesMenu();
+    if (event.target.matches('.fa-heart')) favsMenuRef.classList.toggle('favs--display');
     if (event.target.matches('.fa-sign-out-alt')) logout();
 });
 
 //Event listeners: search input for preview
-textboxRef.addEventListener('input', event => {
+textboxRef.addEventListener('input', event => initiatePreview(event));
+
+//Event listeners: submit on form
+formRef.addEventListener('submit', submitSearch);
+
+//Event listeners: approaching end of page for infinite scroll
+resultsRef.addEventListener('scroll', event => {
+    if (resultsRef.scrollLeft + 100 > resultsRef.scrollWidth - resultsRef.clientWidth) {
+        getMoreResults();
+    }
+});
+
+//Event listeners: favourite checkboxes
+document.addEventListener('change', event => {
+    if (event.target.matches('.detail__checkbox')) {
+        const imdbID = event.target.getAttribute('data-id');
+        const title = event.target.parentNode.parentNode.parentNode.getAttribute('data-title');
+        if (event.target.checked) addToFavourites(imdbID, title);
+        else removeFromFavourites(imdbID);
+    }
+});
+
+
+//###########################   FUNCTIONS   ########################### 
+
+
+//Functions: initiate search preview
+function initiatePreview(event) {
     if (event.target.value.length >= 3) {
         searchPreviewRef.classList.remove('search__preview--hidden');
         const searchQuery = formRef.search.value;
@@ -56,46 +82,14 @@ textboxRef.addEventListener('input', event => {
         .catch(error => console.log(error));
     }
     else searchPreviewRef.classList.add('search__preview--hidden');
-});
-
-//Event listeners: submit on form
-formRef.addEventListener('submit', submitSearch);
-
-//Event listeners: favourite checkboxes
-document.addEventListener('change', event => {
-    if (event.target.matches('.detail__checkbox')) {
-        if (event.target.checked) addToFavourites(event.target.getAttribute('data-id'),event.target.parentNode.parentNode.parentNode.getAttribute('data-title'));
-        else removeFromFavourites(event.target.getAttribute('data-id'));
-    }
-});
-
-//Event listeners: approaching end of page for infinite scroll
-resultsRef.addEventListener('scroll', event => {
-    if (resultsRef.scrollLeft + 100 > resultsRef.scrollWidth - resultsRef.clientWidth) {
-        getMoreResults();
-    }
-  });
-
-
-//###########################   FUNCTIONS   ########################### 
-
-
-//Functions: toggle visibility on favourites list
-function toggleFavoritesMenu() { 
-    favsMenuRef.classList.toggle('favs--display');
 }
 
 //Functions: Clean up on logout
 function logout() {
     myStorage.clear();
     myStorage.favourites = '[]';
-    resetPage();
     refreshFavourites();
     formRef.reset();
-}
-
-//Functions: reset page on logout
-function resetPage() {
     detailsRef.classList.add('details--hidden');
     resultsWrapperRef.classList.add('results__wrapper--hidden');
 }
