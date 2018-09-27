@@ -18,8 +18,14 @@ parentSearchResult.appendChild(searchResultNode);
 
 //Search Function
 
-searchFunc.addEventListener("submit", function(event) {
+//DMITRI
+//const searchFunc = document.querySelector(".search__form")
+// const query = searchFunc.value;
+//fetchIMDB(url);
+
+searchFunc.addEventListener("submit", event => {
     event.preventDefault();
+    
     console.log(event.target['0'].value);
     let url = `https://www.omdbapi.com/?s=${event.target['0'].value}&apikey=73071eff`;
     fetchIMDB(url);
@@ -40,6 +46,50 @@ function IMDBData(search) {
         console.log(movies.imdbID);
     parentSearchResult.appendChild(searchResultNode);    
 
+//DMITRI
+
+// should go in more info section
+// const moviesList = search.Search.map(movieItem => {
+//     const isFavourite = favourites.indexOf(movieItem.imdbId) !== -1;
+
+// let button;
+//  if (isFavourite){
+//     button = //addtofavourites
+// } else {
+//     button = //removefromfavourites
+// }
+
+// return `
+//     <div id=""</div>
+/* <button class"add-to-favs" data-movie-id="${movieItem.imdbID}">Add to favs</button> */
+//     etc
+//     `
+// });
+// joins the string results (below)
+// const moviesContainer = document.querySelector(".movies")
+// moviesContainer.innerHTML = moviesList.join('');
+
+// const favourites = !favouritesString ? JSON.parse(favouritesString); //global var array - add to top of page. //converts to string
+// const favouritesString = localstorage.getItem('favourites'); 
+
+// event listener for favourites
+// moviesContainer.addEventlistener('click', event => {
+// if(event.target.matches('.add-to-favs')){
+//     const movieId = event.target.dataset.movieId; //dataset - grabs any data attribute (classish) on page, plus the text after, removing the kebabcase.
+//     addToFavourites(movieID);
+// }
+// });
+//function to store favs
+// function addToFavourites(movieId){
+//     favourites.push(movieId); //creating favourites array
+//     localStorage.setItem('favourites', JSON.stringify(favourites)); //moving favourite array in to local storage. JSON stringify???
+// }
+
+// function updateButton((button, movieId){
+    button.outerHTML = 
+})
+//END DMITRI
+
     //Event listener of individual listed movies - sends URL to fetch for more info
 
     const filmSelector = document.querySelector(`[data-imdb=${movies.imdbID}]`);
@@ -52,6 +102,7 @@ function IMDBData(search) {
                 // defunct function to push more info next to relevant film
                 // imdbInfo(imdbID)
                 // console.log(imdbID);
+                toggleSliderOpen();
             });
             });
            }
@@ -73,6 +124,21 @@ function notFoundTrailer() {
 //TO DO
 };
 
+
+//toggles
+
+function toggleSliderOpen() {
+    
+    document.querySelector(".more__info__slider").classList.toggle("expanded", true);
+   };
+
+function toggleSliderClose() {
+
+
+   document.querySelector(".more__info__slider").classList.toggle("expanded", false);
+   };
+
+ 
 
 // Initial Search Fetch
 function fetchIMDB(url){
@@ -198,6 +264,13 @@ function movieMore(finder){
     <iframe width="560" height="315" class="trailer" src=${trailerClip} frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
 
     parentMoreInfoSlider.appendChild(moreInfoNodeSlider);
+
+    // X to close slider
+
+ const closeButton = document.querySelector(".close");
+ closeButton.addEventListener("click", event => {
+     toggleSliderClose();
+     });
 
 }
 
