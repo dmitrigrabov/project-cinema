@@ -21,7 +21,7 @@
 
 ## Stages of development
 +  Set up API and read the **Open Movie Database API** documentation 
-+  Created funcitonality for the initial search query
++  Created functionality for the initial search query
 +  Created smart pagination, with scrolling to see all results
 +  Retrieved the data for selected movie 
 + Used Javascript to display the poster image, year, IMDB rating, director, description etc...
@@ -29,14 +29,14 @@
 
 ## Features
 + Responsive search preview - results update with each letter typed. Initial search results are shown below the search box
-+ Smart pagination so that users can quickly navigate between all movies in search results
-+ Form validation giving the user feedback and details of results:
-... + if the search input is more than 3 letters
-⋅⋅⋅ + if the search input has returned a valid result or not
-... + How many results and pages of results found
++ Smart pagination allows users to quickly navigate all pages of search results
++ Form validation gives the user feedback and details of results:
+> + if the search input is more than 3 letters
+> + if the search input has returned a valid result or not
+> + How many results and pages of results found
 
 ## Problems and errors to be fixed
-+ Fix errors with the search input field. Searching more than one word created errors with the results.
++ Fix errors with the search input field. Searching more than one word creates errors with the results.
 + Improve the tablet and desktop views for better responsiveness
 
 ## Desired features with more time
