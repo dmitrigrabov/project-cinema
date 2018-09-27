@@ -8,7 +8,7 @@ const form = document.querySelector('#control__search'),
 
 let params = {
     inputValue: searchInput.value,
-    pageNumber: 1,
+    pageNumber: 2,
     totalPages: 0,
     imdbID: '',
     apiKey: 'f899a3c1'
@@ -97,11 +97,11 @@ function runFetch() {
                         }
 
                         searchResult.innerHTML = `
-                            <span class="results__searchResult__title">${movieParams.title}</span>
+                            <h2 class="results__searchResult__title">${movieParams.title}</h2>
                             <img class="results__searchResult__poster" src="${movieParams.poster}"/>
-                            <span class="results__searchResult__year hide">(${movieParams.year})</span>
-                            <span class="results__searchResult__actors hide">Actors: ${movieParams.actors}</span>
-                            <span class="results__searchResult__description hide">${movieParams.description}</span>
+                            <h3 class="results__searchResult__year hide">(${movieParams.year})</h3>
+                            <h3 class="results__searchResult__actors hide">Actors: ${movieParams.actors}</h3>
+                            <h3 class="results__searchResult__description hide">${movieParams.description}</h3>
                             `;
                         const posterImg = searchResult.querySelector('.results__searchResult__poster');
                         const description = searchResult.querySelector('.results__searchResult__description');
