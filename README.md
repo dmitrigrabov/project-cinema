@@ -1,6 +1,6 @@
-# Project Cinema
+# Project Cinema by Mariusz Sygnowski
 
-We want to create a movie search engine. To power it we will use the [Open Movie Database](http://www.omdbapi.com) API.
+[Click here](https://mariuszsygnowski.github.io/project-cinema/) to see live version.
 
 To start using the OMDB API you will first need to sign up with them to receive and API key. The key issued to you will allow you 1000 requests per day and you will need to include this key as part of every request.
 
