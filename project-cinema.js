@@ -64,8 +64,6 @@ function searchMovie(searchWord, page) {
         append(more, movieRating);
         append(more, movieDetails);
 
-        console.log(movieID);
-
         more.addEventListener("click", function(event) {
           event.preventDefault();
           if (movieDetails.className == "movie-details--off") {
@@ -104,7 +102,7 @@ function searchMovie(searchWord, page) {
 form.addEventListener("submit", function(event) {
   event.preventDefault();
   if (searchValue.value !== "") {
-    console.log(searchValue.value);
+    // console.log(searchValue.value);
 
     results.textContent = "";
     results.textContent = `Results for ${searchValue.value}:`;

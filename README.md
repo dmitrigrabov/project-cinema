@@ -4,6 +4,6 @@ This app is a movie search engine. It has been created using HTML, Javascript an
 
 The results are generated via API, which when fetched is converted to JSON, after which the relevant information is taken, placed in HTML tags, and appended onto the page.
 
-If i had more time I would have liked to have finished adding a favourites list and have completed the search preview.
+If i had more time I would have liked to have finished adding a favourites list and have completed the search preview.I also would have liked to have finished adding the youtube API to link to trailers of the movies.
 
 [![Screen_Shot_2018-09-24_at_08.50.02.png](https://i.postimg.cc/RCRf1HkY/Screen_Shot_2018-09-24_at_08.50.02.png)](https://postimg.cc/BtjX4XQ5)

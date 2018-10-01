@@ -284,6 +284,23 @@ body {
   .movie-plot {
     grid-column: 1/2;
   }
+
+  .previous {
+    width: 50px;
+    height: 50px;
+  }
+
+  .page-select {
+    width: 30px;
+    font-size: 15px;
+  }
+
+  .next {
+    grid-column-start: end;
+    align-content: right;
+    width: 50px;
+    height: 50px;
+  }
 }
 
 @media (min-width: 1050px) {
@@ -405,5 +422,22 @@ body {
 
   .movie-plot {
     grid-column: 1/2;
+  }
+
+  .previous {
+    width: 50px;
+    height: 50px;
+  }
+
+  .page-select {
+    width: 30px;
+    font-size: 15px;
+  }
+
+  .next {
+    grid-column-start: end;
+    align-content: right;
+    width: 50px;
+    height: 50px;
   }
 }
