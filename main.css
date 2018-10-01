@@ -1,0 +1,49 @@
+body {
+  text-align: center;
+  font-family: Impact;
+  background-image:url(https://i.imgur.com/GLIs5QU.jpg);
+
+};
+
+header {
+  color:white;
+  font-size: 20px;
+  margin: 0.2em;
+  padding: 12 2%;
+  height: 10em;
+  text-transform: capitalize;
+}
+
+
+.container1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+};
+
+
+
+.text_1 {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+}
+
+.page-title {
+  font-size: 20px;
+  text-transform: capitalize;
+  background-color: : grey;
+}
+
+#results {
+  list-style-type: none;
+  width:350px;
+  height:150px;
+  color:white;
+  display:inline-block;
+  justify-content: center;
+  flex-direction: column;
+  margin:15px;
+}
