@@ -3,18 +3,21 @@ This is a simple paginated website, presenting information from two APIs: omdbap
 Search for a movie or show and receive results based on that query. Selecting results will bring up more detailed
 information, including a sample review. 
 
-## Getting Started
-
-You can fork and clone the repository onto your machine.
-While this website should be cross-compatible, I have only tested it in Chrome so please keep that in mind. 
+## Setting Up
+Clone the repo: 
+```
+git clone [repo path]
+```
+Install dependencies
+```
+npm i
+```
+Copy and paste the path of the index.html document into your browser.
 
 ## Built With
 Vanilla JS
 CSS
 HTML
-
-## Contributing
-Feel free to send me pull requests with new features or code improvements.
 
 
 
